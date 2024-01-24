@@ -4,7 +4,7 @@ Group project development based on web development, working on e-commerce websit
 Srikanth Boppudi
 Currently working on requirements of the project such as software,features to be added to the E-commerce website.Discussing about the types of services or products to be added in the website.
 
-# E-Commerce Website Project Document
+# E-Commerce Mobile Development Project Document
 
 ## I. Project Overview
 
