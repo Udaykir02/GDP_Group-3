@@ -1,4 +1,4 @@
-# react native environment setup
+# react native environment setup for e-commerce application
 ## Developing OS in Windows
 ## Target OS in Android
 #### Required for developing the front end of the e-commerce application
