@@ -36,8 +36,7 @@
         - Go back to the Dev Menu and select Reload JS.
         - We can now enable Live reloading from the Dev Menu. Your app will reload whenever your JavaScript code has changed.
   - **Using a Virtual Device**
-
-  
+---  
 
 ## Developing OS in macOS
 ## Target OS in iOS
@@ -51,3 +50,22 @@
 > npx react-native@latest init storegrab
 - Using a specific version or template
 > npx react-native@X.XX.X init storegrab --version X.XX.X
+
+## Running the React Native application:
+- Step 1: Start Metro:
+Start the Metro development server, by running the following from the project folder:
+> npm: npm start
+> yarn: yarn start
+- Step 2: Start the application:
+Open a new terminal inside React Native project folder. Run the following:
+> npm: npm run ios
+> yarn: yarn ios
+
+Then the new app will start running in the iOS Simulator shortly.
+This is one way to run our app. It can also run directly from within Xcode.
+## Running on a device:
+- The above command will automatically run the app on the iOS Simulator by default. To run the app on an actual physical iOS device, these are the steps.
+## Modifying app
+- Open App.tsx in user’s text editor of choice and we can edit some lines.
+- Hit Cmd + R in user’s iOS Simulator to reload the app and see the changes.
+
