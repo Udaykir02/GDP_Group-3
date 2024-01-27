@@ -12,6 +12,8 @@ import {
   View, Text, ImageBackground
 } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
+
 
 import createToBeImplementedStyle from "./AppStyle";
 
@@ -19,9 +21,11 @@ import createToBeImplementedStyle from "./AppStyle";
 function App(): React.JSX.Element {
   const styles = createToBeImplementedStyle();
   return (
+    <NavigationContainer>
       <View style={styles.container}>
-              <Text style={styles.title}>Storegrab</Text>
+        <Text style={styles.title}>Storegrab</Text>
       </View>
+    </NavigationContainer>
   )
 }
 
