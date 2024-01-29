@@ -36,7 +36,24 @@
         - Go back to the Dev Menu and select Reload JS.
         - We can now enable Live reloading from the Dev Menu. Your app will reload whenever your JavaScript code has changed.
   - **Using a Virtual Device**
----  
+    -  If you use Android Studio to open ./AwesomeProject/android, you can see the list of available Android Virtual Devices (AVDs) by opening the "AVD Manager" from within Android Studio. Look for an icon:
+    - **Android Studio AVD Manager**
+       - If you have recently installed Android Studio, you will likely need to create a new AVD. Select "Create Virtual Device", then pick any Phone from the list and click "Next", then select the Tiramisu API Level 33 image.
+       - If you don't have HAXM installed, Install the HAXM, then go back to the AVD Manager.
+       - Click "Next" then "Finish" to create your AVD. At this point you should be able to click on the green triangle button next to your AVD to launch it, then proceed to the next step.
+
+- **Running your React Native application**
+  - Step 1: Start Metro
+  - Metro is the JavaScript build tool for React Native. To start the Metro development server, run the following from the project folder:
+
+      > npm start
+
+  - Step 2: Start application
+  - Let Metro Bundler run in its own terminal. Open a new terminal inside your React Native project folder. Run the following:
+
+      > npm run android
+
+- If everything is set up correctly, we can see the new app running in your Android emulator shortly.
 
 ## Developing OS in macOS
 ## Target OS in iOS
