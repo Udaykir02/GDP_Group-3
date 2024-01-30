@@ -89,6 +89,28 @@ If the checkboxes are grayed out, you will have a chance to install these compon
 
 Once setup has finalized and you're presented with the Welcome screen, proceed to the next step.
 
+## 2. Install the Android SDK
+
+Android Studio installs the latest Android SDK by default. However, building a React Native app with native code requires the Android 13 (Tiramisu) SDK in particular. Additional Android SDKs can be installed through the SDK Manager in Android Studio.
+
+To do that, follow these steps:
+
+1. Open Android Studio, click on the "Configure" button, and select "SDK Manager."
+
+2. Alternatively, find the SDK Manager within the Android Studio "Settings" dialog, under Languages & Frameworks → Android SDK.
+
+3. In the SDK Manager, select the "SDK Platforms" tab. Check the box next to "Show Package Details" in the bottom right corner.
+
+4. Look for and expand the Android 13 (Tiramisu) entry. Make sure the following items are checked:
+   - Android SDK Platform 33
+   - Intel x86 Atom_64 System Image or Google APIs Intel x86 Atom System Image
+
+5. Next, select the "SDK Tools" tab. Check the box next to "Show Package Details" here as well.
+
+6. Look for and expand the "Android SDK Build-Tools" entry. Ensure that version 33.0.0 is selected.
+
+7. Click "Apply" to download and install the Android SDK and related build tools.
+
 ## Developing OS in macOS
 ## Target OS in iOS
 #### Required for developing the front end of the e-commerce application called storegrab
