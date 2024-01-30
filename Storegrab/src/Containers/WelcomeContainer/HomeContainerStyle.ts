@@ -12,7 +12,6 @@ export default function <C>() {
             fontWeight: 'bold',
             marginBottom: 20,
             color: '#DEB887',
-
         },
         startButton: {
             backgroundColor: '#2196F3',
