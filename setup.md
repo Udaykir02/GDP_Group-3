@@ -72,6 +72,23 @@ React Native currently recommends version 17 of the Java SE Development Kit (JDK
 
 While you can use any editor of your choice to develop your app, you'll need to install Android Studio to set up the necessary tooling for building your React Native app for Android.
 
+# Android Development Environment
+
+Setting up your development environment can be somewhat tedious if you're new to Android development. If you're already familiar with Android development, there are a few things you may need to configure. In either case, please make sure to carefully follow the next few steps.
+
+## 1. Install Android Studio
+Download and install Android Studio. While on the Android Studio installation wizard, make sure the boxes next to all of the following items are checked:
+
+- Android SDK
+- Android SDK Platform
+- Android Virtual Device
+
+Then, click "Next" to install all of these components.
+
+If the checkboxes are grayed out, you will have a chance to install these components later on.
+
+Once setup has finalized and you're presented with the Welcome screen, proceed to the next step.
+
 ## Developing OS in macOS
 ## Target OS in iOS
 #### Required for developing the front end of the e-commerce application called storegrab
