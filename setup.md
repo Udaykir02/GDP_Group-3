@@ -55,6 +55,23 @@
 
 - If everything is set up correctly, we can see the new app running in your Android emulator shortly.
 
+## Developing OS in Linux
+## Target OS in Android 
+
+# Installing Dependencies
+
+To develop a React Native app, you'll need to set up a few dependencies, including Node, the React Native command line interface, a JDK (Java Development Kit), and Android Studio.
+
+## Node
+
+Follow the installation instructions for your Linux distribution to install Node 18 or newer.
+
+## Java Development Kit
+
+React Native currently recommends version 17 of the Java SE Development Kit (JDK). You may encounter problems using higher JDK versions. Download and install OpenJDK from AdoptOpenJDK or your system packager.
+
+While you can use any editor of your choice to develop your app, you'll need to install Android Studio to set up the necessary tooling for building your React Native app for Android.
+
 ## Developing OS in macOS
 ## Target OS in iOS
 #### Required for developing the front end of the e-commerce application called storegrab
