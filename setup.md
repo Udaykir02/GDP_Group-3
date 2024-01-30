@@ -86,3 +86,30 @@ This is one way to run our app. It can also run directly from within Xcode.
 - Open App.tsx in user’s text editor of choice and we can edit some lines.
 - Hit Cmd + R in user’s iOS Simulator to reload the app and see the changes.
 
+## Developing OS in macOS
+## Target OS in Android
+#### Required for developing the front end of the e-commerce application called storegrab
+- Install the Node, Watchman, the React Native command line interface, a JDK, and Android Studio, where Android Studio is used inorder to set up the necessary tooling to build the project called "Storegrab" for Android, installing Node and Watchman is done using Homebrew and by running the following commands in a Terminal.
+> brew install node <br>
+> brew install watchman
+- Install the OpenJDK distribution called Azul Zulu using Homebrew. Run the following commands in a Terminal after installing Homebrew
+> brew tap homebrew/cask-versions
+> brew install --cask zulu17 <br>
+- Get path to where cask was installed to double-click installer
+> brew info --cask zulu17
+-  Update JAVA_HOME environment variable. JDK will likely be at /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+- Recommended JDK 17
+# Setting up Android development environment
+- Download and install Android Studio. And additionally install
+> Android SDK <br>
+> Android SDK Platform <br>
+> Android Virtual Device 
+- click "Next" to install all of these components.
+- Install the Android SDK
+- Android Studio installs the latest Android SDK(Android 13 (Tiramisu)) by default.
+- Additional Android SDKs can be installed through the SDK Manager in Android Studio.
+- Configuring the ANDROID_HOME environment variable
+- Add the following lines to ~/.zprofile or ~/.zshrc (for bash, then ~/.bash_profile or ~/.bashrc) config file:
+> export ANDROID_HOME=$HOME/Library/Android/sdk <br>
+> export PATH=$PATH:$ANDROID_HOME/emulator <br>
+> export PATH=$PATH:$ANDROID_HOME/platform-tools <br>
