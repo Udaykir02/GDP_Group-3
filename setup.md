@@ -138,6 +138,17 @@ Follow the Watchman installation guide to compile and install Watchman from sour
 
 React Native has a built-in command line interface. Rather than install and manage a specific version of the CLI globally, we recommend you access the current version at runtime using npx, which ships with Node.js. With `npx react-native <command>`, the current stable version of the CLI will be downloaded and executed at the time the command is run.
 
+## Creating a new application
+
+>If you previously installed a global `react-native-cli` package, please remove it as it may cause unexpected issues:
+```
+npm uninstall -g react-native-cli @react-native-community/cli
+```
+React Native has a built-in command line interface, which you can use to generate a new project. You can access it without installing anything globally using npx, which ships with Node.js. Let's create a new React Native project called "Storegrab":
+```
+npx react-native@latest init storegrab
+```
+This step is not necessary if you are integrating React Native into an existing application, or if you've installed Expo in your project (see Expo Modules Installation), or if you're adding Android support to an existing React Native project (see Integration with Existing Apps). You can also use a third-party CLI to initialize your React Native app, such as Ignite CLI.
 
 ## Developing OS in macOS
 ## Target OS in iOS
