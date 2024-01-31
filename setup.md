@@ -111,6 +111,23 @@ To do that, follow these steps:
 
 7. Click "Apply" to download and install the Android SDK and related build tools.
 
+## 3. Configure the ANDROID_HOME environment variable
+
+The React Native tools require some environment variables to be set up in order to build apps with native code.
+
+Add the following lines to your `$HOME/.bash_profile` or `$HOME/.bashrc` (if you are using zsh then `~/.zprofile` or `~/.zshrc`) config file:
+
+```
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+```
+>.bash_profile is specific to bash. If you're using another shell, you will need to edit the appropriate shell-specific config file.
+
+Type source $HOME/.bash_profile for bash or source $HOME/.zprofile to load the config into your current shell. Verify that ANDROID_HOME has been set by running echo $ANDROID_HOME and the appropriate directories have been added to your path by running echo $PATH.
+
+>Please make sure you use the correct Android SDK path. You can find the actual location of the SDK in the Android Studio "Settings" dialog, under Languages & Frameworks → Android SDK.
+
 ## Developing OS in macOS
 ## Target OS in iOS
 #### Required for developing the front end of the e-commerce application called storegrab
