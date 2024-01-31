@@ -128,6 +128,17 @@ Type source $HOME/.bash_profile for bash or source $HOME/.zprofile to load the c
 
 >Please make sure you use the correct Android SDK path. You can find the actual location of the SDK in the Android Studio "Settings" dialog, under Languages & Frameworks → Android SDK.
 
+## Watchman
+
+Follow the Watchman installation guide to compile and install Watchman from source.
+
+>Watchman is a tool by Facebook for watching changes in the filesystem. It is highly recommended you install it for better performance and increased compatibility in certain edge cases (translation: you may be able to get by without installing this, but your mileage may vary; installing this now may save you from a headache later).
+
+## React Native Command Line Interface
+
+React Native has a built-in command line interface. Rather than install and manage a specific version of the CLI globally, we recommend you access the current version at runtime using npx, which ships with Node.js. With `npx react-native <command>`, the current stable version of the CLI will be downloaded and executed at the time the command is run.
+
+
 ## Developing OS in macOS
 ## Target OS in iOS
 #### Required for developing the front end of the e-commerce application called storegrab
