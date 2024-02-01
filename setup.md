@@ -208,3 +208,19 @@ This is one way to run our app. It can also run directly from within Xcode.
 > export ANDROID_HOME=$HOME/Library/Android/sdk <br>
 > export PATH=$PATH:$ANDROID_HOME/emulator <br>
 > export PATH=$PATH:$ANDROID_HOME/platform-tools <br>
+# React Native Command Line Interface
+- It is built in command line interface
+- Access the current version at runtime using npx.
+- Use npx react-native <command> to download the current stable version of the CLI.
+- React Native has a built-in command line interface, which can be used to generate a new project called "Storegrab".
+ > npx react-native@latest init storegrab
+- Using a specific version or template
+ > npx react-native@X.XX.X init storegrab --version X.XX.X
+- In order to run the React Native Android appilication we will need an android device, which can be either a physical Android device, or Android Virtual Device which allows to emulate an Android device on computer.
+- Using a physical device
+  > In case of usage of physical Android device, the device is plugged into the computer using a USB cable and perform the operations using specific instructions.
+- Using a virtual device
+  > In case of usage of virtual device, In this case open Android Studio to open ./storegrab/android, you can see the list of available Android Virtual Devices (AVDs) by opening the "AVD Manager" from within Android Studio.
+-  Select "Create Virtual Device...", then pick any Phone from the list and click "Next", then select the Tiramisu API Level 33 image.
+- Click "Next" then "Finish" to create AVD.
+- Click on the green triangle button next to AVD to launch it, then proceed to the next step.
