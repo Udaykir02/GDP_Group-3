@@ -161,6 +161,21 @@ You will need an Android device to run your React Native Android app. This can b
 
 Either way, you will need to prepare the device to run Android apps for development.
 
+## Using a Physical Device
+ 
+If you have a physical Android device, you can use it for development in place of an AVD by plugging it into your computer using a USB cable and following the instructions [here](https://reactnative.dev/docs/running-on-device).
+
+## Using a Virtual Device
+ 
+If you use Android Studio to open `./storegrab/android`, you can see the list of available Android Virtual Devices (AVDs) by opening the "AVD Manager" from within Android Studio.
+ 
+If you have recently installed Android Studio, you will likely need to create a new AVD. Select "Create Virtual Device...", then pick any Phone from the list and click "Next", then select the Tiramisu API Level 33 image.
+ 
+> We recommend configuring VM acceleration on your system to improve performance. Once you've followed those instructions, go back to the AVD Manager.
+ 
+Click "Next" then "Finish" to create your AVD. At this point, you should be able to click on the green triangle button next to your AVD to launch it, then proceed to the next step.
+
+
 ## Developing OS in macOS
 ## Target OS in iOS
 #### Required for developing the front end of the e-commerce application called storegrab
