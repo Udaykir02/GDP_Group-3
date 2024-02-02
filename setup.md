@@ -250,3 +250,21 @@ This is one way to run our app. It can also run directly from within Xcode.
 -  Select "Create Virtual Device...", then pick any Phone from the list and click "Next", then select the Tiramisu API Level 33 image.
 - Click "Next" then "Finish" to create AVD.
 - Click on the green triangle button next to AVD to launch it, then proceed to the next step.
+## Running the React Native application:
+- Step 1: Start Metro:
+Start the Metro development server, by running the following from the project folder:
+> npm: npm start<br>
+> yarn: yarn start
+
+- Step 2: Start the application:
+Open a new terminal inside React Native project folder. Run the following:
+> npm: npm run android<br>
+> yarn: yarn android<br>
+
+Then the new app will start running in the android emulator shortly.
+This is one way to run our app. It can also run directly from within Android Studio.
+## Running on a device:
+- The above command will automatically run the app on the Android Simulator by default. To run the app on an actual physical Android device, these are the steps.
+## Modifying app
+- Open App.tsx in user’s text editor of choice and we can edit some lines.
+- Hit R key twice or select Reload from the Dev Menu (Cmd + M) to see the changes.
