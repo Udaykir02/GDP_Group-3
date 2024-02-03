@@ -150,16 +150,6 @@ npx react-native@latest init storegrab
 ```
 This step is not necessary if you are integrating React Native into an existing application, or if you've installed Expo in your project (see Expo Modules Installation), or if you're adding Android support to an existing React Native project (see Integration with Existing Apps). You can also use a third-party CLI to initialize your React Native app, such as Ignite CLI.
 
-## [Optional] Using a specific version or template
-If you want to start a new project with a specific React Native version, you can use the `--version` argument:
-
-```
-npx react-native@X.XX.X init AwesomeProject --version X.XX.X
-```
-## Preparing the Android device
-You will need an Android device to run your React Native Android app. This can be either a physical Android device or, more commonly, you can use an Android Virtual Device (AVD) which allows you to emulate an Android device on your computer.
-
-Either way, you will need to prepare the device to run Android apps for development.
 
 ## Using a Physical Device
  
