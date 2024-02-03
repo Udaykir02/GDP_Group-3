@@ -175,6 +175,30 @@ If you have recently installed Android Studio, you will likely need to create a 
  
 Click "Next" then "Finish" to create your AVD. At this point, you should be able to click on the green triangle button next to your AVD to launch it, then proceed to the next step.
 
+## Running your React Native Application
+
+### Step 1: Start Metro
+
+Metro is the JavaScript build tool for React Native. To start the Metro development server, run the following from your project folder:
+
+```
+npm start
+```
+>NOTE:
+If you're familiar with web development, Metro is similar to bundlers such as Vite and webpack, but is designed end-to-end for React Native. For instance, Metro uses Babel to transform syntax such as JSX into executable JavaScript.
+
+### Step 2: Start your application
+
+Let Metro Bundler run in its own terminal. Open a new terminal inside your React Native project folder. Run the following:
+
+```
+npm run android
+```
+If everything is set up correctly, you should see your new app running in your Android emulator shortly.
+
+This is one way to run your app - you can also run it directly from within Android Studio.
+
+> If you can't get this to work, see the [Troubleshooting page](https://reactnative.dev/docs/troubleshooting).
 
 ## Developing OS in macOS
 ## Target OS in iOS
