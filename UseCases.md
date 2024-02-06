@@ -13,14 +13,14 @@
 
 ### Use Case 2: Product Browsing
 
-*Objective:* Offer consumers an intuitive and aesthetically pleasing product catalog to facilitate effective product exploration.
+**Objective:** Offer consumers an intuitive and aesthetically pleasing product catalog to facilitate effective product exploration.
 
-*Interactions:*
+**Interactions:**
 1. An easy-to-use interface with eye-catching graphics aids users in browsing the product catalog.
 2. Users can refine their product searches using sorting and filtering options based on brand, price, category, and other criteria.
 3. The overall browsing experience is enhanced with fluid motions and transitions.
 
-*Results:* Users find it easy and enjoyable to browse the product catalog.
+**Results:** Users find it easy and enjoyable to browse the product catalog.
 
 ### Use Case 3: Product Specifications
 
