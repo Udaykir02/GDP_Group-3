@@ -31,3 +31,14 @@
 2. The technology ensures a user-friendly interface that allows consumers to enlarge product photos for a more detailed view.
 
 **Results:** Users by thoroughly understanding the chosen product, are better equipped to make decisions.
+
+### Use Case 4: Adding to Shopping Cart
+
+**Objective:** Make it simple for customers to add items to their shopping carts for convenient and organized shopping.
+
+**Interactions:**
+1. Users can add items to their shopping cart with a simple click or tap.
+2. An easy-to-use cart management system allows users to view, edit, or remove goods.
+3. Real-time updates on the shopping cart total keep users informed about their current shopping status.
+
+**Results:** Adding and removing goods from the shopping cart is a smooth experience for users, with the total cost dynamically updated.
