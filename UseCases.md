@@ -51,5 +51,5 @@
 1. Users go through a sequence of steps to confirm their orders, provide delivery information, and safely finish their payments.
 2. Many payment options are accepted, including credit/debit cards, digital wallets, and other commonly utilized options.
 3. To safeguard user data, make sure sensitive payment information is handled securely.
-4.
-5. **Results:** Customers can choose from a variety of convenient payment alternatives during a quick, easy, and safe checkout procedure.
+  
+**Results:** Customers can choose from a variety of convenient payment alternatives during a quick, easy, and safe checkout procedure.
