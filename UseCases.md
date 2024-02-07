@@ -66,8 +66,9 @@
 
 ### Use Case 7: User Account Management   
 
-**Objective:** Allow users to update their profile information and access their order history for better account management. 
-                                                                                                                                                  **Interactions:**
+**Objective:** Allow users to update their profile information and access their order history for better account management.                 
+
+**Interactions:**
 1. Users can update their profile information, including addresses, contact details, and preferences, within the app.
 2. Access to order history is provided, allowing users to track and review their previous purchases. 
 
