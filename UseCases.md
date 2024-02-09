@@ -107,3 +107,13 @@
 2. To improve relevance, notifications are tailored based on user choices and behavior.
 
 **Results:** Receiving customized alerts enhances users' interaction with the app and overall purchasing experience.
+
+### Use Case 11: Reviews and Feedback
+
+**Objective:** By showing user-generated evaluations and ratings for every product, promote user interaction and the development of trust.
+
+**Interactions:**
+1. Users can see the ratings and reviews that other users have left for each product.
+2. The option for users to rate and comment on products helps to enhance the process of finding the right one.
+
+**Results:** By using other users' feedback to inform their decisions, users can increase the app's legitimacy and sense of trust.
