@@ -97,3 +97,13 @@
 2. Search results are refined using filters according to different parameters like brand, price, category, etc.
 
 **Results:** Customers may quickly and easily search for products and receive results that are tailored to their tastes.
+
+### Use Case 10: Push Notifications
+
+**Objective:** Make it possible for consumers to get alerts and updates on a timely basis regarding sales, discounts, and the launch of new products.
+
+**Interactions:**
+1. To receive updates on the newest sales, discounts, and arrivals, users choose to receive push notifications.
+2. To improve relevance, notifications are tailored based on user choices and behavior.
+
+**Results:** Receiving customized alerts enhances users' interaction with the app and overall purchasing experience.
