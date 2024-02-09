@@ -85,7 +85,7 @@
 
 **Results:** Customers' shopping experience is improved by the opportunity to create a wishlist of items they want and get updates about it.
 
-[9:17 AM] Bandaru,Nikith Kumar
+
 ### Use Case 9: Search Capabilities
 
 **Objective:** Create a comprehensive search function that offers autocomplete recommendations to expedite the process of finding the right product.
