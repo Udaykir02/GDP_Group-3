@@ -150,16 +150,56 @@ npx react-native@latest init storegrab
 ```
 This step is not necessary if you are integrating React Native into an existing application, or if you've installed Expo in your project (see Expo Modules Installation), or if you're adding Android support to an existing React Native project (see Integration with Existing Apps). You can also use a third-party CLI to initialize your React Native app, such as Ignite CLI.
 
+
 ## [Optional] Using a specific version or template
 If you want to start a new project with a specific React Native version, you can use the `--version` argument:
 
 ```
-npx react-native@X.XX.X init AwesomeProject --version X.XX.X
+npx react-native@X.XX.X init storegrab --version X.XX.X
 ```
 ## Preparing the Android device
 You will need an Android device to run your React Native Android app. This can be either a physical Android device or, more commonly, you can use an Android Virtual Device (AVD) which allows you to emulate an Android device on your computer.
 
 Either way, you will need to prepare the device to run Android apps for development.
+
+## Using a Physical Device
+ 
+If you have a physical Android device, you can use it for development in place of an AVD by plugging it into your computer using a USB cable and following the instructions [here](https://reactnative.dev/docs/running-on-device).
+
+## Using a Virtual Device
+ 
+If you use Android Studio to open `./storegrab/android`, you can see the list of available Android Virtual Devices (AVDs) by opening the "AVD Manager" from within Android Studio.
+ 
+If you have recently installed Android Studio, you will likely need to create a new AVD. Select "Create Virtual Device...", then pick any Phone from the list and click "Next", then select the Tiramisu API Level 33 image.
+ 
+> We recommend configuring VM acceleration on your system to improve performance. Once you've followed those instructions, go back to the AVD Manager.
+ 
+Click "Next" then "Finish" to create your AVD. At this point, you should be able to click on the green triangle button next to your AVD to launch it, then proceed to the next step.
+
+## Running your React Native Application
+
+### Step 1: Start Metro
+
+Metro is the JavaScript build tool for React Native. To start the Metro development server, run the following from your project folder:
+
+```
+npm start
+```
+>NOTE:
+If you're familiar with web development, Metro is similar to bundlers such as Vite and webpack, but is designed end-to-end for React Native. For instance, Metro uses Babel to transform syntax such as JSX into executable JavaScript.
+
+### Step 2: Start your application
+
+Let Metro Bundler run in its own terminal. Open a new terminal inside your React Native project folder. Run the following:
+
+```
+npm run android
+```
+If everything is set up correctly, you should see your new app running in your Android emulator shortly.
+
+This is one way to run your app - you can also run it directly from within Android Studio.
+
+> If you can't get this to work, see the [Troubleshooting page](https://reactnative.dev/docs/troubleshooting).
 
 ## Developing OS in macOS
 ## Target OS in iOS
@@ -235,3 +275,21 @@ This is one way to run our app. It can also run directly from within Xcode.
 -  Select "Create Virtual Device...", then pick any Phone from the list and click "Next", then select the Tiramisu API Level 33 image.
 - Click "Next" then "Finish" to create AVD.
 - Click on the green triangle button next to AVD to launch it, then proceed to the next step.
+## Running the React Native application:
+- Step 1: Start Metro:
+Start the Metro development server, by running the following from the project folder:
+> npm: npm start<br>
+> yarn: yarn start
+
+- Step 2: Start the application:
+Open a new terminal inside React Native project folder. Run the following:
+> npm: npm run android<br>
+> yarn: yarn android<br>
+
+Then the new app will start running in the android emulator shortly.
+This is one way to run our app. It can also run directly from within Android Studio.
+## Running on a device:
+- The above command will automatically run the app on the Android Simulator by default. To run the app on an actual physical Android device, these are the steps.
+## Modifying app
+- Open App.tsx in user’s text editor of choice and we can edit some lines.
+- Hit R key twice or select Reload from the Dev Menu (Cmd + M) to see the changes.
