@@ -6,6 +6,12 @@
 - Product listings, image loading times, and checkout procedures should all be optimized for speedy access while taking possible network variations into account.
 - Even during periods of high traffic, the app should be able to manage many user interactions with efficiency and maintain acceptable response times.
 
+## 2. Security:
+
+- Sensitive data, including payment information and personal information, must be transmitted and authenticated by users using encryption to protect its integrity.
+- Protecting user credentials and other sensitive data kept locally on the device requires the implementation of secure storage techniques.
+- In order to defend against typical security risks like SQL injection, cross-site scripting (XSS), and cross-site request forgery (CSRF), the app should follow recommended procedures.
+
 ## 3. Stability:
 
 - On both the Android and iOS operating systems, the program must be reliable, devoid of frequent crashes or strange behavior.
