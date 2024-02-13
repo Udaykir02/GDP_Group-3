@@ -16,3 +16,8 @@
 
 - On both the Android and iOS operating systems, the program must be reliable, devoid of frequent crashes or strange behavior.
 - In particular, on devices with restricted hardware capabilities, memory management and resource consumption should be optimized to prevent performance degradation over time.
+
+## 4. Availability:
+
+- Users must always be able to use the app, even during brief maintenance or update windows.
+- To guarantee ongoing availability even in the case of server failures or network disruptions, redundant server infrastructure and failover procedures should be in place.
