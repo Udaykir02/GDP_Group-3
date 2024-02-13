@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { TouchableOpacity,View, Text, TextInput } from 'react-native';
 import createToBeImplementedStyle from "./LoginContainerStyle";
 
 const LoginContainer = ({ navigation }: any) => {
