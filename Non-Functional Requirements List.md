@@ -33,6 +33,16 @@
 
 - To prevent performance bottlenecks and spread incoming traffic evenly across several server instances, load balancing solutions should be put into practice.
 
+
+  ## 6. User Experience (UX):
+ 
+- Regardless of the device or screen size, the app should offer a consistent and user-friendly experience.
+  
+- Throughout the whole shopping process, from finding products to checking out, consumers should be guided by logical and easy navigation flows.
+  
+- In order to comply with accessibility standards like WCAG 2.0, accessibility features should be added to the software to guarantee that people with impairments can utilize it.
+  
+
 ## 7. Compatibility:
 
 - Several Android and iOS devices running various operating systems should be able to use the program.
