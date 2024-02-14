@@ -49,3 +49,9 @@
   
 - Compatibility testing should be done to ensure that the application works properly on a range of screen resolutions, aspect ratios, and hardware combinations.
 
+
+## 8. Usability:
+ 
+- The user interface of the app should have clear, simple-to-understand labeling and instructions, as well as an appealing visual design.
+- Feedback methods like error messages and loading indicators should be included to inform users of the app's state and actions.
+
