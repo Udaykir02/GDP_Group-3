@@ -32,3 +32,10 @@
 - To expand specific components, like databases and application servers, to effectively handle increased traffic, vertical scaling methods need to be in place.
 
 - To prevent performance bottlenecks and spread incoming traffic evenly across several server instances, load balancing solutions should be put into practice.
+
+## 7. Compatibility:
+
+- Several Android and iOS devices running various operating systems should be able to use the program.
+  
+- Compatibility testing should be done to ensure that the application works properly on a range of screen resolutions, aspect ratios, and hardware combinations.
+
