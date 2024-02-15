@@ -48,11 +48,15 @@ const ApplicationNavigator = () => {
                             // },
                         }}
                     >
+                        <RootStack.Screen name='login' component={LoginContainer} />
                     </RootStack.Navigator>
                 </SafeAreaView>
             ) : (
                 <Tab.Navigator>
                     <Tab.Screen name="Home" component={HomeContainer} />
+                    <Tab.Screen name="Vendors" component={HomeContainer} />
+                    <Tab.Screen name="Map" component={HomeContainer} />
+                    <Tab.Screen name="Settings" component={HomeContainer} />
                 </Tab.Navigator>
             )}
         </NavigationContainer>
