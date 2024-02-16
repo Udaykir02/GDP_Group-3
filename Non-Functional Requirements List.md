@@ -34,7 +34,7 @@
 - To prevent performance bottlenecks and spread incoming traffic evenly across several server instances, load balancing solutions should be put into practice.
 
 
-  ## 6. User Experience (UX):
+## 6. User Experience (UX):
  
 - Regardless of the device or screen size, the app should offer a consistent and user-friendly experience.
   
@@ -60,12 +60,15 @@
 - When feasible, the application should include offline features, such as the ability to cache product data for offline browsing, and should gracefully handle network outages and low bandwidth conditions.
 - Progressive loading strategies should be used to give priority to important information and functionality over non-essential ones when a network is slow.
 
+## 10. Compliance:
+ 
+- The application must abide by all applicable industry standards and laws, including GDPR to safeguard user privacy and PCI-DSS to handle credit card information.
+- Users should be made aware of terms of service and privacy policies in a clear and understandable manner, along with procedures for getting permission and controlling data preferences.
 
 ## 11. Sustainability:
  
 - Code quality, documentation, and version control best practices should all be adhered to by the well-organized and manageable codebase.
 - Enforcing modular architecture and separating concerns will help with code reuse, testing, and future improvements.
-
 
 ## 12. Backup and Restoration:
 
