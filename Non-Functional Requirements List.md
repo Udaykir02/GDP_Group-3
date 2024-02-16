@@ -59,3 +59,11 @@
  
 - When feasible, the application should include offline features, such as the ability to cache product data for offline browsing, and should gracefully handle network outages and low bandwidth conditions.
 - Progressive loading strategies should be used to give priority to important information and functionality over non-essential ones when a network is slow.
+
+## 12. Backup and Restoration:
+
+- To prevent data loss in the event of hardware failures or system issues, regular backups of the application data, including user profiles, product information, and transaction records, should be carried out.
+- Backup schedules and retention policies should be established to guarantee that backup copies are kept for a suitable amount of time and are easily available for restoration reasons.
+- Point-in-time recovery techniques must be put into place to enable the program to be restored to a particular state prior to data corruption or unintentional deletions.
+- Backup data should be safely kept off-site or in cloud storage services to guard against calamities like fire, theft, or server failures.
+- Automated backup and restore procedures should be routinely observed to ensure their efficacy and quickly address any problems or malfunctions.
