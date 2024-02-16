@@ -60,6 +60,13 @@
 - When feasible, the application should include offline features, such as the ability to cache product data for offline browsing, and should gracefully handle network outages and low bandwidth conditions.
 - Progressive loading strategies should be used to give priority to important information and functionality over non-essential ones when a network is slow.
 
+
+## 11. Sustainability:
+ 
+- Code quality, documentation, and version control best practices should all be adhered to by the well-organized and manageable codebase.
+- Enforcing modular architecture and separating concerns will help with code reuse, testing, and future improvements.
+
+
 ## 12. Backup and Restoration:
 
 - To prevent data loss in the event of hardware failures or system issues, regular backups of the application data, including user profiles, product information, and transaction records, should be carried out.
