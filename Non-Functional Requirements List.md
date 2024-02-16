@@ -55,3 +55,7 @@
 - The user interface of the app should have clear, simple-to-understand labeling and instructions, as well as an appealing visual design.
 - Feedback methods like error messages and loading indicators should be included to inform users of the app's state and actions.
 
+## 9. Network Resilience:
+ 
+- When feasible, the application should include offline features, such as the ability to cache product data for offline browsing, and should gracefully handle network outages and low bandwidth conditions.
+- Progressive loading strategies should be used to give priority to important information and functionality over non-essential ones when a network is slow.
