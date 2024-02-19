@@ -13,3 +13,11 @@ Get started with our [📚 integration guides](https://docs.stripe.com/payments/
 
 Updating to a newer version of the SDK? See our [changelog](https://github.com/stripe/stripe-react-native/blob/master/CHANGELOG.md).
 
+## Features
+
+*Simplified Security*: Our platform streamlines the process of gathering confidential information, such credit card numbers, while maintaining [PCI compliance](https://stripe.com/docs/security#pci-dss-guidelines). This implies that Stripe receives the sensitive data directly from you rather than via your server. See our [Integration Security Guide](https://stripe.com/docs/security) for additional details.
+
+*Apple Pay*: We provide an [easy application with Apple Pay](https://stripe.com/docs/apple-pay).
+
+*Payment methods*: Increasing the number of [payment modes](https://stripe.com/docs/payments/payment-methods/overview) you accept will help your company enhance checkout conversion and grow internationally.
+
