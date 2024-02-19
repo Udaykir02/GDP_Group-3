@@ -21,3 +21,45 @@ Updating to a newer version of the SDK? See our [changelog](https://github.com/s
 
 *Payment methods*: Increasing the number of [payment modes](https://stripe.com/docs/payments/payment-methods/overview) you accept will help your company enhance checkout conversion and grow internationally.
 
+
+
+## Installation
+
+```
+sh
+yarn add @stripe/stripe-react-native
+or
+npm install @stripe/stripe-react-native
+```
+
+### Expo
+
+> [Find Expo's full documentation here](https://docs.expo.io/versions/latest/sdk/stripe/).
+
+Each Expo SDK version requires a specific stripe-react-native version. See the [CHANGELOG](./CHANGELOG.md) for a mapping of versions. To install the correct version for your Expo SDK version run:
+
+```
+sh
+expo install @stripe/stripe-react-native
+````
+
+Next, add:
+```
+json
+{
+  "expo": {
+    ...
+    "plugins": [
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": string | string [],
+          "enableGooglePay": boolean
+        }
+      ]
+    ],
+  }
+}
+```
+
+to your app.json file, where merchantIdentifier is the Apple merchant ID obtained [here](https://stripe.com/docs/apple-pay?platform=react-native). Otherwise, Apple Pay will not work as expected. If you have multiple `merchantIdentifier`s, you can set them in an array.
