@@ -90,3 +90,53 @@ implementation 'com.google.android.material:material:<version>'
 </style>
 ```
 
+## Usage example
+ 
+```tsx
+// App.ts
+import { StripeProvider } from '@stripe/stripe-react-native';
+ 
+function App() {
+  return (
+<StripeProvider
+      publishableKey={publishableKey}
+      merchantIdentifier="merchant.identifier" // required for Apple Pay
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+>
+<PaymentScreen />
+</StripeProvider>
+  );
+}
+ 
+// PaymentScreen.ts
+import { CardField, useStripe } from '@stripe/stripe-react-native';
+ 
+export default function PaymentScreen() {
+  const { confirmPayment } = useStripe();
+ 
+  return (
+<CardField
+      postalCodeEnabled={true}
+      placeholders={{
+        number: '4242 4242 4242 4242',
+      }}
+      cardStyle={{
+        backgroundColor: '#FFFFFF',
+        textColor: '#000000',
+      }}
+      style={{
+        width: '100%',
+        height: 50,
+        marginVertical: 30,
+      }}
+      onCardChange={(cardDetails) => {
+        console.log('cardDetails', cardDetails);
+      }}
+      onFocus={(focusedField) => {
+        console.log('focusField', focusedField);
+      }}
+    />
+  );
+}
+```
+
