@@ -140,3 +140,55 @@ export default function PaymentScreen() {
 }
 ```
 
+## Stripe initialization
+ 
+To initialize Stripe in your React Native app, use the `StripeProvider` component in the root component of your application, or use the `initStripe` method.
+ 
+`StripeProvider` can accept `urlScheme`, `publishableKey`, `stripeAccountId`, `threeDSecureParams` and `merchantIdentifier` as props. Only `publishableKey` is required.
+ 
+```tsx
+import { StripeProvider } from '@stripe/stripe-react-native';
+ 
+function App() {
+  const [publishableKey, setPublishableKey] = useState('');
+ 
+  const fetchPublishableKey = async () => {
+    const key = await fetchKey(); // fetch key from your server here
+    setPublishableKey(key);
+  };
+ 
+  useEffect(() => {
+    fetchPublishableKey();
+  }, []);
+ 
+  return (
+<StripeProvider
+      publishableKey={publishableKey}
+      merchantIdentifier="merchant.identifier" // required for Apple Pay
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+>
+      // Your app code here
+</StripeProvider>
+  );
+}
+```
+ 
+or
+ 
+```tsx
+import { initStripe } from '@stripe/stripe-react-native';
+ 
+function App() {
+  // ...
+ 
+  useEffect(() => {
+    initStripe({
+      publishableKey: publishableKey,
+      merchantIdentifier: 'merchant.identifier',
+      urlScheme: 'your-url-scheme',
+    });
+  }, []);
+}
+```
+ 
+You can find more details about the `StripeProvider` component in the [API reference](https://stripe.dev/stripe-react-native/api-reference/index.html#StripeProvider).
