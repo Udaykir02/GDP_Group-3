@@ -21,7 +21,13 @@ Updating to a newer version of the SDK? See our [changelog](https://github.com/s
 
 *Payment methods*: Increasing the number of [payment modes](https://stripe.com/docs/payments/payment-methods/overview) you accept will help your company enhance checkout conversion and grow internationally.
 
+*SCA-Ready*: In order to comply with the Strong Customer Authentication law in Europe, the SDK automatically conducts native 3D Secure authentication when necessary.
 
+*Native User Interface*: On iOS and Android, we offer native panels and components for the safe collection of payment information.
+
+*PaymentSheet*: Learn how to incorporate our new pre-built payments user interface (UI) for mobile apps, PaymentSheet. PaymentSheet allows remembering and reusing payment methods and helps you accept cards, Apple Pay, Google Pay, and much more right out of the box. Currently, Card, Apple Pay, Google Pay, SEPA Debit, Bancontact, iDEAL, EPS, P24, Afterpay/Clearpay, Klarna, Giropay, Sofort, and ACH are the payment options that PaymentSheet accepts.
+
+*Recommended usage*: You must make use of the in-app purchase APIs provided by the app store if you're offering digital goods or services within your app (such as subscriptions, in-game currency, game levels, access to premium content, or full version unlocking). For additional information, view the policies from Google and Apple. You can use this SDK to process Stripe payments in all other scenarios.
 
 ## Installation
 
