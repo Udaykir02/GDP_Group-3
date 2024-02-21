@@ -63,3 +63,30 @@ json
 ```
 
 to your app.json file, where merchantIdentifier is the Apple merchant ID obtained [here](https://stripe.com/docs/apple-pay?platform=react-native). Otherwise, Apple Pay will not work as expected. If you have multiple `merchantIdentifier`s, you can set them in an array.
+
+### Requirements
+
+#### Android
+
+- Android 5.0 (API level 21) and above
+  - Your `compileSdkVersion` must be `34`. See [this issue](https://github.com/stripe/stripe-react-native/issues/812) for potential workarounds.
+- Android gradle plugin 4.x and above
+
+_Components_
+
+In order to use [CardForm](https://stripe.dev/stripe-react-native/api-reference/index.html#CardForm) component, you need to install and configure [Material Components theme](https://github.com/material-components/material-components-android/blob/master/docs/getting-started.md#4-change-your-app-theme-to-inherit-from-a-material-components-theme) in your app.
+
+1. Add below dependency to your `app/build.gradle` file with specified version
+
+```tsx
+implementation 'com.google.android.material:material:<version>'
+```
+
+2. Set appropriate style in your `styles.xml` file
+
+```tsx
+<style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight">
+    <!-- ... -->
+</style>
+```
+
