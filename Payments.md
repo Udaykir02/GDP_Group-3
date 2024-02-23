@@ -206,3 +206,26 @@ function App() {
 ```
  
 You can find more details about the `StripeProvider` component in the [API reference](https://stripe.dev/stripe-react-native/api-reference/index.html#StripeProvider).
+
+## Testing
+
+This library includes a built in mock file for Jest.
+In order to use it, add the following code to the Jest setup file:
+
+```
+tsx
+import mock from '@stripe/stripe-react-native/jest/mock.js';
+
+jest.mock('@stripe/stripe-react-native', () => mock);
+```
+
+To have a more control over the mocks, you can extend and override particular methods e.g.:
+```
+tsx
+const presentNativePayMock = jest.fn();
+
+jest.mock('@stripe/stripe-react-native', () => ({
+  ...mock,
+  presentNativePay: presentNativePayMock,
+}));
+```
