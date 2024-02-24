@@ -27,7 +27,7 @@ const shippingSchema = new Schema({
   tracking: String
 });
 
-const paymentSchema = new Schema({
+const orderSchema = new Schema({
   userId: String,
   paymentId: String,
   vendorId: String,
@@ -39,6 +39,6 @@ const paymentSchema = new Schema({
   shipping: shippingSchema
 });
 
-const Payment = mongoose.model('Payment', paymentSchema);
+const order = mongoose.model('Payment', orderSchema);
 
-module.exports = Payment;
+module.exports = order;
