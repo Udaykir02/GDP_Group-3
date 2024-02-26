@@ -3,6 +3,11 @@
 ## Cash on Delivery (COD)
 Customers can pay with cash upon delivery of their orders using the popular payment option known as Cash on Delivery (COD). Customers who prefer to pay with cash will find flexibility and convenience when you incorporate COD into your application.
 
+## Debit Cards
+When debit cards are accepted, clients can use money straight out of their bank account to pay for their orders. Debit card integration gives clients a safe and practical way to make payments.
+### Procedure for Implementation:
+Integrate a payment gateway that accepts debit cards into your application (see *Payment Gateway Integration* ). Payments with debit cards are supported by well-known payment gateways including Square, PayPal, and Stripe.
+
 ## Stripe React Native SDK
 
 [![npm](https://img.shields.io/npm/v/@stripe/stripe-react-native)](https://www.npmjs.com/package/@stripe/stripe-react-native)
