@@ -1,4 +1,8 @@
 # Payment Methods for Storegrab
+
+## Cash on Delivery (COD)
+Customers can pay with cash upon delivery of their orders using the popular payment option known as Cash on Delivery (COD). Customers who prefer to pay with cash will find flexibility and convenience when you incorporate COD into your application.
+
 ## Stripe React Native SDK
 
 [![npm](https://img.shields.io/npm/v/@stripe/stripe-react-native)](https://www.npmjs.com/package/@stripe/stripe-react-native)
