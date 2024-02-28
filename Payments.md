@@ -14,6 +14,13 @@ Integrate a payment gateway that accepts debit cards into your application (see 
 1. **Purchase Form**: Present a payment form to clients so they may input their debit card information (number, expiration date, CVV, and billing address).
 2. **Tokenization**: Process and store debit card data securely and anonymously by using tokenization. Pay card industry (PCI) standards compliance is guaranteed by doing this.
 
+## Credit Cards
+Allowing customers to pay with credit cards provides them with convenience and flexibility, as they can use borrowed funds to make purchases. Credit card integration ensures a seamless payment process for your customers.
+
+### Steps for Integration:
+1. **Payment Gateway Integration**: Incorporate a reliable payment gateway that supports credit card transactions. Popular options include Square, PayPal, and Stripe.
+2. **Checkout Process**: Offer customers the option to pay with a credit card during the checkout process. Provide a user-friendly interface where they can securely input their credit card details.
+
 ## Stripe React Native SDK
 
 [![npm](https://img.shields.io/npm/v/@stripe/stripe-react-native)](https://www.npmjs.com/package/@stripe/stripe-react-native)
