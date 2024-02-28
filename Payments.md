@@ -3,6 +3,9 @@
 ## Cash on Delivery (COD)
 Customers can pay with cash upon delivery of their orders using the popular payment option known as Cash on Delivery (COD). Customers who prefer to pay with cash will find flexibility and convenience when you incorporate COD into your application.
 
+### Steps in Implementation:
+1. **Checkout Procedure**: Give clients the choice to choose Cash on Delivery as their payment option during the checkout procedure.
+
 ## Debit Cards
 When debit cards are accepted, clients can use money straight out of their bank account to pay for their orders. Debit card integration gives clients a safe and practical way to make payments.
 ### Procedure for Implementation:
