@@ -8,6 +8,9 @@ When debit cards are accepted, clients can use money straight out of their bank 
 ### Procedure for Implementation:
 Integrate a payment gateway that accepts debit cards into your application (see *Payment Gateway Integration* ). Payments with debit cards are supported by well-known payment gateways including Square, PayPal, and Stripe.
 
+1. **Purchase Form**: Present a payment form to clients so they may input their debit card information (number, expiration date, CVV, and billing address).
+2. **Tokenization**: Process and store debit card data securely and anonymously by using tokenization. Pay card industry (PCI) standards compliance is guaranteed by doing this.
+
 ## Stripe React Native SDK
 
 [![npm](https://img.shields.io/npm/v/@stripe/stripe-react-native)](https://www.npmjs.com/package/@stripe/stripe-react-native)
