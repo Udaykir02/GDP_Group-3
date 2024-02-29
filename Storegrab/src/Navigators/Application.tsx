@@ -15,7 +15,7 @@ const MainTab = () => {
         <Stack.Navigator>
             <Stack.Navigator>
                 <Stack.Screen name="Login" component={LoginContainer} />
-                <Stack.Screen name="Home" component={HomeContainer} />
+                <Stack.Screen name="Main" component={HomeContainer} />
             </Stack.Navigator>
         </Stack.Navigator>
     );

@@ -6,13 +6,26 @@
  */
 
 import React from 'react';
+import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import ApplicationNavigator from './src/Navigators/Application';
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
+};
 
 
 function App(): React.JSX.Element {
 
   return (
-    <ApplicationNavigator />
+    <PaperProvider>
+      <ApplicationNavigator />
+    </PaperProvider>
+    
   );
 }
 
