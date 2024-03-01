@@ -7,7 +7,10 @@
 
 import React from 'react';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+import { Provider } from 'react-redux';
+
 import ApplicationNavigator from './src/Navigators/Application';
+import store from './store';
 
 const theme = {
   ...DefaultTheme,
@@ -23,9 +26,11 @@ function App(): React.JSX.Element {
 
   return (
     <PaperProvider>
-      <ApplicationNavigator />
+      <Provider store={store}>
+        <ApplicationNavigator />
+      </Provider>
     </PaperProvider>
-    
+
   );
 }
 
