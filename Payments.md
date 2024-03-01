@@ -20,6 +20,8 @@ Allowing customers to pay with credit cards provides them with convenience and f
 ### Steps for Integration:
 1. **Payment Gateway Integration**: Incorporate a reliable payment gateway that supports credit card transactions. Popular options include Square, PayPal, and Stripe.
 2. **Checkout Process**: Offer customers the option to pay with a credit card during the checkout process. Provide a user-friendly interface where they can securely input their credit card details.
+3. **Security Measures**: Implement robust security measures to protect customers' sensitive credit card information. Utilize encryption and adhere to Payment Card Industry Data Security Standard (PCI DSS) compliance to safeguard data.
+4. **Authorization and Verification**: Develop a system for authorizing and verifying credit card transactions in real-time. This ensures that the customer's credit card has sufficient funds and is valid for the transaction.
 
 ## Stripe React Native SDK
 
