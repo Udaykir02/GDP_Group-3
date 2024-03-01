@@ -13,6 +13,9 @@ Integrate a payment gateway that accepts debit cards into your application (see 
 
 1. **Purchase Form**: Present a payment form to clients so they may input their debit card information (number, expiration date, CVV, and billing address).
 2. **Tokenization**: Process and store debit card data securely and anonymously by using tokenization. Pay card industry (PCI) standards compliance is guaranteed by doing this.
+3.  **Authorization and Capture**: Establish a procedure for authorization and capture in order to confirm that the customer's account has funds available and to obtain the amount of the payment.
+4.
+5.   **Transaction Confirmation**: After payment authorization and capture are completed successfully, give consumers a transaction confirmation and finish their order.
 
 ## Credit Cards
 Allowing customers to pay with credit cards provides them with convenience and flexibility, as they can use borrowed funds to make purchases. Credit card integration ensures a seamless payment process for your customers.
