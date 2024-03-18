@@ -20,9 +20,9 @@ Integrate a payment gateway that accepts debit cards into your application (see 
 1. **Purchase Form**: Present a payment form to clients so they may input their debit card information (number, expiration date, CVV, and billing address).
 2. **Tokenization**: Process and store debit card data securely and anonymously by using tokenization. Pay card industry (PCI) standards compliance is guaranteed by doing this.
 3.  **Authorization and Capture**: Establish a procedure for authorization and capture in order to confirm that the customer's account has funds available and to obtain the amount of the payment.
-4.  Error Handling: Implement robust error handling mechanisms throughout the payment process to handle any unexpected issues gracefully. This includes validating the input data provided by the user to ensure it meets the required format and security standards.
-5.  Fraud Detection: Integrate fraud detection measures to identify and prevent fraudulent transactions. This can involve analyzing transaction patterns, implementing velocity checks, and using machine learning algorithms to detect suspicious behavior.
-6.  Transaction Confirmation: After payment authorization and capture are completed successfully, give consumers a transaction confirmation and finish their order.
+4.  **Error Handling**: Implement robust error handling mechanisms throughout the payment process to handle any unexpected issues gracefully. This includes validating the input data provided by the user to ensure it meets the required format and security standards.
+5.  **Fraud Detection**: Integrate fraud detection measures to identify and prevent fraudulent transactions. This can involve analyzing transaction patterns, implementing velocity checks, and using machine learning algorithms to detect suspicious behavior.
+6.  **Transaction Confirmation**: After payment authorization and capture are completed successfully, give consumers a transaction confirmation and finish their order.
 
 
 ## Credit Cards
