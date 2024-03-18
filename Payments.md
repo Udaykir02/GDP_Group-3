@@ -27,6 +27,8 @@ Allowing customers to pay with credit cards provides them with convenience and f
 2. **Checkout Process**: Offer customers the option to pay with a credit card during the checkout process. Provide a user-friendly interface where they can securely input their credit card details.
 3. **Security Measures**: Implement robust security measures to protect customers' sensitive credit card information. Utilize encryption and adhere to Payment Card Industry Data Security Standard (PCI DSS) compliance to safeguard data.
 4. **Authorization and Verification**: Develop a system for authorizing and verifying credit card transactions in real-time. This ensures that the customer's credit card has sufficient funds and is valid for the transaction.
+5. **Transaction Confirmation**: Upon successful authorization, provide customers with a transaction confirmation, detailing the amount charged to their credit card and the completion of their order.
+6. **Fraud Detection**: Integrate fraud detection mechanisms to identify and prevent fraudulent credit card transactions. Utilize machine learning algorithms and transaction monitoring systems to enhance security.
 
 ## Stripe React Native SDK
 
