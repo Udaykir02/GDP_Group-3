@@ -8,6 +8,10 @@ Customers can pay with cash upon delivery of their orders using the popular paym
 
 2. **Order Confirmation**: Show the customer a summary of their order and let them know that they will be required to pay cash for their order when it is delivered.
 
+3. **Delivery procedure**: Make sure that your delivery staff gets the customer's cash payment during the delivery procedure.
+   
+4. **Order Completion**: Mark the order as paid and finish the transaction as soon as the money is received.
+
 ## Debit Cards
 When debit cards are accepted, clients can use money straight out of their bank account to pay for their orders. Debit card integration gives clients a safe and practical way to make payments.
 ### Procedure for Implementation:
