@@ -1,0 +1,23 @@
+{
+    "palette": {
+    "background-default": "#ffffff",
+    "background-secondary": "#f7f7f7",
+    "background-blue": "#c8f5ff",
+    "text-darken": "#000000",
+    "text-default": "#322f35",
+    "text-secondary": "#6d6d6d",
+    "primary": "#558235",
+    "primary-light": "#c2dca6",
+    "primary-super-light": "#eef3e7",
+    "success": "#6aa342",
+    "alert-red": "#aa241d",
+    "error": "#b3261e",
+    "core-mark-green": "#6aa342",
+    "core-mark-orange": "#f57f34",
+    "black": "#000000",
+    "solid-black": "#333333",
+    "white": "#ffffff",
+    "blue-dark": "rgba(23, 5, 239, 0.1)",
+    "light-grey": "#f5f6f9"
+}}
+  
