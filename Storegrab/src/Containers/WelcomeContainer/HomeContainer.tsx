@@ -1,3 +1,4 @@
+import { ORDER_DASHBOARD_TILE_TYPE } from '../../models/Constants';
 import { useState } from 'react';
 import { View, Button, Text, Image, ImageBackground } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
@@ -7,7 +8,7 @@ const HomeContainer = ({ navigation }: any) => {
     const styles = createToBeImplementedStyle();
     const [loading,setIsLoading] = useState(true);
 
-    if(loading){
+    if(!loading){
         return (    
             <SkeletonPlaceholder borderRadius={4}>
                 <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
@@ -21,7 +22,6 @@ const HomeContainer = ({ navigation }: any) => {
     }
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Storegrab</Text>
         </View>
     )
 }
