@@ -35,6 +35,11 @@ Allowing customers to pay with credit cards provides them with convenience and f
 4. **Authorization and Verification**: Develop a system for authorizing and verifying credit card transactions in real-time. This ensures that the customer's credit card has sufficient funds and is valid for the transaction.
 5. **Transaction Confirmation**: Upon successful authorization, provide customers with a transaction confirmation, detailing the amount charged to their credit card and the completion of their order.
 6. **Fraud Detection**: Integrate fraud detection mechanisms to identify and prevent fraudulent credit card transactions. Utilize machine learning algorithms and transaction monitoring systems to enhance security.
+7. **Customer Support**: Offer dedicated customer support for any inquiries or issues related to credit card payments. Ensure prompt assistance for customers experiencing payment difficulties or discrepancies.
+8. **Refund and Chargeback Handling**: Establish procedures for handling refunds and chargebacks efficiently. Provide clear guidelines for customers on how to request refunds and address any disputed transactions promptly.
+
+By implementing credit card payment functionality, you enhance the shopping experience for your customers while expanding your payment options to cater to a broader audience.
+
 
 ## Stripe React Native SDK
 
