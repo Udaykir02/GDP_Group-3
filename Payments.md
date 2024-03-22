@@ -320,3 +320,9 @@ If you're still having troubles, please [open an issue](https://github.com/strip
 
 This can occur if you attempt to process an Apple Pay payment on a physical device (even in test mode) without having created **and uploaded** your Apple Pay Certificate to the Stripe Dashboard. Learn how to do that [here](https://stripe.com/docs/apple-pay#csr).
 
+### Licence
+`MIT License`
+
+`Copyright (c) 2020 stripe`
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
