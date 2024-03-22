@@ -7,5 +7,11 @@
 1.The system May include saved vendor preferences.<br>
 2.The system May take the user's address and contact number for order fulfillment.
 
+## Negative Requirements:
+
+1. The system **SHALL NOT** include any ads.
+2. Sensitive data, including credit card numbers, **SHALL NOT** be stored by the system in plain text.
+
+
 Note: <br>
 Further Requirements are possible in the project. 
