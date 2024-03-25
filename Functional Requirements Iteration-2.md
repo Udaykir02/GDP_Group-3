@@ -17,6 +17,9 @@ Further Requirements are possible in the project.
 ## Additional Features:
 1. The system May include saved vendor preferences.
 2. The system May take the user's address and contact number for order fulfillment.
+3. The system MAY incorporate automated recommendation algorithms based on user preferences and purchase history.
+4. The system MAY include a live chat or messaging feature for customer support.
+5. The system MAY utilize affiliate tracking and management tools for partners.
 
 ## Negative Requirements:
 1. The system **SHALL NOT** include any ads.
