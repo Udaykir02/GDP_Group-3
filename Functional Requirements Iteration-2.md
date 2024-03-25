@@ -10,6 +10,9 @@ Further Requirements are possible in the project.
 4. The system **SHALL** provide a shipping tracking UI, facilitating vendors in tracking the delivery status of the orders.
 5. The system SHOULD enable users to link their accounts with external authentication providers (e.g., Google, Facebook).
 6. The system SHOULD send email notifications for critical account activities (e.g., password changes, account deactivation).
+7. The system **SHOULD** offer a comprehensive admin dashboard for effective monitoring and management.
+9. The system **SHOULD** incorporate a robust vendor management system to streamline vendor interactions and transactions.
+10. The system **SHOULD** deploy an efficient order management system to ensure accurate and timely order processing.
 
 ## Additional Features:
 1. The system May include saved vendor preferences.
