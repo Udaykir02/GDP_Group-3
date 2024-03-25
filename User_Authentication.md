@@ -63,7 +63,36 @@ At least one of the following client certificate attributes must be different th
 - Domain Component (DC)
 
 The subject of a client x.509 certificate, which contains the Distinguished Name (DN), must be different than the subjects of member x.509 certificates.
+
+- MongoDB User and $external Database
+
+To authenticate with a client certificate, you must first add the client certificate's subject as a MongoDB user in the $external database. The $external database is the Authentication Database for the user.
+
+To use Client Sessions and Causal Consistency Guarantees with $external authentication users (Kerberos, LDAP, or x.509 users), usernames cannot be greater than 10k bytes.
+
+- MongoDB Configuration for Membership Authentication
+
+- MongoDB Configuration for Membership Authentication
+  
+You can use TLS for internal authentication between each member of your replica set (each mongod instance) or sharded cluster (each mongod and mongos instance).
+
+To use TLS for internal authentication, use the following settings:
+
+security.clusterAuthMode or --clusterAuthMode set to x509
+
+net.tls.clusterFile or --tlsClusterFile (available starting in MongoDB 4.2)
+
 - Kerberos Authentication
+
+  In a Kerberos-based system, every participant in the authenticated communication is known as a "principal", and every principal must have a unique name.
+
+Principals belong to administrative units called realms. For each realm, the Kerberos Key Distribution Center (KDC) maintains a database of the realm's principal and the principals' associated "secret keys".
+
+For a client-server authentication, the client requests from the KDC a "ticket" for access to a specific asset. KDC uses the client's secret and the server's secret to construct the ticket which allows the client and server to mutually authenticate each other, while keeping the secrets hidden.
+
+  User Principal
+
+  Service Principal
 - LDAP Proxy Authentication
 - OpenID Connect Authentication
 - Internal / Membership Authentication
