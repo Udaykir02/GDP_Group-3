@@ -11,6 +11,8 @@
 
 1. The system **SHALL NOT** include any ads.
 2. Sensitive data, including credit card numbers, **SHALL NOT** be stored by the system in plain text.
+3. Without express user authorization, the system SHALL NOT share user data with third parties.
+4. The system SHALL NOT allow more than three consecutive failed login attempts within a five-minute window.
 
 
 Note: <br>
