@@ -38,7 +38,31 @@ db.once("open", function () {
   console.log("Connection to DB succeeded")
 });
 
+async function recreateDB() {
+  // Delete everything
+  // await Vehicles.deleteMany();
+  // let instance1 = new Vehicles({
+  //   vehicle_type: "truck", color: 'purple',
+  //   price: 1300
+  // });
+  // let instance2 = new Vehicles({
+  //   vehicle_type: "car", color: 'white',
+  //   price: 4000
+  // })
 
+  // let instance3 = new Vehicles({
+  //   vehicle_type: "bike", color: 'black',
+  //   price: 2000
+  // })
+
+  const newArray = [];
+  Promise.all(newArray).then(doc => {
+    console.log("First object saved")
+  }
+  ).catch(err => {
+    console.error(err)
+  });
+}
 
 
 let reseed = true;
