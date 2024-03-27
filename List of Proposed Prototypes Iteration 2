@@ -12,3 +12,12 @@ Enable consumers to create an account and safely log in to utilize the capabilit
 3. Username, password, and password recovery option fields on the login page.
 4. Data about user profiles is securely stored.
 
+### Second Prototype: Product Browse and Catalog
+The aim is to offer an aesthetically pleasing and intuitive product catalog to customers so they can peruse and make purchases.
+
+### Features:
+
+1. Product display with prices, details, and pictures.
+2. Choices for classifying and filtering items according to brands, costs, categories, etc.
+3. For a better browsing experience, use fluid motions and transitions.
+
