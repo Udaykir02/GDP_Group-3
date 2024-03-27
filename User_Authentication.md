@@ -92,7 +92,84 @@ For a client-server authentication, the client requests from the KDC a "ticket" 
 
   User Principal
 
+To authenticate using Kerberos, you must add the Kerberos user principals to MongoDB to the $external database. User principal names have the form:
+
+```<username>@<KERBEROS REALM>```
+
+For every user you want to authenticate using Kerberos, you must create a corresponding user in MongoDB in the $external database.
+
   Service Principal
+
+  Every MongoDB mongod and mongos instance (or mongod.exe or mongos.exe on Windows) must have an associated service principal. Service principal names have the form:
+
+```<service>/<fully qualified domain name>@<KERBEROS REALM>```
+
+Linux Keytab Files
+Linux systems can store Kerberos authentication keys for a 
+service principal
+ in keytab files. Each Kerberized mongod and mongos instance running on Linux must have access to a keytab file containing keys for its 
+service principal.
+Configure MongoDB with Kerberos Authentication on Linux
+In order to use MongoDB with Kerberos, a Kerberos service principal for each mongod and mongos instance in your MongoDB deployment must be 
+added to the Kerberos database
+. You can add the service principal by running a command similar to the following on your KDC:
+
+```kadmin.local addprinc mongodb/m1.example.com@EXAMPLE.COM```
+
+You can create the keytab file by running a command similar to the following on the system running mongod or mongos:
+
+```kadmin.local ktadd mongodb/m1.example.com@EXAMPLE.COM```
+
+Procedure
+
+- Start mongod without Kerberos
+- Connect to mongod
+- Add Kerberos Principal(s) to MongoDB.
+ ```use $external
+db.createUser(
+   {
+     user: "application/reporting@EXAMPLE.NET",
+     roles: [ { role: "read", db: "records" } ]
+   }
+)
+```
+- Start mongod with Kerberos support.
+``` env KRB5_KTNAME=<path to keytab file> \
+mongod \
+--setParameter authenticationMechanisms=GSSAPI \
+<additional mongod options>  
+```
+
+``` env KRB5_KTNAME=/opt/mongodb/mongod.keytab \
+/opt/mongodb/bin/mongod --auth \
+--setParameter authenticationMechanisms=GSSAPI \
+--dbpath /opt/mongodb/data --bind_ip localhost,<hostname(s)|ip address(es)>
+ ```
+
+-  Connect mongosh to mongod and authenticate
+
+```mongosh --host hostname.example.net --authenticationMechanism=GSSAPI --authenticationDatabase='$external' --username application/reporting@EXAMPLE.NET
+```
+
+```use $external
+db.auth( { mechanism: "GSSAPI", user: "application/reporting@EXAMPLE.NET" } )
+```
+
+Configure mongos for Kerberos
+
+``` env KRB5_KTNAME=<path to keytab file> \
+mongos \
+--setParameter authenticationMechanisms=GSSAPI \
+<additional mongos options>
+ ```
+
+Use a Config File
+
+To configure mongod or mongos for Kerberos support using a configuration file, specify the authenticationMechanisms setting in the configuration file.
+
+```setParameter: authenticationMechanisms: GSSAPI```
+
+
 - LDAP Proxy Authentication
 - OpenID Connect Authentication
 - Internal / Membership Authentication
