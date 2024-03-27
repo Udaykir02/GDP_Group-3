@@ -1,1 +1,14 @@
+## Project: E-commerce shopping system - Android/IOS
+
+This document outlines the prototypes that are planned for development by the end of the semester for a E-commerce shopping system.
+
+### First Prototype: User Registration and Authentication
+Enable consumers to create an account and safely log in to utilize the capabilities of the shopping website.
+
+### Features:
+
+1. Registration form with user information checking.
+2. Authorization and authentication system for users.
+3. Username, password, and password recovery option fields on the login page.
+4. Data about user profiles is securely stored.
 
