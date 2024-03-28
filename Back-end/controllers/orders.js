@@ -1,7 +1,72 @@
 
 var Order = require("../models/order");
 // List of all Costumes
-exports.order_list = async function (req, res) {
+exports.order_list = async function (req, res) {const Order = require('./path/to/your/order/model');
+
+// Controller functions
+const orderController = {
+  // Function to create a new order
+  createOrder: async (req, res) => {
+    try {
+      const newOrder = await Order.create(req.body);
+      res.status(201).json(newOrder);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Function to get all orders
+  getAllOrders: async (req, res) => {
+    try {
+      const orders = await Order.find();
+      res.json(orders);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Function to get a specific order by ID
+  getOrderById: async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Function to update an order by ID
+  updateOrderById: async (req, res) => {
+    try {
+      const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedOrder) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+      res.json(updatedOrder);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  // Function to delete an order by ID
+  deleteOrderById: async (req, res) => {
+    try {
+      const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+      if (!deletedOrder) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+      res.json({ message: 'Order deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+};
+
+module.exports = orderController;
+
     try {
         theVehicles = await Vehicles.find();
         res.send(theVehicles);
