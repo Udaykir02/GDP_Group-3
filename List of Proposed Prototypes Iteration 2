@@ -28,6 +28,8 @@ Allow users to safely finish transactions and add items to their shopping carts.
 
 1. Product addition with a single tap to the shopping basket.
 2. A simple way to browse, amend, and remove things from your shopping basket.
+3. Smooth checkout procedure involving several phases for payment, delivery information, and order confirmation.
+4. Support for several payment options, such as digital wallets and credit/debit cards.
 
 ### Fourth Prototype: Order Monitoring and Administration
 Put in place a system that lets consumers keep track of their purchases and manage their past purchases.
@@ -39,4 +41,4 @@ Put in place a system that lets consumers keep track of their purchases and mana
 3. Users can track and examine their past purchases by having access to their order history.
 4. Each order includes shipping information and an estimated time of arrival.
 
-Note: In addition to the given features of prototypes few other features might also be added in this iteration.
+Note: In addition to the given features of prototypes few other features might also be added in the List of Proposed Prototypes Iterstion-2.
