@@ -169,6 +169,65 @@ To configure mongod or mongos for Kerberos support using a configuration file, s
 
 ```setParameter: authenticationMechanisms: GSSAPI```
 
+Configure MongoDB with Kerberos Authentication on Windows
+
+Procedures
+
+- Start mongod.exe without Kerberos.
+- Connect to mongod.
+- Add Kerberos Principal(s) to MongoDB.
+- The following example adds the Kerberos principal reportingapp@EXAMPLE.NET with read-only access to the records database
+```use $external
+db.createUser(
+   {
+     user: "reportingapp@EXAMPLE.NET",
+     roles: [ { role: "read", db: "records" } ]
+   }
+)```
+- Start mongod.exe with Kerberos support.
+```mongod.exe --setParameter authenticationMechanisms=GSSAPI <additional mongod.exe options>```
+- Connect mongo.exe shell to mongod.exe and authenticate.
+   Using cmd.exe:
+   ```mongo.exe --host hostname.example.net --authenticationMechanism=GSSAPI --authenticationDatabase=$external --username reportingapp@EXAMPLE.NET```
+   Using Windows PowerShell:
+```mongo.exe --host hostname.example.net --authenticationMechanism=GSSAPI --authenticationDatabase='$external' --username reportingapp@EXAMPLE.NET```
+
+If you are connecting to a system whose hostname does not match the Kerberos name, first connect mongo.exe to the mongod.exe, and then from the mongo.exe shell, use the db.auth() method to authenticate in the $external database.
+
+```use $external
+db.auth( { mechanism: "GSSAPI", user: "reportingapp@EXAMPLE.NET" } )```
+- Additional Considerations
+- Configure mongos.exe for Kerberos
+```mongos.exe --setParameter authenticationMechanisms=GSSAPI <additional mongos options>```
+- Assign Service Principal Name to MongoDB Windows Service
+``` setspn.exe -S <service>/<fully qualified domain name> <service account name> ```
+- Incorporate Additional Authentication Mechanisms
+- Kerberos authentication (GSSAPI (Kerberos)) can work alongside:
+- MongoDB's SCRAM authentication mechanism:
+
+   SCRAM-SHA-1
+
+   SCRAM-SHA-256 (Added in MongoDB 4.0)
+
+- MongoDB's authentication mechanism for LDAP:
+
+   PLAIN (LDAP SASL)
+
+- MongoDB's authentication mechanism for x.509:
+
+   MONGODB-X509)
+
+Specify the mechanisms as follows:
+
+```--setParameter authenticationMechanisms=GSSAPI,SCRAM-SHA-256```
+
+
+
+
+
+
+
+
 
 - LDAP Proxy Authentication
 - OpenID Connect Authentication
