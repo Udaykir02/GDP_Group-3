@@ -261,5 +261,15 @@ Specify the mechanisms as follows:
 
 
 - LDAP Proxy Authentication
+  MongoDB Enterprise supports proxy authentication through a Lightweight Directory Access Protocol (LDAP) service.
+  Previous versions of MongoDB support authentication against an LDAP server using simple and SASL binding via saslauthd. This restricted LDAP authentication support to only Linux MongoDB deployments.
+  MongoDB supports simple and SASL binding to LDAP servers via Operating system libraries , saslauthd
+  MongoDB can provide professional services for optimal configuration of LDAP authentication for your MongoDB deployment.
+  Connection Pool
+  Starting in version 4.2.0, when connecting to the LDAP server for authentication/authorization, MongoDB, by default:
+  Uses connection pooling if run:
+  on Windows or on Linux where MongoDB Enterprise binaries are linked against  libldap_r.
+  Does not use connection pooling if run: on Linux where MongoDB Enterprise binaries are linked against libldap.
+  To change the connection pooling behavior, update the ldapUseConnectionPool parameter.
 - OpenID Connect Authentication
 - Internal / Membership Authentication
