@@ -155,7 +155,7 @@ const Footer: React.FC = () => {
               }
             }}
           >
-            <OrdersStack.Screen name="Orders" component={HomeContainer} />
+            <OrdersStack.Screen name="OrdersScreen" component={HomeContainer} />
           </OrdersStack.Navigator>
         )}
       </Tab.Screen>
@@ -197,7 +197,7 @@ const Footer: React.FC = () => {
               }
             }}
           >
-            <AccountStack.Screen name="Account" component={AccountContainer} />
+            <AccountStack.Screen name="AccountScreen" component={AccountContainer} />
           </AccountStack.Navigator>
         )}
       </Tab.Screen>

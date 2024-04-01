@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import { useState } from 'react';
 import { TouchableOpacity,View, Text, TextInput } from 'react-native';
 import createToBeImplementedStyle from "./LoginContainerStyle";
@@ -7,9 +9,20 @@ const LoginContainer = ({ navigation }: any) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        console.log("hello")
-        navigation.navigate("Home")
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:5000/login', {
+                username,
+                password
+            });
+            const token = response.data.token;
+            // Store token in AsyncStorage or secure storage
+            await AsyncStorage.setItem('token', token);
+            // Navigate to the next screen upon successful login
+            // Add your navigation logic here
+        } catch (error) {
+            console.error('Login failed:');
+        }
     };
 
     return (
