@@ -74,3 +74,15 @@ The Search will display a user input specific products.
 The Search is also used to get the vendors based on their titles and locations in vendor list ui.
 The Search will have security measures against cyber attacks such as data breaches, leaks, or hacks.
 
+### Eighth Prototype: Vendor Subscription Management
+In accordance with the subscription-based pricing model specified in the functional requirements, implement a system to manage vendor subscriptions.
+
+### Features:
+
+1. Vendor subscription programs with various features and tiers.
+2. Vendors can upgrade, downgrade, or cancel subscriptions using the subscription management interface.
+3. Billing and payment processing done automatically for renewed subscriptions.
+4. Notifications about impending subscription renewals and payments.
+5. Comprehensive reporting and analytics on the revenue and performance of subscriptions.
+
+
