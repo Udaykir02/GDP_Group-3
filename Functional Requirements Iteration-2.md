@@ -20,6 +20,11 @@ Further Requirements are possible in the project.
 3. The system MAY incorporate automated recommendation algorithms based on user preferences and purchase history.
 4. The system MAY include a live chat or messaging feature for customer support.
 5. The system MAY utilize affiliate tracking and management tools for partners.
+6. The system **MAY** implement a biometric authentication feature for supported devices.
+7. The system **MAY** provide users with the option to choose between light and dark themes in the user interface.
+8. The system **MAY** offer a "Remember Me" functionality for convenient user login on trusted devices.
+9. The system **MAY** allow users to export their account data in a downloadable format.
+10. The system **MAY** integrate with third-party identity verification services for enhanced user verification.
 
 ## Negative Requirements:
 1. The system **SHALL NOT** include any ads.
