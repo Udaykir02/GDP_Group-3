@@ -95,3 +95,16 @@ One way to meet the functional requirement for real-time feedback on password st
 3. Recommendations for strengthening weak passwords based on complexity criteria.
 4. Incorporation of password strength techniques that are industry standard for precise evaluation.
 5. Users are urged to create strong and distinctive passwords to improve account security.
+
+### Tenth Prototype: Multi-factor Authentication (MFA) Integration
+Adapt multi-factor authentication (MFA) features to the functional requirements for additional security measures in order to improve account security.
+
+### Features:
+
+1. Users can choose how to establish multi-factor authentication (MFA) using authenticator apps, SMS, or email.
+2. Configuration settings are available to personalize MFA techniques and preferences.
+3. Secure management of MFA tokens and verification procedures is implemented to prevent unwanted access.
+4. Simple user instructions and a seamless MFA setup and authentication process are provided.
+5. Usage of MFA is tracked and recorded for security audits.
+
+In order to improve the overall functionality and security of the e-commerce shopping system, this Iteration 2 plan includes more prototypes that meet the functional requirements. These prototypes center on secure password management, multi-factor authentication, and vendor subscription management.
