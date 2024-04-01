@@ -25,6 +25,20 @@ const LoginContainer = ({ navigation }: any) => {
         }
     };
 
+    const handleRegister = async () => {
+        try {
+            const response = await axios.post('http://localhost:5000/register', {
+                username,
+                password
+            });
+            console.log('Registration successful:', response.data);
+            // Optionally, you can navigate to the login screen after successful registration
+            // navigation.navigate('Login');
+        } catch (error) {
+            console.error('Registration failed:');
+        }
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Storegrab</Text>
