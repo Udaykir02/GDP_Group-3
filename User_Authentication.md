@@ -283,4 +283,42 @@ Specify the mechanisms as follows:
   
   To change the connection pooling behavior, update the ldapUseConnectionPool parameter.
 - OpenID Connect Authentication
+  MongoDB Enterprise supports OpenID Connect authentication. OpenID Connect is an authentication layer built on top of OAuth2. You can use OpenID Connect to configure single sign-on between your MongoDB database and a third-party identity provider.
+
+The OpenID Connect authentication process with MongoDB is summarized below:
+
+Configure your MongoDB server with OpenID Connect. The configuration includes information from your identity provider, such as client ID, authorization endpoints, and token endpoints. For more details, see Configure MongoDB with OpenID Connect.
+
+The client application (for example mongosh or MongoDB Compass) contacts the identity provider's authorization endpoint. You are redirected to your identity provider's login screen. Provide your credentials to complete authentication.
+
+The client application receives an access token from the identity provider.
+
+The MongoDB server uses the access token provided from the client application to finalize authentication. The access token contains information such as user identity and authorization rights.
+
+Configure MongoDB with OpenID Connect
+
+To configure the MongoDB server, enable the MONGODB-OIDC authentication mechanism and use the oidcIdentityProviders to specify identity provider (IDP) configurations.
+
+You can configure the MongoDB server using your configuration file or the command line.
+
+```setParameter:
+   authenticationMechanisms: MONGODB-OIDC
+   oidcIdentityProviders: [ {"issuer": "https://...", ...} ]
+```
+Create MongoDB roles
+
+In the admin database, use the db.createRole() method to create roles that map the identity provider group roles to MongoDB roles.
+
+Use the following format to create roles:
+
+```
+<authNamePrefix>/<authorizationClaim>
+```
+```
+db.createRole( {
+   role: "okta/Everyone",
+   privileges: [ ],
+   roles: [ "readWriteAnyDatabase" ]
+   } )
+```
 - Internal / Membership Authentication
