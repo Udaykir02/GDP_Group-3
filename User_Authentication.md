@@ -322,3 +322,23 @@ db.createRole( {
    } )
 ```
 - Internal / Membership Authentication
+  
+  In addition to verifying the identity of a client, MongoDB can require members of replica sets and sharded clusters to authenticate their membership to their respective replica set or sharded cluster. For the internal authentication of the members, MongoDB can use either keyfiles or x.509 certificates.
+
+The selected method is used for all internal communication. For example, when a client authenticates to a mongos using one of the supported authentication mechanisms, the mongos then uses the configured internal authentication method to connect to the required mongod processes.
+
+Keyfiles
+
+Keyfiles use SCRAM challenge and response authentication mechanism where the keyfiles contain the shared password for the members.
+
+Key Requirements
+
+A key's length must be between 6 and 1024 characters and may only contain characters in the base64 set. MongoDB strips whitespace characters (e.g. x0d, x09, and x20) for cross-platform convenience. As a result, the following operations produce identical keys:
+
+```
+echo -e "mysecretkey" > key1
+echo -e "my secret key" > key1
+echo -e "my secret key\n" > key2
+echo -e "my    secret    key" > key3
+echo -e "my\r\nsecret\r\nkey\r\n" > key4
+```
