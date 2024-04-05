@@ -46,3 +46,14 @@
 ### Note:
 New fields might be added to this file as a part of UseCase Iteration-2
 
+### Use Case 5: Payment and Checkout
+
+**Objective:** Create an easy-to-use, secure checkout procedure that requires several steps to complete for payment, shipping information, and order confirmation.
+
+**Interactions:**
+1. Users go through a sequence of steps to confirm their orders, provide delivery information, and safely finish their payments.
+2. Many payment options are accepted, including credit/debit cards, digital wallets, and other commonly utilized options.
+3. To safeguard user data, make sure sensitive payment information is handled securely.
+  
+**Results:** Customers can choose from a variety of convenient payment alternatives during a quick, easy, and safe checkout procedure.
+
