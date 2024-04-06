@@ -57,3 +57,13 @@ New fields might be added to this file as a part of UseCase Iteration-2
   
 **Results:** Customers can choose from a variety of convenient payment alternatives during a quick, easy, and safe checkout procedure.
 
+### Use Case 6: Order Tracking
+ 
+**Objective:** Adopt a feature that lets users follow the location and progress of their orders in real time: order tracking.
+ 
+**Interactions:**
+1. Using the app, users can monitor the whereabouts and current status of their orders in real time.
+2. To keep customers updated on order updates, including shipping information and projected arrival times, push alerts or emails are issued.
+ 
+**Results:** Customers' entire buying experience is improved by having access to real-time order changes
+
