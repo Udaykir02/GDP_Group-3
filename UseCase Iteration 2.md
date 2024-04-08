@@ -77,3 +77,13 @@ New fields might be added to this file as a part of UseCase Iteration-2
 
 **Results:** Users have control over their account settings and can easily manage their profile information and track their order history.
 
+### Use Case 8: Wishlist
+
+**Objective:** Give consumers the ability to compile and maintain a wish list of goods they're considering. 
+
+**Interactions:** 
+1. Users can customize their wishlist by adding and removing products, resulting in a unique assortment of the things they want.
+2. It is easy to transfer wishlist items to the shopping cart for payment.
+3. When products on their wishlist go on sale or are restocked, users are notified.
+
+**Results:** Customers' shopping experience is improved by the opportunity to create a wishlist of items they want and get updates about it.
