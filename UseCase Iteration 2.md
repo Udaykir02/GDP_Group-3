@@ -43,9 +43,6 @@
 
 **Results:** Adding and removing goods from the shopping cart is a smooth experience for users, with the total cost dynamically updated.
 
-### Note:
-New fields might be added to this file as a part of UseCase Iteration-2
-
 ### Use Case 5: Payment and Checkout
 
 **Objective:** Create an easy-to-use, secure checkout procedure that requires several steps to complete for payment, shipping information, and order confirmation.
@@ -99,3 +96,19 @@ New fields might be added to this file as a part of UseCase Iteration-2
 2. Search results are refined using filters according to different parameters like brand, price, category, etc.
 
 **Results:** Customers may quickly and easily search for products and receive results that are tailored to their tastes.
+
+### Note:
+New fields might be added to this file as a part of UseCase Iteration-2
+
+### New UseCases:
+
+### Use Case 13: Vendor Subscription Management
+
+**Objective:** Give local shop vendors the ability to select, adjust, and use premium features for their membership plans.
+
+**Interactions:**
+1. In terms of features and service levels, vendors have a variety of subscription options to select from.
+2. The platform keeps track of vendors' subscription statuses and handles subscription payments.
+3. Suppliers can change or downgrade their programs as needed after receiving notifications prior to the dates of membership renewal.
+
+**Results:** In order to guarantee that they have access to the services required to support their business operations, vendors efficiently manage their subscriptions.
