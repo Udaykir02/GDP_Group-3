@@ -10,7 +10,20 @@ Zoho Inventory: Provides tools for order management, purchasing, and inventory t
 
 Order Tracking:
 
+ShipStation: Allows you to manage orders, track shipments, and streamline the fulfillment process across multiple channels.
+
+AfterShip: Enables tracking of shipments across multiple carriers and provides a branded tracking experience for customers.
+
+Orderhive: Offers order management, inventory control, and shipping integration to streamline order fulfillment.
+
 Customer Relationship Management (CRM):
+
+Salesforce: Provides a comprehensive CRM platform with features for managing customer interactions, sales, and marketing efforts.
+
+HubSpot: Offers CRM tools along with marketing automation, customer service, and sales tools to help businesses grow.
+
+Zendesk: Provides customer service and support tools including ticketing, live chat, and knowledge base management.
+
 
 Analytics:
 
