@@ -133,3 +133,13 @@ New fields might be added to this file as a part of UseCase Iteration-2
 3. The analysis of inventory data can provide valuable information about sales patterns and stock optimization.
 
 **Results:** Suppliers maximize their product options, minimize stockouts, and maintain precise inventory levels.
+
+
+**Objective:** Facilitate delivery staff and vendors in effectively handling order deliveries to clients.
+
+**Interactions:**
+1. Delivery staff receive orders from the system according to their location and availability.
+2. From pickup until delivery, vendors and delivery staff are able to update the order progress in real-time.
+3. Clients are informed about the progress of their deliveries and have the option to speak with delivery staff if needed.
+
+**Results:** Orders are delivered quickly, which increases client satisfaction and expedites vendors' delivery procedures.
