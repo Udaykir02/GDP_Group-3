@@ -112,3 +112,14 @@ New fields might be added to this file as a part of UseCase Iteration-2
 3. Suppliers can change or downgrade their programs as needed after receiving notifications prior to the dates of membership renewal.
 
 **Results:** In order to guarantee that they have access to the services required to support their business operations, vendors efficiently manage their subscriptions.
+
+### Use Case 14: Inventory Management for Vendors
+
+**Objective:** Offer vendors the resources they need to effectively manage the inventory of their products within the app.
+
+**Interactions:**
+1. Using the admin interface, vendors can add, update, or remove products from their inventory.
+2. The system notifies vendors when supply levels are low and provides inventory tracking.
+3. The analysis of inventory data can provide valuable information about sales patterns and stock optimization.
+
+**Results:** Suppliers maximize their product options, minimize stockouts, and maintain precise inventory levels.
