@@ -120,6 +120,16 @@ New fields might be added to this file as a part of UseCase Iteration-2
 
 **Results:** By using other users' feedback to inform their decisions, users can increase the app's legitimacy and sense of trust.
 
+### Use Case 12: Preferences for Language and Currency
+
+**Objective:** Offer users the ability to configure their preferred language and currency for a more tailored purchasing experience.
+
+**Interactions:**
+1. By allowing users to choose their preferred language for app content, accessibility and user experience are improved.
+2. For precise pricing and a customized purchasing experience, users can select the currency of their choice.
+   
+**Results:** Users can personalize the language and currency they want to use, which enhances the app's overall usability and happiness.
+
 ### New UseCases:
 
 ### Use Case 13: Vendor Subscription Management
