@@ -164,3 +164,15 @@ New fields might be added to this file as a part of UseCase Iteration-2
 3. Clients are informed about the progress of their deliveries and have the option to speak with delivery staff if needed.
  
 **Results:** Orders are delivered quickly, which increases client satisfaction and expedites vendors' delivery procedures.
+
+### Use Case 16: Secure Payment Processing
+
+**Objective:** Ensure quick and safe payment processing for orders made through the app.
+
+**Interactions:**
+1. At checkout, customers select from a variety of payment methods, such as credit/debit cards and e-wallets.
+2. The system complies with PCI compliance guidelines and conducts transactions securely.
+3. Confirmation of successful transactions is sent to vendors and customers.
+
+**Results:** Customers' and vendors' confidence in the safe processing of payments contributes to the e-commerce platform's increased dependability.
+
