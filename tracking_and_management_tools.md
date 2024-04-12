@@ -56,4 +56,5 @@ Content Management System (CMS):
 
 WordPress/WooCommerce: A popular combination for building e-commerce websites, WordPress offers flexibility in content management while WooCommerce provides e-commerce functionality.
 
+
 Shopify: A complete e-commerce platform that includes website building tools, hosting, and payment processing, making it easy to set up and manage an online store.
