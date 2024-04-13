@@ -186,3 +186,13 @@ New fields might be added to this file as a part of UseCase Iteration-2
 
 **Results:** Customers' and vendors' confidence in the safe processing of payments contributes to the e-commerce platform's increased dependability.
 
+### Use Case 17: Map Routing Mechanism for Delivery
+
+**Objective:** Include a map routing system to help delivery staff find the best routes.
+
+**Interactions:**
+
+Based on the delivery locations and traffic conditions at the moment, the algorithm determines the most efficient delivery routes.
+On their devices, delivery staff members are given turn-by-turn navigation instructions.
+Using a map interface, vendors and customers can follow the status of deliveries in real time.
+Results: Customers receive timely deliveries, business efficiency is increased, and delivery times are shortened.Objective: Include a map routing system to help delivery staff find the best routes.
