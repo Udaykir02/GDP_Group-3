@@ -1,7 +1,7 @@
 {
     "users": [
         {
-            "userId": "user123",
+            "username": "user123",
             "fname": "John",
             "lname": "Doe",
             "hashedAndSaltedPassword": "hashedPassword123",
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "userId": "user456",
+            "username": "user456",
             "fname": "Alice",
             "lname": "Smith",
             "hashedAndSaltedPassword": "hashedPassword456",
@@ -52,7 +52,7 @@
             ]
         },
         {
-            "userId": "user789",
+            "username": "user789",
             "fname": "Emily",
             "lname": "Johnson",
             "hashedAndSaltedPassword": "hashedPassword789",
@@ -176,7 +176,7 @@
     "orders": [
         {
             "orderId": "order123",
-            "userId": "user123",
+            "username": "user123",
             "paymentId": "payment456",
             "vendorId": "vendor123",
             "paymentStatus": "paid",
@@ -217,7 +217,7 @@
         },
         {
             "orderId": "order456",
-            "userId": "user456",
+            "username": "user456",
             "paymentId": "payment789",
             "vendorId": "vendor456",
             "paymentStatus": "paid",
@@ -258,7 +258,7 @@
         },
         {
             "orderId": "order789",
-            "userId": "user789",
+            "username": "user789",
             "paymentId": "payment789",
             "vendorId": "vendor789",
             "paymentStatus": "pending",
@@ -300,7 +300,7 @@
     ],
     "payments": [
         {
-            "userId": "user123",
+            "username": "user123",
             "status": "verified",
             "gateway": "stripe",
             "type": "credit",
@@ -314,7 +314,7 @@
             }
         },
         {
-            "userId": "user456",
+            "username": "user456",
             "status": "verified",
             "gateway": "paypal",
             "type": "debit",
@@ -328,7 +328,7 @@
             }
         },
         {
-            "userId": "user789",
+            "username": "user789",
             "status": "pending",
             "gateway": "stripe",
             "type": "credit",
@@ -345,21 +345,21 @@
     "ratings_reviews": [
         {
             "reviewId": "review123",
-            "userId": "user456",
+            "username": "user456",
             "skuId": "sku456",
             "rating": 4,
             "review": "Great quality shirt, very comfortable!"
         },
         {
             "reviewId": "review456",
-            "userId": "user789",
+            "username": "user789",
             "skuId": "sku789",
             "rating": 5,
             "review": "Excellent headphones, love the sound quality!"
         },
         {
             "reviewId": "review789",
-            "userId": "user123",
+            "username": "user123",
             "skuId": "sku123",
             "rating": 4.5,
             "review": "Fast delivery, great laptop!"
@@ -367,7 +367,7 @@
     ],
     "customer_support": [
         {
-            "userId": "user123",
+            "username": "user123",
             "fname": "John",
             "lname": "Doe",
             "recipient": "Support",
@@ -375,7 +375,7 @@
             "timestamp": "2024-04-12T10:30:00Z"
         },
         {
-            "userId": "user456",
+            "username": "user456",
             "fname": "Alice",
             "lname": "Smith",
             "recipient": "Support",
@@ -383,7 +383,7 @@
             "timestamp": "2024-04-11T15:45:00Z"
         },
         {
-            "userId": "user789",
+            "username": "user789",
             "fname": "Emily",
             "lname": "Johnson",
             "recipient": "Support",
