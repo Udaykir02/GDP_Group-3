@@ -26,7 +26,7 @@ const ApplicationNavigator = () => {
 
 
 
-    const accessToken = 'password';
+    const accessToken = '';
 
 
 

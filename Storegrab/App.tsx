@@ -29,9 +29,9 @@ function App(): React.JSX.Element {
 
   return (
     <PaperProvider>
-        <AppThemeProvider>
+      <AppThemeProvider>
         <RootNavigation />
-        </AppThemeProvider>
+      </AppThemeProvider>
     </PaperProvider>
 
   );

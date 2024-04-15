@@ -1,67 +1,46 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useState } from 'react';
-import { TouchableOpacity,View, Text, TextInput } from 'react-native';
+import { TouchableOpacity,View, Text, TextInput, Button } from 'react-native';
 import createToBeImplementedStyle from "./LoginContainerStyle";
 
 const LoginContainer = ({ navigation }: any) => {
     const styles = createToBeImplementedStyle();
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+  
     const handleLogin = async () => {
-        try {
-            const response = await axios.post('http://localhost:5000/login', {
-                username,
-                password
-            });
-            const token = response.data.token;
-            // Store token in AsyncStorage or secure storage
-            await AsyncStorage.setItem('token', token);
-            // Navigate to the next screen upon successful login
-            // Add your navigation logic here
-        } catch (error) {
-            console.error('Login failed:');
-        }
-    };
+      try {
+        const emailString = email.toLowerCase();
+        const passwordString = password.toLowerCase();
+        const response = await axios.post('http://localhost:3000/api/login', { email: emailString, password: passwordString });
+        const token = response.data.token;
+        await AsyncStorage.setItem('auth_token', token);
+        // Save token to AsyncStorage or Redux store for future requests
 
-    const handleRegister = async () => {
-        try {
-            const response = await axios.post('http://localhost:5000/register', {
-                username,
-                password
-            });
-            console.log('Registration successful:', response.data);
-            // Optionally, you can navigate to the login screen after successful registration
-            // navigation.navigate('Login');
-        } catch (error) {
-            console.error('Registration failed:');
-        }
+        console.log('Logged in successfully with token:', token);
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
     };
-
+  
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Storegrab</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Username"
-                value={username}
-                onChangeText={text => { setUsername(text) }}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={text => { setPassword(text) }}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Register</Text>
-            </TouchableOpacity>
-        </View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <Button title="Login" onPress={handleLogin} />
+      </View>
     );
 };
 
