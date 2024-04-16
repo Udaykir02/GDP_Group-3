@@ -6,6 +6,7 @@ import Footer from './Footer';
 import RegisterContainer from '../Containers/RegisterContainer/RegisterContainer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContainer from '../Containers/AuthContainer/AuthContainer';
+import { useSelector } from 'react-redux';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -23,9 +24,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigation = () => {
   const [accessToken,setAccessToken] = React.useState('')
+  const token = useSelector((state:any) => state.auth.token);
   React.useEffect(()=>{
-    getTokenFromStorage();
-  },[])
+    console.log("khjoi")
+    getTokenFromStorage()
+  },[token])
+
   
   const getTokenFromStorage = async () => {
     try {
@@ -36,6 +40,7 @@ const RootNavigation = () => {
         console.log('Retrieved token:', token);
       } else {
         // Token does not exist
+        setAccessToken('');
         console.log('Token does not exist');
       }
     } catch (error) {

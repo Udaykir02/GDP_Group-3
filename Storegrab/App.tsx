@@ -28,11 +28,13 @@ const theme = {
 function App(): React.JSX.Element {
 
   return (
+    <Provider store={store}>
     <PaperProvider>
       <AppThemeProvider>
         <RootNavigation />
       </AppThemeProvider>
     </PaperProvider>
+    </Provider>
 
   );
 }
