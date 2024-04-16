@@ -1,13 +1,13 @@
-import { combineReducers} from 'redux';
-const appReducer = combineReducers({
-})
+import authReducer from './users/slice'
+export type StateType = {
+  // Reducers types here
+  auth: ReturnType<typeof authReducer>;
+};
 
-const rootReducer = (state: any, action: any) => {
-  if (action.type === 'USER_LOGOUT') {
-    state = undefined
-  }
 
-  return appReducer(state, action)
-}
 
-export default rootReducer;
+const rootReducers = {
+  auth: authReducer,
+};
+
+export default rootReducers;
