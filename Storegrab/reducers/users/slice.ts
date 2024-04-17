@@ -32,10 +32,8 @@ const authSlice = createSlice({
             state.error = action.payload;
         },
         logoutSuccess: (state) => {
-            console.log(state)
             state.token = '',
             state.loading = false;
-            console.log(state)
         },
         logoutFailure: (state, action: PayloadAction<LogoutFailurePayload>) => {
             state.loading = false;

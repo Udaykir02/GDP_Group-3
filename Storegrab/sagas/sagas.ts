@@ -9,19 +9,16 @@ import { loginRequest } from "../actions/userActions";
 
 
 function* login(action: any) {
-    console.log('hi')
     try {
         const response: AxiosResponse<UserType> = yield call(axios.post, 'http://localhost:3000/api/login', {
             email: action.payload.email,
             password: action.payload.password,
         });
         const token = response.data.token;
-        console.log(token)
         yield AsyncStorage.setItem('auth_token', token);
         yield put(loginSuccess(token));
         // Navigate to home screen or perform any other action
     } catch (error) {
-        console.log(error)
         yield put(loginFailure(JSON.stringify(error)));
     }
 }
@@ -44,7 +41,6 @@ function* register(action:any) {
   function* logout(action:any) {
     try {
         yield AsyncStorage.setItem('auth_token', '');
-        console.log("kj")
         yield put(logoutSuccess());
       // Optionally, you can automatically login the user after registration
       // yield call(login, { payload: action.payload });

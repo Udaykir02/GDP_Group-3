@@ -26,7 +26,6 @@ const RootNavigation = () => {
   const [accessToken,setAccessToken] = React.useState('')
   const token = useSelector((state:any) => state.auth.token);
   React.useEffect(()=>{
-    console.log("khjoi")
     getTokenFromStorage()
   },[token])
 
@@ -60,9 +59,9 @@ const RootNavigation = () => {
         // },
       }}
     >
-      <AuthStack.Screen name='auth' component={AuthContainer} />
-      <AuthStack.Screen name='login' component={LoginContainer} />
-      <AuthStack.Screen name='register' component={RegisterContainer} />
+      <AuthStack.Screen name='Welcome' component={AuthContainer} />
+      <AuthStack.Screen name='Login' component={LoginContainer} />
+      <AuthStack.Screen name='Register' component={RegisterContainer} />
     </AuthStack.Navigator>
     )
   }

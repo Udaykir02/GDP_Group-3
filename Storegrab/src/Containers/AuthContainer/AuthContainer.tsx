@@ -11,11 +11,11 @@ const AuthContainer = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Go to Login"
-          onPress={() => navigation.navigate('login')}
+          onPress={() => navigation.navigate('Login')}
         />
         <Button
           title="Go to Register"
-          onPress={() => navigation.navigate('register')}
+          onPress={() => navigation.navigate('Register')}
         />
       </View>
     </View>

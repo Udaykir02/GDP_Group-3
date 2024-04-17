@@ -21,9 +21,6 @@ const AccountContainer: React.FC = () => {
   return (
     <AppPageWrapper>
       <View>
-        <Text variant="displayLarge" style={{ color: colors.textDefault }}>
-          Account
-        </Text>
         {/* Logout button */}
         <Button onPress={handleLogout}>Logout</Button>
       </View>
