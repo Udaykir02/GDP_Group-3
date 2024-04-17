@@ -13,7 +13,6 @@ const LoginContainer = ({ navigation }: any) => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const handleLogin = async () => {
-        console.log("Hi")
         dispatch(loginRequest(email, password));
     };
 
