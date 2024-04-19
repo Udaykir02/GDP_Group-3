@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "strict": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"],
+      "@Mock/*": ["./../__mocks__/*"]
+    },
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
