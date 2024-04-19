@@ -1,0 +1,30 @@
+@import 'variables.scss';
+
+:export {
+  backgroundDefault: $background-default;
+  backgroundSecondary: $background-secondary;
+  backgroundBlue: $background-blue;
+
+  textDarken: $text-darken;
+  textDefault: $text-default;
+  textSecondary: $text-secondary;
+
+  primary: $primary;
+  primaryLight: $primary-light;
+  primarySuperLight: $primary-super-light;
+
+  success: $success;
+
+  alertRed: $alert-red;
+  error: $error;
+
+  coreMarkGreen: $core-mark-green;
+  coreMarkOrange: $core-mark-orange;
+
+  black: $black;
+  solidBlack: $solid-black;
+  brightWhite: $white;
+  blueDark: $blue-dark;
+
+  lightGrey: $light-grey;
+}
