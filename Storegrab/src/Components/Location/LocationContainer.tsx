@@ -60,7 +60,7 @@ const LocationContainer = ({ addresses, googlemap_key, mapRegion, defaultLocatio
             const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
                 params: {
                     latlng: `${location?.location.coords.latitude},${location?.location.coords.longitude}`,
-                    key: 'AIzaSyA8dUT9FqaVVWyicIDocW-l3PY8npYofMY' // Replace 'YOUR_API_KEY_HERE' with your actual API key
+                    key: '' // Replace 'YOUR_API_KEY_HERE' with your actual API key
                 }
             });
             console.log(JSON.stringify(response))
@@ -117,7 +117,7 @@ const LocationContainer = ({ addresses, googlemap_key, mapRegion, defaultLocatio
         if (text.length > 2) {
             setLoading(false)
 
-            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + text + '&key=AIzaSyA8dUT9FqaVVWyicIDocW-l3PY8npYofMY')
+            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + text + '&key=')
                 .then(
                     (response) => {
                         if (response.status !== 200) {
