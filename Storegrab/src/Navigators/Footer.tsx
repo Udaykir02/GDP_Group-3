@@ -8,6 +8,8 @@ import HomeContainer from '../Containers/WelcomeContainer/HomeContainer';
 import AccountContainer from '../Containers/Account/AccountContainer';
 import { AppTheme } from '@/styles/theme/theme';
 import Header from './Header';
+import VendorContainer from '../Containers/Vendors/VendorContainer';
+import OrderContainer from '../Containers/Order/OrderContainer';
 
 const Footer: React.FC = () => {
   const Tab = createBottomTabNavigator();
@@ -155,7 +157,7 @@ const Footer: React.FC = () => {
               }
             }}
           >
-            <OrdersStack.Screen name="OrdersScreen" component={HomeContainer} />
+            <OrdersStack.Screen name="OrdersScreen" component={OrderContainer} />
           </OrdersStack.Navigator>
         )}
       </Tab.Screen>
@@ -176,7 +178,7 @@ const Footer: React.FC = () => {
               }
             }}
           >
-            <DeliveriesStack.Screen name="Vendors" component={HomeContainer} />
+            <DeliveriesStack.Screen name="Vendors" component={VendorContainer} />
           </DeliveriesStack.Navigator>
         )}
       </Tab.Screen>
