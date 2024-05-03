@@ -1,15 +1,26 @@
 import { ORDER_DASHBOARD_TILE_TYPE } from '../../models/Constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Button, Text, Image, ImageBackground, Dimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import createToBeImplementedStyle from "./HomeContainerStyle";
 import DealCard from '../../Components/DealCard';
 import SaleItem from '../../Components/SaleItem';
 import AppSwiper from '../../Components/AppSwiper';
+import useLocationService from '../../Hooks/useLocationService';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const HomeContainer = ({ navigation }: any) => {
     const styles = createToBeImplementedStyle();
     const [loading,setIsLoading] = useState(true);
+    const { currentLocation } = useLocationService();
+
+    useEffect(()=>{
+        onLoadScreen();
+    },[])
+
+   const onLoadScreen = async () => {
+     const location = await currentLocation()
+     console.log(location)
+   }
 
     if(!loading){
         return (    

@@ -5,31 +5,17 @@ import { Text } from 'react-native-paper';
 import { useAppTheme } from '../../styles/theme/theme';
 import AppPageWrapper from '../../shared/AppPageWrapper';
 import LocationContainer from '../../Components/Location/LocationContainer';
+import DeliveryCard from '../../Components/DeliveryCard';
 
-const VendorContainer: React.FC = () => {
+const OrderContainer: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   const { colors } = useAppTheme();
   return (
     <AppPageWrapper>
-<Modal
-  animationType="slide"
-  transparent={true}
-  visible={isModalVisible}
-  onRequestClose={() => {
-    setIsModalVisible(false)
-  }}>
-  <View
-    style={{
-      height: '50%',
-      marginTop: 'auto',
-      backgroundColor:'blue'
-    }}>
-      <LocationContainer />
-  </View>
-</Modal>
+        <DeliveryCard />
     </AppPageWrapper>
   );
 };
 
-export default VendorContainer;
+export default OrderContainer;
