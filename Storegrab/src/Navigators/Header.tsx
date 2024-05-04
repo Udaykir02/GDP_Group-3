@@ -1,19 +1,24 @@
 import React, { useContext, useRef } from 'react';
-import { Animated, Image, StyleSheet } from 'react-native';
+import { Animated, Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 import { AppTheme } from '@/styles/theme/theme';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setModalVisible } from '../../reducers/locationReducer';
 
 interface Props {
   name?: string;
   params?: any;
 }
 
+
+
 const Header: React.FC<Props> = ({ name }) => {
   const navigation = useNavigation();
-
+  const address = useSelector((state:any)=> state.location.defaultLocation)
+  const dispatch = useDispatch();
   const styles = StyleSheet.create({
     viewContainer: {
       flexDirection: 'row'
@@ -33,7 +38,26 @@ const Header: React.FC<Props> = ({ name }) => {
       display: 'flex',
       alignItems: 'flex-start'
     },
-    appbar: { margin: 0 }
+    appbar: { margin: 0 },
+    container: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    text: {
+      // Your text styles here
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: 'black',
+      textDecorationLine: 'underline',
+      textDecorationStyle: 'dotted',
+      // Add any other text styles you want
+    },
+    underline: {
+      borderBottomWidth: 4,
+      borderBottomColor: 'black',
+      borderStyle: 'dotted',
+      flex: 1,
+    },
   });
   const { colors }: AppTheme = useTheme();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -49,6 +73,18 @@ const Header: React.FC<Props> = ({ name }) => {
     outputRange: [1, 0.5],
     extrapolate: 'clamp'
   });
+
+  const DottedUnderlineText = ( children: string ) => {
+    return (
+      <TouchableOpacity onPress={()=>{
+        dispatch(setModalVisible(true));
+      }}>
+      <View style={styles.container}>
+        <Text style={styles.text}>{children? children : 'select a location'}</Text>
+      </View>
+      </TouchableOpacity>
+    );
+  };
   return (
     <>
       <Appbar.Header mode="small" elevated style={{ backgroundColor: colors.brightWhite, marginRight: 16 }}>
@@ -59,7 +95,7 @@ const Header: React.FC<Props> = ({ name }) => {
           name != 'Resources' &&
           name != 'Account' && <Appbar.BackAction onPress={() => navigation.goBack()} />}
         {name != 'Home' && name != 'Login' ? (
-          <Appbar.Content title={name} titleStyle={styles.title} />
+          <Appbar.Content title={name == 'Vendors'?DottedUnderlineText(address?.formatted_address):name} titleStyle={styles.title} />
         ) : (
           <Appbar.Content title={<Image source={require('../Assets/images/logo.png')} style={styles.image} />} />
         )}

@@ -7,6 +7,7 @@ import RegisterContainer from '../Containers/RegisterContainer/RegisterContainer
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContainer from '../Containers/AuthContainer/AuthContainer';
 import { useSelector } from 'react-redux';
+import RegionContainer from '../Components/Region';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   Root: undefined;
   Login: undefined;
   Location: undefined;
+  Region: undefined;
 };
 
 const MainContainer = () => {
@@ -68,6 +70,7 @@ const RootNavigation = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Root">
       <Stack.Screen name="Root" component={MainContainer} />
+      <Stack.Screen name="Region" component={RegionContainer} />
     </Stack.Navigator>
   );
 };
