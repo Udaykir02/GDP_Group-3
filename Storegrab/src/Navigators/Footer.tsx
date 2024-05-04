@@ -10,6 +10,7 @@ import { AppTheme } from '@/styles/theme/theme';
 import Header from './Header';
 import VendorContainer from '../Containers/Vendors/VendorContainer';
 import OrderContainer from '../Containers/Order/OrderContainer';
+import RegionContainer from '../Components/Region';
 
 const Footer: React.FC = () => {
   const Tab = createBottomTabNavigator();
