@@ -15,10 +15,12 @@ function* login(action: any) {
             password: action.payload.password,
         });
         const token = response.data.token;
+        console.log(token)
         yield AsyncStorage.setItem('auth_token', token);
         yield put(loginSuccess(token));
         // Navigate to home screen or perform any other action
     } catch (error) {
+      console.log(error);
         yield put(loginFailure(JSON.stringify(error)));
     }
 }
@@ -34,6 +36,7 @@ function* register(action:any) {
       // Optionally, you can automatically login the user after registration
       // yield call(login, { payload: action.payload });
     } catch (error) {
+      console.log(error)
       yield put(registerFailure(JSON.stringify(error)));
     }
   }

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
-var User = require('../models/account');
+const jwt = require('jsonwebtoken');
+const User = require('../models/account');
 
 // Route for adding users
 router.post('/users', async (req, res) => {
@@ -13,7 +13,6 @@ router.post('/users', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 // Route for user registration
 router.post('/register', async (req, res) => {
@@ -62,8 +61,8 @@ router.post('/register', async (req, res) => {
     }
   });
   
-  // Route for user login
-  router.post('/login', async (req, res) => {
+// Route for user login
+router.post('/login', async (req, res) => {
     try {
       // Find the user by email
       const user = await User.findOne({ username: req.body.email });
@@ -85,7 +84,54 @@ router.post('/register', async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  });
+});
+
+// Route for resetting user password
+router.post('/reset-password', async (req, res) => {
+  try {
+    // Find the user by email
+    const user = await User.findOne({ username: req.body.email });
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    // Generate a random temporary password
+    const temporaryPassword = Math.random().toString(36).slice(-8);
+
+    // Hash the temporary password
+    const hashedTemporaryPassword = await bcrypt.hash(temporaryPassword, 10);
+
+    // Update user's password in the database
+    user.hashedAndSaltedPassword = hashedTemporaryPassword;
+    await user.save();
+
+    // Send the temporary password to the user through email or other means
+    // This step should be implemented according to your application's requirements
+
+    // Return success message
+    res.status(200).json({ message: 'Password reset successful' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Add this to your userRoutes or a suitable place
+router.get('/users/:userId/preferred-products', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const preferredProducts = await Product.find({
+      'categories': { $in: user.vendorpreferences }
+    });
+
+    res.status(200).json(preferredProducts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Define other routes for users as needed
 

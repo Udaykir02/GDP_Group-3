@@ -1,5 +1,5 @@
 
-var Order = require("../models/order");
+var Order = require("../models/Order");
 // List of all Costumes
 exports.order_list = async function (req, res) {const Order = require('./path/to/your/order/model');
 

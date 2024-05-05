@@ -2,9 +2,30 @@
 // const Schema = mongoose.Schema;
 
 // const productSchema = new Schema({
+    // name: {
+    //     type: String,
+    //     required: true
+    // },
+    // category: {
+    //     type: String,
+    //     required: true
+    // },
+    // price: {
+    //     type: Number,
+    //     required: true
+    // },
+    // quantity: {
+    //     type: Number,
+    //     required: true
+    // },
+    
+    
 //   skuId: String,
 //   item: String,
+//vendorId: mongoose.Schema.Types.ObjectId, // Reference to Vendor model
 //   price: Number,
+
+
 //   qty: Number,
 //   size: {
 //     h: Number,
