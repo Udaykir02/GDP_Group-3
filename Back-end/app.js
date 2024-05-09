@@ -71,8 +71,9 @@ if (reseed) { recreateDB(); }
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const userRoutes = require('./routes/userRoutes');
+
 // const inventoryRoutes = require('./routes/inventoryRoutes');
-// const vendorRoutes = require('./routes/vendorRoutes');
+const vendorRoutes = require('./routes/vendorRoutes');
 // const orderRoutes = require('./routes/orderRoutes');
 // const paymentRoutes = require('./routes/paymentRoutes');
 // const ratingReviewRoutes = require('./routes/ratingReviewRoutes');
@@ -101,6 +102,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', userRoutes);
+app.use('/vendorapi',vendorRoutes);
 // app.use('/api', inventoryRoutes);
 // app.use('/api', vendorRoutes);
 // app.use('/api', orderRoutes);

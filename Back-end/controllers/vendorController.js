@@ -11,3 +11,57 @@ module.exports = {
   },
   // Other vendor-related controller functions...
 };
+// Function to find the nearest vendor based on user's current geopoint
+const findNearestVendor = async (req, res) => {
+  try {
+    // Extract user's current geopoint from request body
+    const { latitude, longitude } = req.body;
+
+    // Find the nearest vendor using $geoNear aggregation
+    const nearestVendor = await Vendor.aggregate([
+      {
+        $geoNear: {
+          near: { type: 'Point', coordinates: [longitude, latitude] },
+          distanceField: 'distance',
+          spherical: true ,       
+        }
+      },
+      {
+        $match: {
+          distance: { $lte: 5 * 1609.34 } // Convert miles to meters (1 mile = 1609.34 meters)
+        }
+      }
+    ]);
+
+    // Check if a nearest vendor is found
+    if (nearestVendor.length === 0) {
+      return res.status(404).json({ message: 'No nearest vendor found' });
+    }
+
+    // Return the nearest vendor
+    res.status(200).json({ nearestVendor: nearestVendor[0] });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Controller method to insert vendors' data with geopoints
+const insertVendorWithGeopoint = async (req, res) => {
+  try {
+
+    // // Extract vendor data including geopoint from request body
+    // const { vendorData } = req.body;
+    // console.log(JSON.stringify(req.body))
+    // // Create a new vendor instance
+    const newVendor = new Vendor(req.body);
+
+    // Save the vendor to the database
+    await newVendor.save();
+
+    res.status(201).json({ message: 'Vendor data with geopoint inserted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { findNearestVendor, insertVendorWithGeopoint };
