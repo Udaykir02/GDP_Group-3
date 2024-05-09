@@ -226,7 +226,7 @@ const Product = ({
                     style={styles.articles}
                 />
             </View>
-            {(cartitems.length > 0) ?
+            {/* {(cartitems.length > 0) ?
                 <View flex={0.10} row style={styles.shadow}>
                     <View flex middle >
                         <Button color="success" style={styles.optionsButton} onPress={() => { navigation.navigate('Cart') }}>
@@ -247,7 +247,7 @@ const Product = ({
                             </View>
                         </Button>
                     </View>
-                </View> : null}
+                </View> : null} */}
         </View>
     );
 };
