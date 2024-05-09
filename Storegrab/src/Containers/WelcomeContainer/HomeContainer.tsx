@@ -1,93 +1,284 @@
-import { ORDER_DASHBOARD_TILE_TYPE } from '../../models/Constants';
-import { useEffect, useState } from 'react';
-import { View, Button, Text, Image, ImageBackground, Dimensions } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import React, { useState, useEffect } from "react";
+import {
+    StyleSheet,
+    Dimensions,
+    ScrollView,
+    Image,
+    ImageBackground,
+    Platform,
+    TouchableOpacity,
+    ActivityIndicator,
+    FlatList,
+    View,
+    Text,
+    SafeAreaView
+} from "react-native";
+import { Button } from "react-native-paper";
+import { connect, useSelector } from 'react-redux';
+import propTypes from 'prop-types';
+import {
+    addShops,
+    shopsPagination,
+    addProducts,
+    productsPagination,
+    eraseProducts,
+    updateProducts,
+    changeProduct,
+    removeProduct,
+    removeProduct2,
+    removeProduct3,
+    setAlgoliaText,
+    setRefreshing
+} from '../../../reducers/vendorReducer'
+
+import {
+    initialCart,
+    initialOrder,
+    removeOrder,
+    changeOrder,
+    addOrder,
+    addItem,
+    removeItem,
+    removeUnits,
+    removeUnits2,
+    addOrders,
+    updateOrders,
+    ordersPagination,
+    ordersRefreshing,
+    ordersFavourite,
+    addFavourites,
+    updateFavourites,
+    favouritesPagination,
+    favRefreshing,
+    addFavourite,
+    removeFavourite
+} from "../../../reducers/cartReducer"
+
 import createToBeImplementedStyle from "./HomeContainerStyle";
-import DealCard from '../../Components/DealCard';
-import SaleItem from '../../Components/SaleItem';
-import AppSwiper from '../../Components/AppSwiper';
-import useLocationService from '../../Hooks/useLocationService';
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const HomeContainer = ({ navigation }: any) => {
-    const styles = createToBeImplementedStyle();
-    const [loading,setIsLoading] = useState(true);
-    const { currentLocation } = useLocationService();
+import Prodcard from "../../Components/Prodcard";
+// import Prodcard from "../components/Prodcard";
+const { width, height } = Dimensions.get("screen");
 
-    useEffect(()=>{
-        onLoadScreen();
-    },[])
+const thumbMeasure = (width - 48 - 32) / 3;
 
-   const onLoadScreen = async () => {
-     const location = await currentLocation()
-     console.log(location)
-   }
-
-    if(!loading){
-        return (    
-            <SkeletonPlaceholder borderRadius={4}>
-                <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-                  <SkeletonPlaceholder.Item width={60} height={60} borderRadius={50} />
-                  <SkeletonPlaceholder.Item marginLeft={20}>
-                    <SkeletonPlaceholder.Item width={120} height={20} />
-                    <SkeletonPlaceholder.Item marginTop={6} width={80} height={20} />
-                  </SkeletonPlaceholder.Item>
-                </SkeletonPlaceholder.Item>
-              </SkeletonPlaceholder>)
-    }
-    return (
-        <View style={styles.container}>
-                <View style={{ flex: 1, backgroundColor: '#d5d5d6' }}>
-                    <AppSwiper />
-                    <View style={{ flexDirection: 'row', height: SCREEN_WIDTH / 3, backgroundColor: '#fff' }}>
-                        <SaleItem imageUri={require('../../Assets/images/clone_dummy/sale_0.jpg')} />
-                        <SaleItem imageUri={require('../../Assets/images/clone_dummy/sale_1.jpg')} />
-                        <SaleItem imageUri={require('../../Assets/images/clone_dummy/sale_2.jpg')} />
-                    </View>
-                    <View style={{ flex: 1, height: 90, backgroundColor: '#2874f0', paddingHorizontal: 10 }}>
-                        <ImageBackground
-                            source={require('../../Assets/images/clone_dummy/deal_of_day_bg.jpg')}
-                            style={{ width: '100%', height: '100%' }}>
-
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#2874f090' }}>
-
-                                <View>
-                                    <Text style={{ fontSize: 18, color: '#fff' }}>Deal of the Day</Text>
-                                    <Text style={{ color: '#fff' }}>16hr 32m remaning</Text>
-                                </View>
-
-                                <Text style={{ backgroundColor: '#fff', fontWeight: '400', paddingVertical: 5, paddingHorizontal: 10, borderRadius: 2 }}>
-                                    View All
-                                </Text>
-                            </View>
-                        </ImageBackground>
-                    </View>
-                    <View style={{ flex: 1, backgroundColor: '#2874f0', padding: 10 }}>
-                        <View style={{ flex: 1, flexDirection: "row", backgroundColor: '#fff', borderRadius: 5, flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                            <DealCard
-                                imageUri={require('../../Assets/images/clone_dummy/deal1.jpeg')}
-                                heading="Headphones&Speakers"
-                                price="Under ₹1049"
-                            />
-                            <DealCard
-                                imageUri={require('../../Assets/images/clone_dummy/deal2.jpeg')}
-                                heading="Laptop Skins"
-                                price="Under ₹129"
-                            />
-                            <DealCard
-                                imageUri={require('../../Assets/images/clone_dummy/deal3.jpeg')}
-                                heading="Mixers & Hand Blenders"
-                                price="Under ₹699"
-                            />
-                            <DealCard
-                                imageUri={require('../../Assets/images/clone_dummy/deal4.jpeg')}
-                                heading="Home Decor Range"
-                                price="Under ₹999"
-                            />
-                        </View>
-                    </View>
-                </View>
-        </View>
-    )
+const cacheImages = (images: any) => {
+    return images.map((image: any) => {
+        if (typeof image === "string") {
+            return Image.prefetch(image);
+        }
+    });
 }
 
-export default HomeContainer
+const mock_products = [
+    {
+        id: 101,
+        title: "Product 1",
+        price: 10,
+        description: "Description of Product 1",
+        image: "https://picsum.photos/700",
+        units: 0,
+        cart: [],
+        meat: ""
+    },
+    {
+        id: 102,
+        title: "Product 2",
+        price: 15,
+        description: "Description of Product 2",
+        image: "https://picsum.photos/700",
+        units: 0,
+        cart: [],
+        meat: ""
+    },
+]
+
+const Product = ({
+    navigation, route
+}: any) => {
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+    const styles = createToBeImplementedStyle();
+    const { cartitems, orderitems, orders, moreorders, lastorder, order_refreshing, favourites, morefavourites, lastfavourite, fav_refreshing } = useSelector((state: any) => state.cart)
+    const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct } = useSelector((state: any) => state.vendor)
+
+    useEffect(() => {
+        // const fetchProducts = async () => {
+        //   const productApi = await getProducts({ id: route.params.shop.objectID });
+        //   const imagearray = productApi.products.map(product => product.image);
+        //   await _loadResourcesAsync(imagearray);
+        //   await addProducts(productApi.products);
+        //   await productsPagination({ lastproduct: productApi.lastVisible, moreproducts: productApi.hasMore });
+        // };
+
+        // fetchProducts();
+
+        // return () => {
+        //   // Cleanup function here if needed
+        // };
+    }, []);
+
+    const _loadResourcesAsync = (assetImages: any) => {
+        return Promise.all([...cacheImages(assetImages)]);
+    };
+
+    const getProducts = async (object: any) => {
+        // try {
+        //   const getProductsFn = fire.functions('asia-east2').httpsCallable('getProducts');
+        //   const result = await getProductsFn(object);
+        //   if (result.data.type === 'success') {
+        //     return result.data.payload;
+        //   }
+        // } catch (error) {
+        //   console.error('Error getting products:', error);
+        // }
+    };
+
+    const getMoreProducts = async (object: any) => {
+        // try {
+        //   const getMoreProductsFn = fire.functions('asia-east2').httpsCallable('getMoreProducts');
+        //   const result = await getMoreProductsFn(object);
+        //   if (result.data.type === 'success') {
+        //     return result.data.payload;
+        //   }
+        // } catch (error) {
+        //   console.error('Error getting more products:', error);
+        // }
+    };
+
+    const renderArticles = () => {
+        return (
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ paddingHorizontal: 16 }}>
+                    {/* <Prodcard item={route.params.shop} horizontal /> */}
+                </View>
+            </ScrollView>
+        );
+    };
+
+    const renderHeader = () => {
+        // Your renderHeader logic here
+        return (<></>)
+    };
+
+    const renderMore = async () => {
+        // Your renderMore logic here
+    };
+
+    const fetchMore = () => {
+        // Your fetchMore logic here
+    };
+
+    const getTotal = () => {
+        // Your getTotal logic here
+    };
+
+    return (
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <View style={{ flex: 1 }}>
+                <SafeAreaView>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        {/* <NavBar
+              back={false}
+              title={route.params.shop.title}
+              style={styles.navbar}
+              transparent={false}
+              right={null}
+              rightStyle={{ alignItems: 'center' }}
+              left={
+                // <Icon
+                //   name='chevron-down'
+                //   family="entypo"
+                //   size={20}
+                //   onPress={() => navigation.goBack()}
+                //   color={argonTheme.COLORS.ICON}
+                //   style={{ marginTop: 2 }}
+                // />
+              }
+              leftStyle={{ paddingVertical: 12, flex: 0.2 }}
+              titleStyle={[
+                styles.title,
+              ]}
+            /> */}
+                    </TouchableOpacity>
+                </SafeAreaView>
+                <FlatList
+                    data={mock_products}
+                    ListHeaderComponent={renderHeader}
+                    renderItem={({ item, index }) => (
+                        <Prodcard
+                            item={item}
+                            shop={{ cta: true }}
+                            location={index}
+                            horizontal
+                            style={{ paddingHorizontal: 16, paddingVertical: 16 / 2 }}
+                            cartitems={cartitems}
+                            removeProduct={removeProduct}
+                            removeProduct2={removeProduct2}
+                            removeUnits={removeUnits}
+                            removeUnits2={removeUnits2}
+                            navigation={navigation} full={false} ctaColor={""} imageStyle={{ borderRadius: 10 }} />
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    extraData={[]}
+                    onEndReachedThreshold={0.1}
+                    //   ListFooterComponent={(moreproducts) ? <View row space="evenly" style={{ paddingVertical: 16 }}><View flex center><ActivityIndicator size="large" /></View></View> : null}
+                    refreshing={refreshing}
+                    onEndReached={() => fetchMore()}
+                    style={styles.articles}
+                />
+            </View>
+            {/* {(cartitems.length > 0) ?
+                <View flex={0.10} row style={styles.shadow}>
+                    <View flex middle >
+                        <Button color="success" style={styles.optionsButton} onPress={() => { navigation.navigate('Cart') }}>
+                            <View row style={{ width: 'auto' }}>
+                                <View flex={0.6} middle left>
+                                    <Text bold size={12} color="#fff">
+                                        {cartitems.length + ((cartitems.length === 1) ? ' ITEM' : ' ITEMS')}
+                                    </Text>
+                                    <Text bold size={12} color="#fff">
+                                        {'\u20B9' + getTotal()}<Text p size={8} color="#fff"> plus charges</Text>
+                                    </Text>
+                                </View>
+                                <View flex={0.4} middle>
+                                    <Text bold size={16} color="#fff">
+                                        View Cart <Icon family='Entypo' name='controller-play' size={15} color="#fff" />
+                                    </Text>
+                                </View>
+                            </View>
+                        </Button>
+                    </View>
+                </View> : null} */}
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    navbar: {
+        paddingVertical: 0,
+        paddingBottom: 16 * 1,
+        paddingTop: 16,
+        zIndex: 5,
+    },
+    title: {
+        width: '100%',
+        color: "#32325D",
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    shadow: {
+        width: width,
+        backgroundColor: '#fff',
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 6,
+        shadowOpacity: 0.2,
+        elevation: 3,
+    },
+    optionsButton: {
+        width: "92%",
+        paddingHorizontal: 16,
+    },
+});
+
+
+export default Product;
