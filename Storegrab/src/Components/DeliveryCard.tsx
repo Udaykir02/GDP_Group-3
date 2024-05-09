@@ -135,7 +135,7 @@ const DeliveryCard: React.FC = () => {
             <Text style={{ color: colors.primary, fontWeight: '700' }}>On the Way</Text>
           </View>
         </View>
-        {setTitleValueUi('Driver', 'Bob Smith')}
+        {setTitleValueUi('Vendor', 'Marshalls')}
         <View style={{ marginTop: 10 }}>
           <View
             style={{
@@ -243,7 +243,7 @@ const DeliveryCard: React.FC = () => {
                 }}
               >
                 <Image
-                  source={require('../Assets/images/truck-images/door-right.png')}
+                  source={require('../Assets/images/truck-images/door-middle.png')}
                   style={{
                     height: '100%',
                     width: '100%'
@@ -288,18 +288,13 @@ const DeliveryCard: React.FC = () => {
         <View style={styles.footerContainer}>
           <View style={styles.footerLeftContainer}>
             <View style={styles.footerChildContainer}>
-              {setTitleValueUi('Cartons', 4)}
-              {setTitleValueUi('Totes', 12)}
               {setTitleValueUi('Items', 124)}
             </View>
             <View style={styles.footerChildContainer}>
-              {setTitleValueUi('Full Cases', 12)}
-              {setTitleValueUi('Invoices', 3)}
-              {setTitleValueUi('Total Pieces', 432)}
+
             </View>
           </View>
           <View style={{ alignItems: 'flex-end', justifyContent: 'space-between' }}>
-            {setTitleValueUi('COD', '$56.08')}
             <Text variant="titleMedium" style={{ color: colors.textDefault }}>
               $4,578.93
             </Text>

@@ -13,6 +13,7 @@ import SearchComponent from '../SearchComponent';
 import axios from 'axios';
 import { setDefaultLocation, setMapRegion } from '../../../reducers/locationReducer';
 import { useNavigation } from '@react-navigation/native';
+import MyIcon from '../MyIcon';
 
 const { width } = Dimensions.get('screen');
 
@@ -21,7 +22,7 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
     const [searching, setSearching] = useState(false);
     const [loading, setLoading] = useState(true);
     const [location, setLocation] = useState('');
-    const [search, setSearch] = useState([]);
+    const [search, setSearch] = useState<any>([]);
     const [searchText, setSearchText] = useState('');
     const { colors }: AppTheme = useTheme();
     const { currentLocation } = useLocationService();
@@ -182,7 +183,7 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
                     renderItem={({ item, index }) => (
                         <TouchableHighlight onPress={() => handleSubmit(index)}>
                             <View style={{ paddingHorizontal: 10, paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
-                                {/* <Icon name="location-pin" type="entypo" size={24} color="black" /> */}
+                                <MyIcon name='Entypo|location-pin' style={{ fontSize: 25, color: "#000"}} />
                                 <View style={{ flex: 1, marginLeft: 10 }}>
                                     <Text >
                                         {searchText.length > 2 ? searchText : item.title}

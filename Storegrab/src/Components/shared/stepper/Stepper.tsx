@@ -23,7 +23,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
   const styles = createStepperStyle(theme)
 
   const [count, setCount] = useState(quantity);
-  const [productQuantityCase, setProductQuantityCase] = useState<String>(isCase ? '' : "Each");
+  const [productQuantityCase, setProductQuantityCase] = useState<String>("Each");
   const [shadowColor, setShadowColor] = useState('transparent');
   const [borderColor, setBorderColor] = useState(theme.colors.primary);
   const animationMinus = useRef(new Animated.Value(0)).current;
@@ -143,17 +143,6 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
 
   return (
     <View style={[styles.mainContainer]}>
-      {productQuantityCase === '' ? <View style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
-        <Text style={{ fontSize: 16 }}>Select</Text>
-        <MaterialCommunityIcons
-          name="chevron-right"
-          size={25}
-        />
-
-      </View> : <StepperCase productQuantityCase={productQuantityCase} handleProductCase={handleProductCase} isCase={isCase} />}
       {productQuantityCase === '' ? <ProductStepper handleProductCase={handleProductCase} price={5.96} deal={true} /> : <View style={{ ...styles.outerContainer, ...dynamicShadowStyle, borderColor: borderColor }}>
         {Platform.OS === 'android' && <View style={{ ...styles.androidShadow, borderColor: shadowColor }} />}
 
@@ -166,22 +155,14 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
           </TouchableOpacity>
 
           <View style={styles.inputContainer}>
-            <TouchableWithoutFeedback onPress={() => {
-              Keyboard.dismiss();
-              handleTextInputFocus();
-            }}>
               <TextInput
-                style={{ ...styles.countInput, marginBottom: par ? 12 : 0 }}
+                style={{ ...styles.countInput, marginBottom: 0 }}
                 value={formatNumber(count.toString())}
                 onChangeText={(text) => updateCount(text)}
                 keyboardType="number-pad"
                 maxLength={5}
               />
-            </TouchableWithoutFeedback>
           </View>
-          {par ? <View style={styles.parContainer}>
-            <Text style={styles.par}>PAR {par}</Text>
-          </View> : null}
           <TouchableOpacity onPress={() => handlePress(1)}>
             <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
               <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
