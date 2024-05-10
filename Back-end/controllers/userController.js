@@ -142,7 +142,7 @@ const loginUser = async (req, res) => {
 const verifyOtp = async (req, res) => {
   try {
 
-    const { enteredOTP } = req.body.enteredOTP;
+    const { enteredOTP } = req.body;
     // Find the user by email
     const existingUser = await User.findOne({ username: req.body.email });
     if (!existingUser) {
@@ -150,7 +150,7 @@ const verifyOtp = async (req, res) => {
     }
 
     // Compare the entered OTP with the OTP saved in the user's document
-    if (existingUser.otp !== Number(enteredOTP)) {
+    if (Number(existingUser.otp) !== Number(enteredOTP)) {
       return res.status(400).json({ message: 'Invalid OTP' });
     }
 
@@ -176,9 +176,9 @@ const resetPasswordPostToken = async (req, res) => {
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' });
     }
-
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     // Update the user's password
-    existingUser.password = newPassword;
+    existingUser.hashedAndSaltedPassword = hashedPassword;
     await existingUser.save();
 
     // Password reset successful

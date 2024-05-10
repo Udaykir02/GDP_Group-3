@@ -30,3 +30,20 @@ export const registerFailure = (error: any) => ({
 export const logoutRequest = () => ({
     type: 'LOGOUT_REQUEST'
 });
+
+// Password Reset
+
+export const sendOTPRequest = (email: any) => ({
+    type: 'OTP_REQUEST',
+    payload: { email },
+});
+
+export const verifyOTPRequest = (email: any, enteredOTP: any) => ({
+    type: 'VERIFY_OTP_REQUEST',
+    payload: { email, enteredOTP },
+});
+
+export const resetPasswordRequest = (email: any, newPassword:any, token:any) => ({
+    type: 'PASSWORD_RESET_REQUEST',
+    payload: { email, newPassword, token },
+});

@@ -19,3 +19,5 @@ export type LoginFailurePayload = string; // Error message is a string
 export type RegisterFailurePayload = string
 
 export type LogoutFailurePayload = string
+
+export type VerifyOtpSuccessPayload = string
