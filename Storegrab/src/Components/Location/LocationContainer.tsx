@@ -138,10 +138,10 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
 
     const searchTextChange = (text: string) => {
         setSearchText(text)
-        console.log(text)
+        console.log(process.env.GOOGLE_MAPS_API)
         if (text.length > 2) {
             setLoading(false)
-            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + text.split(" ").join("+") + '&key=AIzaSyA8dUT9FqaVVWyicIDocW-l3PY8npYofMY')
+            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + text.split(" ").join("+") + '&key='+process.env.GOOGLE_MAPS_API)
                 .then(
                     (response) => {
                         if (response.status !== 200) {

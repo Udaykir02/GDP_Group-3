@@ -45,7 +45,8 @@ const RegionContainer = ({  navigation, route }: any) => {
     const onRegionChange = async (newRegion: any) => {
         console.log(JSON.stringify(newRegion))
         dispatch(setMapRegion(newRegion));
-        const response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + newRegion.latitude + ',' + newRegion.longitude + '&key=AIzaSyA8dUT9FqaVVWyicIDocW-l3PY8npYofMY');
+        console.log(process.env.GOOGLE_MAPS_API)
+        const response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + newRegion.latitude + ',' + newRegion.longitude + '&key='+ process.env.GOOGLE_MAPS_API);
         if (response.status === 200) {
             const address_json = await response.json();
             if (address_json.results.length > 0) {
