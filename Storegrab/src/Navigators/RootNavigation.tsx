@@ -8,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContainer from '../Containers/AuthContainer/AuthContainer';
 import { useSelector } from 'react-redux';
 import RegionContainer from '../Components/Region';
+import VendorSubscriptionPage from '../Components/Subscription';
+import ResetPasswordScreen from '../Components/ResetPasswordScreen';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -16,6 +18,7 @@ export type RootStackParamList = {
   Login: undefined;
   Location: undefined;
   Region: undefined;
+  VendorSubscription: undefined;
 };
 
 const MainContainer = () => {
@@ -64,6 +67,7 @@ const RootNavigation = () => {
       <AuthStack.Screen name='Welcome' component={AuthContainer} />
       <AuthStack.Screen name='Login' component={LoginContainer} />
       <AuthStack.Screen name='Register' component={RegisterContainer} />
+      <AuthStack.Screen name='Reset' component={ResetPasswordScreen} />
     </AuthStack.Navigator>
     )
   }
@@ -71,6 +75,7 @@ const RootNavigation = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Root">
       <Stack.Screen name="Root" component={MainContainer} />
       <Stack.Screen name="Region" component={RegionContainer} />
+      <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} />
     </Stack.Navigator>
   );
 };

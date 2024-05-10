@@ -25,7 +25,7 @@ router.post('/reset', resetPasswordController);
 
 router.post('/verify',verifyOtp);
 
-router.post('./password-reset',verifyTokenAndUser,resetPasswordPostToken)
+router.post('/password-reset',verifyTokenAndUser,resetPasswordPostToken)
 
 
 // Define other routes for users as needed

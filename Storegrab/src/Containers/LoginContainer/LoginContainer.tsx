@@ -15,7 +15,9 @@ const LoginContainer = ({ navigation }: any) => {
     const handleLogin = async () => {
         dispatch(loginRequest(email, password));
     };
-
+    const handleResetPassword = () => {
+        navigation.navigate('Reset')
+    }
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -46,6 +48,7 @@ const LoginContainer = ({ navigation }: any) => {
                     underlayColor='#fff'>
                     <Text style={[{fontSize: 15},styles.loginText]}>Login</Text>
                 </TouchableHighlight>
+                <Button title="Reset Password" onPress={handleResetPassword} />
             </View>
 
         </View>
