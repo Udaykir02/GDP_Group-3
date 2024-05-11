@@ -27,5 +27,12 @@ export default function <C>() {
             shadowOpacity: 0.5,
             elevation: 3,
         },
+        title: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            alignSelf: 'center',
+            marginLeft: 15
+
+        },
     })
 }

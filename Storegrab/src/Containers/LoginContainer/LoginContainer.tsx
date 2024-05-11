@@ -1,9 +1,9 @@
 import { loginRequest } from '../../../actions/userActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { useState } from 'react';
-import { TouchableOpacity, View, Text, TextInput, Button, Image, TouchableHighlight } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { TouchableOpacity, View, Text, TextInput, Button, Image, TouchableHighlight, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import createToBeImplementedStyle from "./LoginContainerStyle";
 
 
@@ -12,12 +12,23 @@ const LoginContainer = ({ navigation }: any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const { error } = useSelector((state: any)=> state.auth)
     const handleLogin = async () => {
-        dispatch(loginRequest(email, password));
+        await dispatch(loginRequest(email, password));
+        
     };
     const handleResetPassword = () => {
         navigation.navigate('Reset')
     }
+
+    useEffect(()=>{
+        // Display alert when error occurs
+        if (error) {
+            console.log(JSON.stringify(error))
+            Alert.alert('Error', error, [{ text: 'OK' }]);
+        }
+    },[error])
+
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
