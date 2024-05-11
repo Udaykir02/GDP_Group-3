@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const inventoryController = require('../controllers/inventoryController');
+const {insertInventory} = require('../controllers/inventoryController');
 
 // Route for adding inventory
 router.post('/inventory', async (req, res) => {
@@ -11,6 +11,10 @@ router.post('/inventory', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+router.post('/insert',insertInventory);
+
+
 
 // Define other routes for inventory as needed
 
