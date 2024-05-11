@@ -15,10 +15,9 @@ module.exports = {
 const findNearestVendor = async (req, res) => {
   try {
     // Extract user's current geopoint from request body
-    const { latitude, longitude } = req.body;
+    const { latitude, longitude, miles, vendor_types } = req.body;
 
-    // Find the nearest vendor using $geoNear aggregation
-    const nearestVendor = await Vendor.aggregate([
+    const pipeline = [
       {
         $geoNear: {
           near: { type: 'Point', coordinates: [longitude, latitude] },
@@ -28,10 +27,22 @@ const findNearestVendor = async (req, res) => {
       },
       {
         $match: {
-          distance: { $lte: 5 * 1609.34 } // Convert miles to meters (1 mile = 1609.34 meters)
+          distance: { $lte: miles  * 1609.34 } // Convert miles to meters (1 mile = 1609.34 meters)
         }
       }
-    ]);
+    ]
+    // Conditionally add vendor_type filter to the pipeline
+    if (vendor_types.length !== 0) {
+      pipeline.push({
+        $match: {
+          vendor_type: { $in: vendor_types }
+        }
+      });
+    }
+
+    // Find the nearest vendor using $geoNear aggregation
+    const nearestVendor = await Vendor.aggregate(pipeline);
+
 
     // Check if a nearest vendor is found
     if (nearestVendor.length === 0) {

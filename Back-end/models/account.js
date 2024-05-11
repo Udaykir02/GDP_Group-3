@@ -26,6 +26,9 @@ const UserSchema = new Schema({
     vendorpreferences: [{ type: String }],
     userRecomendations: [{ type: Schema.Types.ObjectId, ref: 'Product' }], // Assuming reference to a Product model
     otp: { type: Number, required: false },
+    blocked: { type: Boolean, default: false },
+    loginAttempts: { type: Number, default: 0 },
+    otpAttempts: { type: Number, default: 0 }
 });
 
 UserSchema.plugin(passportLocalMongoose);

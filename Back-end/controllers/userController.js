@@ -123,12 +123,31 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
+    // Check if the user is blocked
+    if (user.blocked) {
+      return res.status(403).json({ message: 'User is blocked. Please contact support.' });
+    }
+
+    // Check if the user has exceeded the login attempts limit
+    if (user.loginAttempts >= 5) {
+      // Block the user
+      user.blocked = true;
+      await user.save();
+      return res.status(403).json({ message: 'User has exceeded login attempts limit. User is now blocked.' });
+    }
+
     // Check if the password is correct
     const passwordMatch = await bcrypt.compare(req.body.password, user.hashedAndSaltedPassword);
     if (!passwordMatch) {
+      user.loginAttempts += 1;
+      await user.save();
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
+    // Reset login attempts on successful login
+    user.loginAttempts = 0;
+    user.otpAttempts = 0;
+    await user.save();
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
 
@@ -149,13 +168,30 @@ const verifyOtp = async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
+    // Check if the user is blocked
+    if (existingUser.otpAttempts> 5) {
+      return res.status(403).json({ message: 'User is blocked. Please contact support.' });
+    }
+
+    // Check if the user has exceeded the login attempts limit
+    if (existingUser.otpAttempts >= 5) {
+      // Block the user
+      existingUser.blocked = true;
+      await existingUser.save();
+      return res.status(403).json({ message: 'User has exceeded otp attempts limit. User is now blocked.' });
+    }
+
     // Compare the entered OTP with the OTP saved in the user's document
     if (Number(existingUser.otp) !== Number(enteredOTP)) {
+      existingUser.otpAttempts += 1;
+      await user.save();
       return res.status(400).json({ message: 'Invalid OTP' });
     }
 
     // OTP is valid, clear the OTP field in the user's document
     existingUser.otp = undefined;
+    existingUser.loginAttempts = 0;
+    existingUser.otpAttempts = 0;
     await existingUser.save();
     // Generate JWT token
     const token = jwt.sign({ userId: existingUser._id }, 'your_secret_key', { expiresIn: '1h' });

@@ -15,7 +15,8 @@ const vendorSchema = new Schema({
     geopoint: {
         type: { type: String, default: 'Point' },
         coordinates: { type: [Number], default: [0, 0] } // Default to [0, 0] if not provided
-    }
+    },
+    vendor_type: String
 });
 
 // Index for geospatial queries

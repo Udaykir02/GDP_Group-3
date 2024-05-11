@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import RegionContainer from '../Components/Region';
 import VendorSubscriptionPage from '../Components/Subscription';
 import ResetPasswordScreen from '../Components/ResetPasswordScreen';
+import Filters from '../Components/Filters';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   Location: undefined;
   Region: undefined;
   VendorSubscription: undefined;
+  Filter: undefined;
 };
 
 const MainContainer = () => {
@@ -76,6 +78,7 @@ const RootNavigation = () => {
       <Stack.Screen name="Root" component={MainContainer} />
       <Stack.Screen name="Region" component={RegionContainer} />
       <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} />
+      <Stack.Screen name="Filter" component={Filters} options={{headerShown: true, headerBackTitle: 'back'}}/>
     </Stack.Navigator>
   );
 };

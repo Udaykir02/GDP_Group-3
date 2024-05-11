@@ -1,85 +1,95 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: any = {
-  algoliatext: '',
-  vendorshops: [],
-  vendorpage: 0,
-  hasmore: true,
-  products: [],
-  moreproducts: true,
-  lastproduct: {},
-  refreshing: false 
+    algoliatext: '',
+    vendorshops: [],
+    vendorpage: 0,
+    hasmore: true,
+    products: [],
+    moreproducts: true,
+    lastproduct: {},
+    refreshing: false,
+    radius: 5,
+    vendorTypes: ['grocery', 'boutique', 'artisanal', 'market','food', 'antique', 'book', 'craft', 'pet']
 };
 
 const vendorSlice = createSlice({
-  name: 'vendor',
-  initialState,
-  reducers: {
-    addShops(state, action) {
-      state.vendorshops = action.payload;
-    },
-    shopsPagination(state, action) {
-      state.vendorpage = action.payload.vendorpage;
-      state.hasmore = action.payload.hasmore;
-    },
-    addProducts(state, action) {
-      state.products = action.payload;
-    },
-    productsPagination(state, action) {
-      state.lastproduct = action.payload.lastproduct;
-      state.moreproducts = action.payload.moreproducts;
-    },
-    eraseProducts(state) {
-      state.products = [];
-      state.lastproduct = {};
-      state.moreproducts = true;
-    },
-    updateProducts(state, action) {
-      state.products.push(action.payload);
-    },
-    changeProduct(state, action) {
-      const { index, units, cart } = action.payload;
-      state.products[index].units = units;
-      state.products[index].cart.push(cart);
-    },
-    removeProduct(state, action) {
-      const { index, units, cart } = action.payload;
-      state.products[index].units = units;
-      state.products[index].cart.splice(cart, 1);
-    },
-    removeProduct2(state, action) {
-      const { index, units, cartindex, cartunits, total } = action.payload;
-      state.products[index].units = units;
-      state.products[index].cart[cartindex].units = cartunits;
-      state.products[index].cart[cartindex].total = total;
-    },
-    removeProduct3(state, action) {
-      const { index } = action.payload;
-      state.products[index].units = 0;
-      state.products[index].cart = [];
-    },
-    setAlgoliaText(state, action) {
-      state.algoliatext = action.payload;
-    },
-    setRefreshing(state, action) {
-      state.refreshing = action.payload;
+    name: 'vendor',
+    initialState,
+    reducers: {
+        addShops(state, action) {
+            state.vendorshops = action.payload;
+        },
+        shopsPagination(state, action) {
+            state.vendorpage = action.payload.vendorpage;
+            state.hasmore = action.payload.hasmore;
+        },
+        addProducts(state, action) {
+            state.products = action.payload;
+        },
+        productsPagination(state, action) {
+            state.lastproduct = action.payload.lastproduct;
+            state.moreproducts = action.payload.moreproducts;
+        },
+        eraseProducts(state) {
+            state.products = [];
+            state.lastproduct = {};
+            state.moreproducts = true;
+        },
+        updateProducts(state, action) {
+            state.products.push(action.payload);
+        },
+        changeProduct(state, action) {
+            const { index, units, cart } = action.payload;
+            state.products[index].units = units;
+            state.products[index].cart.push(cart);
+        },
+        removeProduct(state, action) {
+            const { index, units, cart } = action.payload;
+            state.products[index].units = units;
+            state.products[index].cart.splice(cart, 1);
+        },
+        removeProduct2(state, action) {
+            const { index, units, cartindex, cartunits, total } = action.payload;
+            state.products[index].units = units;
+            state.products[index].cart[cartindex].units = cartunits;
+            state.products[index].cart[cartindex].total = total;
+        },
+        removeProduct3(state, action) {
+            const { index } = action.payload;
+            state.products[index].units = 0;
+            state.products[index].cart = [];
+        },
+        setAlgoliaText(state, action) {
+            state.algoliatext = action.payload;
+        },
+        setRefreshing(state, action) {
+            state.refreshing = action.payload;
+        },
+        updateRadius: (state, action) => {
+            state.radius = action.payload;
+        },
+        updateVendorType: (state, action) => {
+            state.vendorTypes = action.payload;
+        }
     }
-  }
 });
 
 export const {
-  addShops,
-  shopsPagination,
-  addProducts,
-  productsPagination,
-  eraseProducts,
-  updateProducts,
-  changeProduct,
-  removeProduct,
-  removeProduct2,
-  removeProduct3,
-  setAlgoliaText,
-  setRefreshing
+    addShops,
+    shopsPagination,
+    addProducts,
+    productsPagination,
+    eraseProducts,
+    updateProducts,
+    changeProduct,
+    removeProduct,
+    removeProduct2,
+    removeProduct3,
+    setAlgoliaText,
+    setRefreshing,
+    updateRadius,
+    updateVendorType
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;

@@ -67,11 +67,12 @@ let vendors = [
   }
 ];
 const LeftContent = (props: any) => <Avatar.Icon {...props} icon="folder" />
-const VendorContainer: React.FC = () => {
+const VendorContainer: React.FC = ({ navigation }: any) => {
+  const { radius, vendorTypes } = useSelector((state: any) => state.vendor)
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [hasMore, setHasMore] = useState(false)
   const [refreshing, setRefreshing] = useState(false);
-  const [vendors, setVendors] = useState([]);
+  const [vendors, setVendors] = useState<any>([]);
   const styles = createToBeImplementedStyle();
   const { chosenLocation } = useSelector((state: any) => state.location)
   const { token } = useSelector((state: any) => state.auth)
@@ -89,7 +90,8 @@ const VendorContainer: React.FC = () => {
       const requestData = {
         longitude: chosenLocation.longitude, // Example longitude
         latitude: chosenLocation.latitude, // Example latitude
-        token: token // Replace 'your_token_here' with your actual token
+        miles: radius,
+        vendor_types: vendorTypes
       };
 
       // Define the request configuration
@@ -98,7 +100,7 @@ const VendorContainer: React.FC = () => {
         url: 'http://localhost:3000/vendorapi/nearest-vendor',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${requestData.token}` // Add the token to the Authorization header
+          'Authorization': `Bearer ${token}` // Add the token to the Authorization header
         },
         data: requestData // Add the request body
       };
@@ -117,15 +119,27 @@ const VendorContainer: React.FC = () => {
     }
 
     console.log(JSON.stringify(chosenLocation) + "Hi")
-  }, [chosenLocation])
+  }, [chosenLocation,radius,vendorTypes.length])
 
   useEffect(() => {
     setIsModalVisible(isReduxModalVisible)
   }, [isReduxModalVisible])
 
+  const renderHeader = () => {
+    return (
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+        <Text style={styles.title}>{`${radius} miles radius`}</Text>
+        <Button icon={'menu'} mode={'outlined'} onPress={handleResetPassword} >Filters</Button>
+        </View>
+    )
+  }
+  const handleResetPassword = () => {
+    navigation.navigate('Filter')
+  }
+
   return (
     <AppPageWrapper>
-
+      
       <FlatList
         data={vendors}
         renderItem={({ item }) => (
@@ -149,6 +163,7 @@ const VendorContainer: React.FC = () => {
         // onEndReached={fetchMore}
         // onRefresh={() => {algoliaRefreshing(true); renderPull();}}
         style={styles.articles}
+        ListHeaderComponent={renderHeader}
       />
       <Modal
         animationType="slide"
