@@ -72,7 +72,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const userRoutes = require('./routes/userRoutes');
 
-// const inventoryRoutes = require('./routes/inventoryRoutes');
+const inventoryRoutes = require('./routes/inventoryRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
 // const orderRoutes = require('./routes/orderRoutes');
 // const paymentRoutes = require('./routes/paymentRoutes');
@@ -103,7 +103,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', userRoutes);
 app.use('/vendorapi',vendorRoutes);
-// app.use('/api', inventoryRoutes);
+app.use('/inventory', inventoryRoutes);
 // app.use('/api', vendorRoutes);
 // app.use('/api', orderRoutes);
 // app.use('/api', paymentRoutes);
