@@ -16,6 +16,7 @@ const vendorSchema = new Schema({
         type: { type: String, default: 'Point' },
         coordinates: { type: [Number], default: [0, 0] } // Default to [0, 0] if not provided
     },
+    products: [String],
     vendor_type: String
 });
 
