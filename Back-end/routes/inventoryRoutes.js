@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {insertInventory} = require('../controllers/inventoryController');
+const {insertInventory, getInventoryBySkuId} = require('../controllers/inventoryController');
 
 // Route for adding inventory
 router.post('/inventory', async (req, res) => {
@@ -14,7 +14,7 @@ router.post('/inventory', async (req, res) => {
 
 router.post('/insert',insertInventory);
 
-
+router.post('/getInventory',getInventoryBySkuId);
 
 // Define other routes for inventory as needed
 
