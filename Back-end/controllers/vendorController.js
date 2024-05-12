@@ -50,8 +50,9 @@ const findNearestVendor = async (req, res) => {
     }
 
     // Return the nearest vendor
-    res.status(200).json({ nearestVendor: nearestVendor[0] });
+    res.status(200).json({ nearestVendor: nearestVendor });
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({ error: error.message });
   }
 };
