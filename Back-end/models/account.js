@@ -28,7 +28,13 @@ const UserSchema = new Schema({
     otp: { type: Number, required: false },
     blocked: { type: Boolean, default: false },
     loginAttempts: { type: Number, default: 0 },
-    otpAttempts: { type: Number, default: 0 }
+    otpAttempts: { type: Number, default: 0 },
+    customer: {
+        type: Object // This will hold the customer object
+    },
+    ephemeralKey: {
+        type: Object // This will hold the ephemeral key object
+    }
 });
 
 UserSchema.plugin(passportLocalMongoose);

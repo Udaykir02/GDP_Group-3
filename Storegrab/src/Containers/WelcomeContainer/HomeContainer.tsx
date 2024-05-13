@@ -92,13 +92,13 @@ const mock_products = [
     },
 ]
 
-const Product = ({
+const HomeContainer = ({
     navigation, route
 }: any) => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const styles = createToBeImplementedStyle();
     const { cartitems, orderitems, orders, moreorders, lastorder, order_refreshing, favourites, morefavourites, lastfavourite, fav_refreshing } = useSelector((state: any) => state.cart)
-    const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct } = useSelector((state: any) => state.vendor)
+    const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor } = useSelector((state: any) => state.vendor)
 
     useEffect(() => {
         // const fetchProducts = async () => {
@@ -173,33 +173,7 @@ const Product = ({
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <View style={{ flex: 1 }}>
-                <SafeAreaView>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        {/* <NavBar
-              back={false}
-              title={route.params.shop.title}
-              style={styles.navbar}
-              transparent={false}
-              right={null}
-              rightStyle={{ alignItems: 'center' }}
-              left={
-                // <Icon
-                //   name='chevron-down'
-                //   family="entypo"
-                //   size={20}
-                //   onPress={() => navigation.goBack()}
-                //   color={argonTheme.COLORS.ICON}
-                //   style={{ marginTop: 2 }}
-                // />
-              }
-              leftStyle={{ paddingVertical: 12, flex: 0.2 }}
-              titleStyle={[
-                styles.title,
-              ]}
-            /> */}
-                    </TouchableOpacity>
-                </SafeAreaView>
+            {selectedVendor !== null ? <View style={{ flex: 1 }}>
                 <FlatList
                     data={mock_products}
                     ListHeaderComponent={renderHeader}
@@ -225,7 +199,7 @@ const Product = ({
                     onEndReached={() => fetchMore()}
                     style={styles.articles}
                 />
-            </View>
+            </View>: null}
             {/* {(cartitems.length > 0) ?
                 <View flex={0.10} row style={styles.shadow}>
                     <View flex middle >
@@ -281,4 +255,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Product;
+export default HomeContainer;

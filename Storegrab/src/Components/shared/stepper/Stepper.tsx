@@ -43,7 +43,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     }),
   };
 
-  const handlePress = (change) => {
+  const handlePress = (change:any) => {
     const animation = change > 0 ? animationPlus : animationMinus;
     if (change > 0) {
       setShadowColor(theme.colors.primary)
@@ -76,7 +76,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     setCount((prevCount) => Math.max(0, prevCount + change));
   };
 
-  const updateCount = (text) => {
+  const updateCount = (text:any) => {
     const value = parseInt(text) > par ? count : parseInt(text);
     if (value) {
       if (count > value) {
@@ -122,7 +122,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     borderStyle: 'dotted' as const,
   };
 
-  const formatNumber = (number) => {
+  const formatNumber = (number:any) => {
     return new Intl.NumberFormat().format(number);
   };
 
