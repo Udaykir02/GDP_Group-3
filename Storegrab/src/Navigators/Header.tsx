@@ -18,6 +18,7 @@ interface Props {
 const Header: React.FC<Props> = ({ name }) => {
   const navigation = useNavigation();
   const address = useSelector((state:any)=> state.location.defaultLocation)
+  const { selectedVendor } = useSelector((state:any)=> state.vendor)
   const dispatch = useDispatch();
   const styles = StyleSheet.create({
     viewContainer: {
@@ -45,11 +46,9 @@ const Header: React.FC<Props> = ({ name }) => {
     },
     text: {
       // Your text styles here
-      fontSize: 14,
+      fontSize: name == 'Vendors'?18:14,
       fontWeight: 'bold',
-      color: 'black',
-      textDecorationLine: 'underline',
-      textDecorationStyle: 'dotted',
+      color: 'black'
       // Add any other text styles you want
     },
     underline: {
@@ -91,11 +90,10 @@ const Header: React.FC<Props> = ({ name }) => {
         {name != 'HomeScreen' &&
           name != 'Login' &&
           name != 'Orders' &&
-          name != 'VendorsScreen' &&
           name != 'Resources' &&
           name != 'Account' && <Appbar.BackAction onPress={() => navigation.goBack()} />}
         {name != 'Home' && name != 'Login' ? (
-          <Appbar.Content title={name == 'Vendors'?DottedUnderlineText(address?.formatted_address):name} titleStyle={styles.title} />
+          <Appbar.Content title={name == 'Vendors'?DottedUnderlineText(address?.formatted_address?.split(',')[0]):name} titleStyle={styles.title} />
         ) : (
           <Appbar.Content title={<Image source={require('../Assets/images/logo.png')} style={styles.image} />} />
         )}

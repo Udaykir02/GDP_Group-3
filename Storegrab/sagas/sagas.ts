@@ -44,8 +44,8 @@ function* logout(action: any) {
     yield put(logoutSuccess());
     // Optionally, you can automatically login the user after registration
     // yield call(login, { payload: action.payload });
-  } catch (error) {
-    yield put(logoutFailure(JSON.stringify(error)));
+  } catch (error:any) {
+    yield put(logoutFailure(JSON.stringify(error.message)));
   }
 }
 

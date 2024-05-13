@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Animated, TextInput, Platform
 import { useTheme } from 'react-native-paper';
 
 import { AppTheme } from '../../../styles/theme/theme';
-export default function <C>({ colors }) {
+export default function <C>({ colors }:any) {
     return StyleSheet.create({
         mainContainer: {
             flexDirection: 'row',
@@ -83,7 +83,8 @@ export default function <C>({ colors }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            minWidth: 32
+            minWidth: 32,
+
         },
         shadow: {
             ...Platform.select({

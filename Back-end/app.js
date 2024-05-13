@@ -71,6 +71,7 @@ if (reseed) { recreateDB(); }
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const userRoutes = require('./routes/userRoutes');
+const stripeRoutes = require('./routes/stripeRoutes');
 
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
@@ -104,6 +105,7 @@ app.use('/users', usersRouter);
 app.use('/api', userRoutes);
 app.use('/vendorapi',vendorRoutes);
 app.use('/inventory', inventoryRoutes);
+app.use('/stripe',stripeRoutes)
 // app.use('/api', vendorRoutes);
 // app.use('/api', orderRoutes);
 // app.use('/api', paymentRoutes);

@@ -10,7 +10,8 @@ const initialState: any = {
     lastproduct: {},
     refreshing: false,
     radius: 5,
-    vendorTypes: ['grocery', 'boutique', 'artisanal', 'market','food', 'antique', 'book', 'craft', 'pet']
+    vendorTypes: ['grocery', 'boutique', 'artisanal', 'market','food', 'antique', 'book', 'craft', 'pet'],
+    selectedVendor: null
 };
 
 const vendorSlice = createSlice({
@@ -71,7 +72,10 @@ const vendorSlice = createSlice({
         },
         updateVendorType: (state, action) => {
             state.vendorTypes = action.payload;
-        }
+        },
+        updateSelectedVendor: (state, action) => {
+            state.selectedVendor = action.payload;
+        },  
     }
 });
 
@@ -89,7 +93,8 @@ export const {
     setAlgoliaText,
     setRefreshing,
     updateRadius,
-    updateVendorType
+    updateVendorType,
+    updateSelectedVendor
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;

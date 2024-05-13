@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 var User = require('../models/account');
-
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const { generateOTP } = require("../utils/otpUtils")
@@ -79,6 +79,16 @@ const registerUser = async (req, res) => {
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    // Create a customer in Stripe
+    const customer = await stripe.customers.create();
+
+    // Generate an ephemeral key for the customer
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      { customer: customer.id },
+      { apiVersion: '2024-04-10' }
+    );
+
     const newUserObject = {
       userId: req.body.username,
       username: req.body.email,
@@ -100,7 +110,9 @@ const registerUser = async (req, res) => {
         "electronics",
         "clothing"
       ],
-      userRecomendations: []
+      userRecomendations: [],
+      customer: customer,
+      ephemeralKey: ephemeralKey
     }
     // Create a new user
     const newUser = new User(newUserObject);
@@ -169,7 +181,7 @@ const verifyOtp = async (req, res) => {
     }
 
     // Check if the user is blocked
-    if (existingUser.otpAttempts> 5) {
+    if (existingUser.otpAttempts > 5) {
       return res.status(403).json({ message: 'User is blocked. Please contact support.' });
     }
 
