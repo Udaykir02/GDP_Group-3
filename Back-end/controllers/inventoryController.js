@@ -1,4 +1,5 @@
 const Inventory = require('../models/inventory')
+const mongoose = require('mongoose');
 
 // module.exports = {
 //   addInventory: async (inventoryData) => {
@@ -56,4 +57,35 @@ const getInventoryBySkuId = async (req, res) => {
   }
 };
 
-module.exports = { insertInventory, getInventoryBySkuId }
+
+const updateInventory = async (req, res) => {
+  try {
+    // Extract inventory ID from request parameters
+    const { inventoryId, skuId, item, price, size, features, description, categories, image, brand } = req.body;
+
+    // Check if the inventory ID is valid
+    if (!mongoose.Types.ObjectId.isValid(inventoryId)) {
+      return res.status(400).json({ error: 'Invalid inventory ID' });
+    }
+
+    // Find the inventory by ID and update it with the new data from the request body
+    await Inventory.findByIdAndUpdate(inventoryId, {
+      skuId: skuId,
+      item: item,
+      price: price,
+      qty: 3,
+      size: size,
+      features: features,
+      description: description,
+      categories: categories,
+      image: image,
+      brand: brand
+  });
+
+    res.status(200).json({ message: 'Inventory data updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { insertInventory, getInventoryBySkuId, updateInventory }
