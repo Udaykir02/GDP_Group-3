@@ -35,7 +35,7 @@ const getInventoryBySkuId = async (req, res) => {
   try {
     // Extract the SKU ID from the request parameters
     const { skuids } = req.body;
-
+    console.log(skuids)
     const inventoryArray = [];
     
     for (let i = 0; i < skuids.length; i++) {
@@ -51,6 +51,7 @@ const getInventoryBySkuId = async (req, res) => {
     }
   } catch (error) {
     // If an error occurs, send an error response
+    console.log(error.message)
     res.status(500).json({ success: false, error: error.message });
   }
 };

@@ -1,8 +1,9 @@
+import { updateSelectedVendor } from '../../reducers/vendorReducer';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Linking, Dimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Button } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const  { width, height} = Dimensions.get('screen');
 const VendorScreen = ({ navigation, route }: any) => {
     const [routeCoordinates, setRouteCoordinates] = useState<any>([]);
@@ -10,6 +11,7 @@ const VendorScreen = ({ navigation, route }: any) => {
     const address = useSelector((state:any)=> state.location.defaultLocation)
     const { region } = useSelector((state:any)=> state.location)
     const [mapRegion, setMapRegion] = useState(region);
+    const dispatch = useDispatch();
     useEffect(()=>{
         console.log("----->"+JSON.stringify(region))
         console.log("----->"+JSON.stringify(route?.params?.vendor))
@@ -105,7 +107,8 @@ const VendorScreen = ({ navigation, route }: any) => {
     };
 
     const handleSubmit = () => {
-
+            dispatch(updateSelectedVendor(route?.params?.vendor))
+            navigation.navigate('HomeScreen')
     }
     return (
         <View style={styles.container}>

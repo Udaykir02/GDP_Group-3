@@ -11,7 +11,9 @@ const initialState: any = {
     refreshing: false,
     radius: 5,
     vendorTypes: ['grocery', 'boutique', 'artisanal', 'market','food', 'antique', 'book', 'craft', 'pet'],
-    selectedVendor: null
+    selectedVendor: null,
+    loading: false,
+    error: null
 };
 
 const vendorSlice = createSlice({
@@ -75,7 +77,14 @@ const vendorSlice = createSlice({
         },
         updateSelectedVendor: (state, action) => {
             state.selectedVendor = action.payload;
-        },  
+        },
+        updateVendorProductsSuccess: (state, action) => {
+            state.products = action.payload
+        },
+        updateVendorProductsFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;;
+        }  
     }
 });
 
@@ -94,7 +103,9 @@ export const {
     setRefreshing,
     updateRadius,
     updateVendorType,
-    updateSelectedVendor
+    updateSelectedVendor,
+    updateVendorProductsSuccess,
+    updateVendorProductsFailure
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;
