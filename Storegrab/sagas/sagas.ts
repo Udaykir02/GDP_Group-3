@@ -5,6 +5,7 @@ import { UserType } from "../reducers/users/types";
 import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure } from "../reducers/users/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginRequest } from "../actions/userActions";
+import { updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
 
 
 
@@ -99,6 +100,20 @@ function* handleResetPassword(action: any) {
   }
 }
 
+//update vendor products saga
+function* handleVendorProductsSaga(action: any) {
+  try {
+    const { skuids, token } = action.payload;
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
+      skuids: skuids
+    },{ headers: { Authorization: `${token}` } });
+    console.log(JSON.stringify(response.data.data))
+    yield put(updateVendorProductsSuccess(response.data?.data));
+  } catch (error: any) {
+    yield put(updateVendorProductsFailure(error.message));
+  }
+}
+
 // Generator function
 export function* watchAuthUser() {
   yield takeLatest('LOGIN_REQUEST', login);
@@ -107,4 +122,5 @@ export function* watchAuthUser() {
   yield takeLatest('OTP_REQUEST', handleSendOTP);
   yield takeLatest('VERIFY_OTP_REQUEST', handleVerifyOTP);
   yield takeLatest('PASSWORD_RESET_REQUEST', handleResetPassword);
+  yield takeLatest('GET_PRODUCTS_REQUEST', handleVendorProductsSaga);
 }

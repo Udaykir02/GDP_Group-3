@@ -14,7 +14,7 @@ import {
     SafeAreaView
 } from "react-native";
 import { Button } from "react-native-paper";
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import propTypes from 'prop-types';
 import {
     addShops,
@@ -56,6 +56,7 @@ import {
 
 import createToBeImplementedStyle from "./HomeContainerStyle";
 import Prodcard from "../../Components/Prodcard";
+import { getProductsRequest } from "../../../actions/vendorActions";
 // import Prodcard from "../components/Prodcard";
 const { width, height } = Dimensions.get("screen");
 
@@ -99,6 +100,14 @@ const HomeContainer = ({
     const styles = createToBeImplementedStyle();
     const { cartitems, orderitems, orders, moreorders, lastorder, order_refreshing, favourites, morefavourites, lastfavourite, fav_refreshing } = useSelector((state: any) => state.cart)
     const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor } = useSelector((state: any) => state.vendor)
+    const { token } = useSelector((state:any)=>state.auth)
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        if(selectedVendor){
+            dispatch(getProductsRequest(selectedVendor.products,token))
+        }
+        
+    },[selectedVendor?.vendorId])
 
     useEffect(() => {
         // const fetchProducts = async () => {
@@ -175,7 +184,7 @@ const HomeContainer = ({
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             {selectedVendor !== null ? <View style={{ flex: 1 }}>
                 <FlatList
-                    data={mock_products}
+                    data={products}
                     ListHeaderComponent={renderHeader}
                     renderItem={({ item, index }) => (
                         <Prodcard
@@ -192,7 +201,7 @@ const HomeContainer = ({
                             navigation={navigation} full={false} ctaColor={""} imageStyle={{ borderRadius: 10 }} />
                     )}
                     keyExtractor={(item, index) => index.toString()}
-                    extraData={[]}
+                    extraData={products}
                     onEndReachedThreshold={0.1}
                     //   ListFooterComponent={(moreproducts) ? <View row space="evenly" style={{ paddingVertical: 16 }}><View flex center><ActivityIndicator size="large" /></View></View> : null}
                     refreshing={refreshing}
