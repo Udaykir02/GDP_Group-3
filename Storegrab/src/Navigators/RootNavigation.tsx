@@ -12,6 +12,7 @@ import VendorSubscriptionPage from '../Components/Subscription';
 import ResetPasswordScreen from '../Components/ResetPasswordScreen';
 import Filters from '../Components/Filters';
 import VendorScreen from '../Components/VendorScreen';
+import Cart from '../Components/Cart';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export type RootStackParamList = {
   VendorSubscription: undefined;
   Filter: undefined;
   Vendor: undefined;
+  Cart: undefined;
 };
 
 const MainContainer = () => {
@@ -81,7 +83,8 @@ const RootNavigation = () => {
       <Stack.Screen name="Region" component={RegionContainer} />
       <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} />
       <Stack.Screen name="Filter" component={Filters} options={{headerShown: true, headerBackTitle: 'back'}}/>
-      <Stack.Screen name="Vendor" component={VendorScreen} />
+      <Stack.Screen name="Vendor" component={VendorScreen} options={{headerShown: true, headerBackTitle: 'back'}}/>
+      <Stack.Screen name="Cart" component={Cart} options={{headerShown: true, headerBackTitle: 'back'}}/>
     </Stack.Navigator>
   );
 };

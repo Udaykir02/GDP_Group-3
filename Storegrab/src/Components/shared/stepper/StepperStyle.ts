@@ -64,7 +64,7 @@ export default function <C>({ colors }:any) {
             fontSize: 16,
             fontWeight: 'bold',
             marginHorizontal: 4,
-            color: colors.textDarken,
+            color: "#000",
         },
         parContainer: {
             height: 12,

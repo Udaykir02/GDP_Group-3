@@ -1,32 +1,41 @@
 import React, { useState } from 'react';
-import { StyleSheet, Dimensions, ScrollView, TouchableOpacity, Alert, View } from 'react-native';
-import { Text, Icon, Checkbox } from 'galio-framework';
+import { StyleSheet, Dimensions, ScrollView, TouchableOpacity, Alert, View, Text } from 'react-native';
 
-import { Card, Input } from '../components';
-import articles from '../constants/articles';
-import argonTheme from '../constants/Theme';
-import NumericInput from '../components/NumericInput';
-import { Button } from "../components";
 const { width, height } = Dimensions.get('screen');
 
-import { connect } from 'react-redux';
-import propTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { removeUnits, removeUnits2, initialCart, addOrder } from '../actions/cartActions';
-import { removeProduct, removeProduct2, removeProduct3 } from '../actions/vendorActions';
 
-import RazorpayCheckout from 'react-native-razorpay';
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-import fire from '../firebase/Fire';
 
-const Cart = ({ cartitems, products, removeProduct, removeProduct2, removeUnits, removeUnits2, initialCart, removeProduct3, addOrder, choosenlocation, privatedata, choosenaddress, delivery_charge, navigation }) => {
+
+
+import { StateType } from '../../reducers';
+import CheckoutButton from './CheckoutButton';
+import MyIcon from './MyIcon';
+
+const Cart = ({ navigation }: any) => {
   const [tip, setTip] = useState(0);
-  const [charges] = useState(delivery_charge);
+  const [charges] = useState(20);
   const [fade, setFade] = useState(false);
   const [cash, setCash] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const removeCart = (object) => {
+  const {
+    cartitems,
+    orderitems,
+    orders,
+    moreorders,
+    lastorder,
+    order_refreshing,
+    favourites,
+    morefavourites,
+    lastfavourite,
+    fav_refreshing
+  } = useSelector((state:StateType)=>state.cart)
+
+  const dispatch = useDispatch()
+
+  const removeCart = (object: any) => {
     return new Promise(function(resolve, reject) {
       var remove_Cart = fire.functions('asia-east2').httpsCallable('removeCart');
       remove_Cart(object).then(function(result) {
@@ -37,7 +46,7 @@ const Cart = ({ cartitems, products, removeProduct, removeProduct2, removeUnits,
     })
   }
 
-  const updateCart = (object) => {
+  const updateCart = (object: any) => {
     return new Promise(function(resolve, reject) {
       var update_Cart = fire.functions('asia-east2').httpsCallable('updateCart');
       update_Cart(object).then(function(result) {
@@ -48,7 +57,7 @@ const Cart = ({ cartitems, products, removeProduct, removeProduct2, removeUnits,
     })
   }
 
-  const renderOptions = (i) => {
+  const renderOptions = (i: number) => {
     const cartunits = cartitems[i].units + 1;
     const total = cartunits * cartitems[i].cost;
     const objectID = cartitems[i].objectID;
@@ -67,7 +76,7 @@ const Cart = ({ cartitems, products, removeProduct, removeProduct2, removeUnits,
     updateCart({ product: cartitems[i] });
   }
 
-  const decrease = (i) => {
+  const decrease = (i: number) => {
     if (cartitems.length === 1) {
       if (cartitems[i].units === 1) {
         const objectID = cartitems[i].objectID;
@@ -148,25 +157,25 @@ const Cart = ({ cartitems, products, removeProduct, removeProduct2, removeUnits,
     return total;
   }
 
-  const renderItem = (item, i) => {
+  const renderItem = (item:any, i:number) => {
     return (
       <View key={i} style={styles.article}>
         <TouchableOpacity onPress={() => navigation.navigate('Pro', { 'id': item.objectID })}>
-          <Text style={styles.articleTitle}>{item.title}</Text>
+          <Text style={styles.articleTitle}>{item.name}</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.articleText}>{item.units}</Text>
+          <Text style={styles.articleText}>{item.qty}</Text>
           <Text style={styles.articleText}> x </Text>
-          <Text style={styles.articleText}>${item.cost}</Text>
+          <Text style={styles.articleText}>${item.price}</Text>
           <Text style={styles.articleText}> = </Text>
-          <Text style={styles.articleText}>${item.total}</Text>
+          <Text style={styles.articleText}>${item.qty * item.price}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => decrease(i)}>
-            <Icon name="minus" family="antdesign" size={18} style={{ color: '#e2bb88', marginRight: 10 }} />
+            <MyIcon name="AntDesign|minus" style={{ color: '#e2bb88', marginRight: 10, fontSize: 18 }} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => renderOptions(i)}>
-            <Icon name="plus" family="antdesign" size={18} style={{ color: '#e2bb88' }} />
+            <MyIcon name="AntDesign|plus" style={{ color: '#e2bb88', fontSize: 18 }} />
           </TouchableOpacity>
         </View>
       </View>
@@ -224,78 +233,45 @@ const Cart = ({ cartitems, products, removeProduct, removeProduct2, removeUnits,
     }
   }
 
-  if (cartitems.length === 0) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000' }}>
-        <Text style={{ color: '#fff' }}>No items in Cart</Text>
-      </View>
-    )
-  }
+//   if (cartitems.length === 0) {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000' }}>
+//         <Text style={{ color: '#fff' }}>No items in Cart</Text>
+//       </View>
+//     )
+//   }
 
   return (
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
-        {cartitems.map((item, i) => renderItem(item, i))}
+        {/* {cartitems.map((item, i) => renderItem(item, i))} */}
       </ScrollView>
       <View style={styles.total}>
         <View style={styles.totalPrice}>
           <Text style={{ fontFamily: 'HKGrotesk-Bold' }}>Total: </Text>
-          <Text style={{ fontFamily: 'HKGrotesk-Bold' }}>${getTotal()}</Text>
+          {/* <Text style={{ fontFamily: 'HKGrotesk-Bold' }}>${getTotal()}</Text> */}
         </View>
-        <Input
-          placeholder="Tip"
-          right
-          icon="percent"
-          family="antdesign"
-          iconSize={15}
-          iconColor="#e2bb88"
-          onChangeText={(text) => setTip(text)}
-          style={styles.inputs}
-        />
         <View style={{ flexDirection: 'row' }}>
-          <Checkbox
+          {/* <CheckBox
             color='#e2bb88'
             label='Cash on delivery'
             onChange={() => setCash(!cash)}
-          />
+          /> */}
         </View>
-        <View style={{ marginTop: 10 }}>
-          <Button color="error" style={{ width: 150 }} onPress={() => makePayment()}>{loading ? <SkeletonPlaceholder>
-            <View style={{ borderRadius: 10, width: 150, height: 35 }} />
-          </SkeletonPlaceholder> : 'Checkout'}</Button>
-        </View>
+        <CheckoutButton onPress={()=>{}} loading={false} />
       </View>
     </View>
   )
 }
 
-Cart.propTypes = {
-  removeUnits: propTypes.func.isRequired,
-  removeUnits2: propTypes.func.isRequired,
-  removeProduct: propTypes.func.isRequired,
-  removeProduct2: propTypes.func.isRequired,
-  removeProduct3: propTypes.func.isRequired,
-  addOrder: propTypes.func.isRequired,
-  initialCart: propTypes.func.isRequired,
-}
 
-const mapStateToProps = (state) => ({
-  cartitems: state.cart.cartitems,
-  products: state.vendor.products,
-  choosenlocation: state.location,
-  privatedata: state.auth.privatedata,
-  choosenaddress: state.address,
-  delivery_charge: state.delivery,
-});
-
-export default connect(mapStateToProps, { removeUnits, removeUnits2, removeProduct, removeProduct2, removeProduct3, addOrder, initialCart })(Cart);
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000'
   },
   articles: {
     width: width - 16 * 2,
@@ -325,7 +301,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: '#e2bb88',
-    backgroundColor: '#000000'
   },
   totalPrice: {
     flexDirection: 'row',

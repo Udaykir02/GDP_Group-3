@@ -1,5 +1,6 @@
 var nodemailer = require('nodemailer');
 var User = require('../models/account');
+const Inventory = require('../models/inventory')
 const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
@@ -164,7 +165,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
 
     // Return the token
-    res.status(200).json({ token });
+    res.status(200).json({ token: token, userData: { userId: user.userId, email: user.username, fname: user.fname, lname: user.lname, emailVerified: user.emailVerified, address: user.address, vendors: user.vendors, notificationActive: user.notificationActive, vendorpreferences: user.vendorpreferences, userRecomendations: user.userRecomendations } });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -237,6 +238,79 @@ const resetPasswordPostToken = async (req, res) => {
   }
 }
 
+// Controller function to add inventory items to the user's cart and update inventory quantity
+const addToCart = async (userId, skuId, qty) => {
+  try {
+    // Find the user by userId
+    const user = await User.findOne({ userId });
+
+    if (!user) {
+      return { success: false, message: 'User not found' };
+    }
+
+    // Find the inventory item by skuId
+    const inventoryItem = await Inventory.findOne({ skuId });
+
+    if (!inventoryItem) {
+      return { success: false, message: 'Inventory item not found' };
+    }
+
+    // Check if the requested quantity is available
+    if (inventoryItem.qty < qty) {
+      return { success: false, message: 'Insufficient quantity available' };
+    }
+
+    // Update the inventory quantity
+    inventoryItem.qty -= qty;
+    await inventoryItem.save();
+
+    // Check if the item already exists in the user's cart
+    const existingCartItemIndex = user.cart.findIndex(item => item.skuId === skuId);
+
+    if (existingCartItemIndex !== -1) {
+      // Update the quantity of the existing item in the cart
+      user.cart[existingCartItemIndex].qty += qty;
+    } else {
+      // Add the item to the cart if it doesn't exist
+      user.cart.push({
+        skuId: skuId,
+        item: inventoryItem.item,
+        price: inventoryItem.price,
+        qty: qty,
+        size: inventoryItem.size,
+        features: inventoryItem.features,
+        description: inventoryItem.description,
+        categories: inventoryItem.categories,
+        image: inventoryItem.image,
+        brand: inventoryItem.brand
+      });
+    }
+
+    // Save the updated user document
+    await user.save();
+
+    return { success: true, message: 'Item added to cart successfully' };
+  } catch (error) {
+    console.error('Error adding item to cart:', error);
+    return { success: false, message: 'Error adding item to cart' };
+  }
+};
+
+const addToCartController = async (req, res) => {
+  const { userId, skuId, qty } = req.body;
+
+  try {
+    const result = await addToCart(userId, skuId, qty);
+    if (result.success) {
+      res.status(200).json({ message: result.message });
+    } else {
+      res.status(400).json({ error: result.message });
+    }
+  } catch (error) {
+    console.error('Error adding item to cart:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
 
 
 
@@ -253,4 +327,4 @@ const resetPasswordPostToken = async (req, res) => {
 //   // Other user-related controller functions...
 // };
 
-module.exports = { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken }
+module.exports = { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController }

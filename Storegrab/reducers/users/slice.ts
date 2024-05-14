@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserType, LoginPayload, LoginSuccessPayload, LoginFailurePayload, RegisterFailurePayload, LogoutFailurePayload, VerifyOtpSuccessPayload } from './types';
+import { UserType, LoginPayload, LoginSuccessPayload, LoginFailurePayload, RegisterFailurePayload, LogoutFailurePayload, VerifyOtpSuccessPayload, UserData } from './types';
 
 interface AuthState {
+    user: UserData | null;
     token: string | null;
     error: string | null;
     loading: boolean;
@@ -9,6 +10,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+    user: null,
     token: null,
     error: null,
     loading: false,
@@ -20,7 +22,8 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         loginSuccess: (state, action: PayloadAction<LoginSuccessPayload>) => {
-            state.token = action.payload;
+            state.token = action.payload.token;
+            state.user = action.payload.userData
             state.error = null;
         },
         loginFailure: (state, action: PayloadAction<LoginFailurePayload>) => {

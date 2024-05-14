@@ -57,6 +57,7 @@ import {
 import createToBeImplementedStyle from "./HomeContainerStyle";
 import Prodcard from "../../Components/Prodcard";
 import { getProductsRequest } from "../../../actions/vendorActions";
+import MyIcon from "../../Components/MyIcon";
 // import Prodcard from "../components/Prodcard";
 const { width, height } = Dimensions.get("screen");
 
@@ -100,7 +101,7 @@ const HomeContainer = ({
     const styles = createToBeImplementedStyle();
     const { cartitems, orderitems, orders, moreorders, lastorder, order_refreshing, favourites, morefavourites, lastfavourite, fav_refreshing } = useSelector((state: any) => state.cart)
     const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor } = useSelector((state: any) => state.vendor)
-    const { token } = useSelector((state:any)=>state.auth)
+    const { token, user } = useSelector((state:any)=>state.auth)
     const dispatch = useDispatch();
     useEffect(()=>{
         if(selectedVendor){
@@ -209,59 +210,33 @@ const HomeContainer = ({
                     style={styles.articles}
                 />
             </View>: null}
-            {/* {(cartitems.length > 0) ?
-                <View flex={0.10} row style={styles.shadow}>
-                    <View flex middle >
-                        <Button color="success" style={styles.optionsButton} onPress={() => { navigation.navigate('Cart') }}>
-                            <View row style={{ width: 'auto' }}>
-                                <View flex={0.6} middle left>
-                                    <Text bold size={12} color="#fff">
+            {(user?.cart?.length>0)?
+                <View style={[styles.shadow]}>
+                    <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center'}}>
+                        <TouchableOpacity  style={styles.optionsButton} onPress={() => { navigation.navigate('Cart') }}>
+                            <View style={{ width: 'auto', flexDirection: 'row' }}>
+                                <View style={{ width: '70%'}}>
+                                    <Text>
                                         {cartitems.length + ((cartitems.length === 1) ? ' ITEM' : ' ITEMS')}
                                     </Text>
-                                    <Text bold size={12} color="#fff">
-                                        {'\u20B9' + getTotal()}<Text p size={8} color="#fff"> plus charges</Text>
+                                    <Text>
+                                        {'\u20B9' + getTotal()}<Text> plus charges</Text>
                                     </Text>
                                 </View>
-                                <View flex={0.4} middle>
-                                    <Text bold size={16} color="#fff">
-                                        View Cart <Icon family='Entypo' name='controller-play' size={15} color="#fff" />
+                                <View style={{ justifyContent: 'center', alignItems: 'flex-end'}}>
+                                    <Text>
+                                        View Cart <MyIcon name='Entypo|controller-play' style={{ fontSize: 15, color: "#fff"}} />
                                     </Text>
                                 </View>
                             </View>
-                        </Button>
+                        </TouchableOpacity>
                     </View>
-                </View> : null} */}
+                </View>:null}
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    navbar: {
-        paddingVertical: 0,
-        paddingBottom: 16 * 1,
-        paddingTop: 16,
-        zIndex: 5,
-    },
-    title: {
-        width: '100%',
-        color: "#32325D",
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    shadow: {
-        width: width,
-        backgroundColor: '#fff',
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 6,
-        shadowOpacity: 0.2,
-        elevation: 3,
-    },
-    optionsButton: {
-        width: "92%",
-        paddingHorizontal: 16,
-    },
-});
+
 
 
 export default HomeContainer;

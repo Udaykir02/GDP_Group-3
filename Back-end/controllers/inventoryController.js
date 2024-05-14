@@ -61,15 +61,15 @@ const getInventoryBySkuId = async (req, res) => {
 const updateInventory = async (req, res) => {
   try {
     // Extract inventory ID from request parameters
-    const { inventoryId, skuId, item, price, size, features, description, categories, image, brand } = req.body;
+    const { skuId, item, price, size, features, description, categories, image, brand } = req.body;
 
     // Check if the inventory ID is valid
-    if (!mongoose.Types.ObjectId.isValid(inventoryId)) {
+    if (!mongoose.Types.ObjectId.isValid(skuId)) {
       return res.status(400).json({ error: 'Invalid inventory ID' });
     }
 
     // Find the inventory by ID and update it with the new data from the request body
-    await Inventory.findByIdAndUpdate(inventoryId, {
+    await Inventory.findByIdAndUpdate(skuId, {
       skuId: skuId,
       item: item,
       price: price,
