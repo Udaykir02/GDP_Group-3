@@ -12,7 +12,7 @@ const AccountContainer: React.FC = () => {
 
   const { colors } = useAppTheme();
   const dispatch = useDispatch(); // Get dispatch function from react-redux
- const navigation = useNavigation()
+  const navigation = useNavigation()
   // Logout function
   const handleLogout = () => {
     dispatch(logoutRequest()); // Dispatch the logout action
@@ -26,7 +26,7 @@ const AccountContainer: React.FC = () => {
   return (
     <AppPageWrapper>
       <View>
-      <TouchableOpacity onPress={handleNavigateToSubscription}>
+        <TouchableOpacity onPress={handleNavigateToSubscription}>
           <Text style={{ marginTop: 10, color: colors.primary }}>Vendor Subscription</Text>
         </TouchableOpacity>
         {/* Logout button */}

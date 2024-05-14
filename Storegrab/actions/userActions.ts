@@ -47,3 +47,8 @@ export const resetPasswordRequest = (email: any, newPassword:any, token:any) => 
     type: 'PASSWORD_RESET_REQUEST',
     payload: { email, newPassword, token },
 });
+
+export const addToCartRequest = (userId: any, skuId: any, qty: any, token: any ) => ({
+    type: 'ADD_TO_CART_REQUEST',
+    payload: { userId, skuId, qty, token },
+})

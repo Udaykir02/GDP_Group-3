@@ -10,14 +10,18 @@ import StepperCase from './StepperCase';
 import ProductStepper from './ProductStepper';
 
 import createStepperStyle from './StepperStyle';
+import { UserCartType } from '../../../../reducers/users/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartRequest } from '../../../../actions/userActions';
 interface IProps {
   par: number;
   quantity: number;
   deal: boolean;
   isCase: boolean;
-  handleTextInputFocus: () => void
+  handleTextInputFocus: () => void,
+  inventory: UserCartType
 }
-const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputFocus }: IProps) => {
+const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputFocus, inventory }: IProps) => {
   const theme: AppTheme = useTheme();
 
   const styles = createStepperStyle(theme)
@@ -28,6 +32,9 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
   const [borderColor, setBorderColor] = useState(theme.colors.primary);
   const animationMinus = useRef(new Animated.Value(0)).current;
   const animationPlus = useRef(new Animated.Value(0)).current;
+  const { user, token } = useSelector((state: any)=> state.auth)
+
+  const dispatch = useDispatch();
 
   const dynamicShadowStyle = {
     ...Platform.select({
@@ -43,7 +50,12 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     }),
   };
 
-  const handlePress = (change:any) => {
+
+
+  const handlePress = (change: any) => {
+    const objectPattern = { userId: user?.userId, skuId: inventory?.skuId, qty: change, token: token } 
+    console.log(objectPattern);
+    dispatch(addToCartRequest(user?.userId,inventory?.skuId, change,token ));
     const animation = change > 0 ? animationPlus : animationMinus;
     if (change > 0) {
       setShadowColor(theme.colors.primary)
@@ -72,27 +84,10 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
       }),
     ]).start();
 
-
+    
     setCount((prevCount) => Math.max(0, prevCount + change));
   };
 
-  const updateCount = (text:any) => {
-    const value = parseInt(text) > par ? count : parseInt(text);
-    if (value) {
-      if (count > value) {
-        setShadowColor(theme.colors.coreMarkOrange)
-        setBorderColor(theme.colors.coreMarkOrange)
-      }
-      else {
-        setShadowColor(theme.colors.primary)
-        setBorderColor(theme.colors.primary)
-      }
-
-
-    }
-
-    setCount(value || 0);
-  }
 
 
   const animatedMinusButtonStyle = {
@@ -122,7 +117,8 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     borderStyle: 'dotted' as const,
   };
 
-  const formatNumber = (number:any) => {
+  const formatNumber = (number: any) => {
+    console.log("skjde" + number)
     return new Intl.NumberFormat().format(number);
   };
 
@@ -148,26 +144,27 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
 
         <View style={{ ...styles.innerContainer, backgroundColor: count > 0 ? theme.colors.primarySuperLight : theme.colors.backgroundDefault }}>
 
-          <TouchableOpacity onPress={() => handlePress(-1)} disabled={count === 0}>
-            <Animated.View style={[styles.button, animatedMinusButtonStyle]}>
-              <Text style={{ ...styles.buttonText, color: count > 0 ? theme.colors.primary : "#C1C7CD" }}><MaterialCommunityIcons name="minus" size={32} /></Text>
-            </Animated.View>
-          </TouchableOpacity>
+          {(count === 0) ? <><TouchableOpacity onPress={() => handlePress(1)}><View style={styles.inputContainer}>
+            <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{'Add'}</Text>
+          </View></TouchableOpacity>
+            <TouchableOpacity onPress={() => handlePress(1)}>
+              <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
+                <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
+              </Animated.View>
+            </TouchableOpacity></> : <><TouchableOpacity onPress={() => handlePress(-1)} disabled={count === 0}>
+              <Animated.View style={[styles.button, animatedMinusButtonStyle]}>
+                <Text style={{ ...styles.buttonText, color: count > 0 ? theme.colors.primary : "#C1C7CD" }}><MaterialCommunityIcons name="minus" size={32} /></Text>
+              </Animated.View>
+            </TouchableOpacity>
 
-          <View style={styles.inputContainer}>
-              <TextInput
-                style={{ ...styles.countInput, marginBottom: 0 }}
-                value={formatNumber(count.toString())}
-                onChangeText={(text) => updateCount(text)}
-                keyboardType="number-pad"
-                maxLength={5}
-              />
-          </View>
-          <TouchableOpacity onPress={() => handlePress(1)}>
-            <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
-              <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
-            </Animated.View>
-          </TouchableOpacity>
+            <View style={styles.inputContainer}>
+              <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{count}</Text>
+            </View>
+            <TouchableOpacity onPress={() => handlePress(1)}>
+              <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
+                <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
+              </Animated.View>
+            </TouchableOpacity></>}
         </View>
       </View>}
     </View>

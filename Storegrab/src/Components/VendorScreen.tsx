@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Linking, Dimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import { argonTheme } from '../constants';
 const  { width, height} = Dimensions.get('screen');
 const VendorScreen = ({ navigation, route }: any) => {
     const [routeCoordinates, setRouteCoordinates] = useState<any>([]);
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: '#68a0cf',
+        backgroundColor: argonTheme.COLORS.ERROR,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#fff',

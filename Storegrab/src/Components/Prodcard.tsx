@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Alert, View, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -146,23 +146,6 @@ const Prodcard: React.FC<ProdcardProps> = ({
         // });
     };
 
-    const renderOptions = () => {
-        if (shop.cta && cartitems.length > 0) {
-            navigation.navigate('Options', { product: item, shop, location });
-        } else {
-            Alert.alert(
-                'No service',
-                'This vendor is not accepting orders, Please try again later.',
-                [
-                    {
-                        text: 'Ok',
-                        onPress: () => { },
-                    },
-                ],
-                { cancelable: false }
-            );
-        }
-    };
 
     const decrease = () => {
         // if (item.units === 1 && item.cart.length === 1) {
@@ -203,6 +186,10 @@ const Prodcard: React.FC<ProdcardProps> = ({
         styles.shadow,
     ];
 
+    useEffect(()=>{
+        console.log("This-is-a-check"+item)
+      },[])
+
     return (
         <TouchableWithoutFeedback onPress={() => setIsHorizontal(!isHorizontal)}>
             <View style={[cardContainer, { flexDirection: isHorizontal ? 'row' : 'column' }]}>
@@ -218,7 +205,7 @@ const Prodcard: React.FC<ProdcardProps> = ({
                         </View>
                         <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center': 'flex-end', justifyContent: isHorizontal ?'center':'flex-end' }}>
                             <NumericInput
-                                value={item.units}
+                                value={item.qty}
                                 decrease={decrease}
                                 onChange={(value: any) => { }}
                                 editable={false}
@@ -232,7 +219,7 @@ const Prodcard: React.FC<ProdcardProps> = ({
                                 inputStyle={{ backgroundColor: '#f7ebeb', borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#adadad' }}
                                 rounded={true}
                                 textColor={'#32325D'}
-                                renderOptions={renderOptions}
+                                inventory={item}
                             />
                         </View>
                     </View>

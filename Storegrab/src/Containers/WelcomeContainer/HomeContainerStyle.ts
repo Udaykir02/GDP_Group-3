@@ -1,3 +1,4 @@
+import { argonTheme } from '../../constants';
 import { Dimensions, StyleSheet } from 'react-native';
 const { width, height } = Dimensions.get('screen');
 
@@ -29,6 +30,34 @@ export default function <C>() {
         },
         articles: {
             width: 'auto',
+        },
+        navbar: {
+            paddingVertical: 0,
+            paddingBottom: 16 * 1,
+            paddingTop: 16,
+            zIndex: 5,
+        },
+        shadow: {
+            position: 'absolute',
+            bottom: 5,
+            flex: 0.10,
+            flexDirection: 'row',
+            width: width,
+            backgroundColor: '#ffffff',
+            shadowColor: 'black',
+            shadowOffset: { width: 0, height: 2 },
+            shadowRadius: 6,
+            shadowOpacity: 0.2,
+            elevation: 3,
+            borderRadius:8
+        },
+        optionsButton: {
+            width: "92%",
+            height: 50,
+            paddingHorizontal: 16,
+            backgroundColor: argonTheme.COLORS.ERROR,
+            borderRadius:8,
+            justifyContent: 'center'
         },
     })
 }

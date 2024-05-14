@@ -12,6 +12,22 @@ const AddressSchema = new Schema({
     zip: String
 });
 
+const UserCartSchema = new Schema({
+    skuId: String,
+    item: String,
+    price: Number,
+    qty: Number,
+    size: {
+      h: Number,
+      l: Number,
+      w: Number
+    },
+    features: String,
+    categories: [String],
+    image: String,
+    description: String,
+    brand: String
+  })
 // Define the main user schema
 const UserSchema = new Schema({
     userId: { type: String, required: true, unique: true },
@@ -34,7 +50,8 @@ const UserSchema = new Schema({
     },
     ephemeralKey: {
         type: Object // This will hold the ephemeral key object
-    }
+    },
+    cart: [UserCartSchema]
 });
 
 UserSchema.plugin(passportLocalMongoose);

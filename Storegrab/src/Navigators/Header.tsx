@@ -84,6 +84,17 @@ const Header: React.FC<Props> = ({ name }) => {
       </TouchableOpacity>
     );
   };
+
+  const getTitle = (name: string) => {
+      switch(name){
+        case "Vendors":
+          return DottedUnderlineText(address?.formatted_address?.split(',')[0])
+        case "HomeScreen":
+          return selectedVendor? selectedVendor.vendor_name : name;
+        default:
+          return name 
+      }
+  }
   return (
     <>
       <Appbar.Header mode="small" elevated style={{ backgroundColor: colors.brightWhite, marginRight: 16 }}>
@@ -93,7 +104,7 @@ const Header: React.FC<Props> = ({ name }) => {
           name != 'Resources' &&
           name != 'Account' && <Appbar.BackAction onPress={() => navigation.goBack()} />}
         {name != 'Home' && name != 'Login' ? (
-          <Appbar.Content title={name == 'Vendors'?DottedUnderlineText(address?.formatted_address?.split(',')[0]):name} titleStyle={styles.title} />
+          <Appbar.Content title={getTitle(name)} titleStyle={styles.title} />
         ) : (
           <Appbar.Content title={<Image source={require('../Assets/images/logo.png')} style={styles.image} />} />
         )}

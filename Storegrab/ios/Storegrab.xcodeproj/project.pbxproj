@@ -11,8 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1B95D1A8A700571296B70EAE /* libPods-Storegrab.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A9BD72C8CB54EE724C533A /* libPods-Storegrab.a */; };
 		6132EF182BDFF13200BBE14D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6132EF172BDFF13200BBE14D /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9A1D062EF1F0B91421AF1E50 /* libPods-Storegrab-StoregrabTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 388BEBE099F8AB0169DD26D5 /* libPods-Storegrab-StoregrabTests.a */; };
 		B1AAD1A02BB73B0E008DECEC /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1AAD18D2BB73B0E008DECEC /* Fontisto.ttf */; };
 		B1AAD1A12BB73B0E008DECEC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1AAD18E2BB73B0E008DECEC /* Octicons.ttf */; };
 		B1AAD1A22BB73B0E008DECEC /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1AAD18F2BB73B0E008DECEC /* Feather.ttf */; };
@@ -32,8 +34,6 @@
 		B1AAD1B02BB73B0E008DECEC /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1AAD19D2BB73B0E008DECEC /* SimpleLineIcons.ttf */; };
 		B1AAD1B12BB73B0E008DECEC /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1AAD19E2BB73B0E008DECEC /* FontAwesome6_Brands.ttf */; };
 		B1AAD1B22BB73B0E008DECEC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1AAD19F2BB73B0E008DECEC /* MaterialIcons.ttf */; };
-		CF840349F05EC8F50F9FA1D6 /* libPods-Storegrab.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FEBA5D692D0787CAD27BF5 /* libPods-Storegrab.a */; };
-		F0BCBCE737E64B794555486B /* libPods-Storegrab-StoregrabTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DB2D49B89EA7CCF9FB479D9 /* libPods-Storegrab-StoregrabTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,18 +50,18 @@
 		00E356EE1AD99517003FC87E /* StoregrabTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoregrabTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* StoregrabTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoregrabTests.m; sourceTree = "<group>"; };
-		04FEBA5D692D0787CAD27BF5 /* libPods-Storegrab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storegrab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Storegrab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storegrab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Storegrab/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Storegrab/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Storegrab/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Storegrab/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Storegrab/main.m; sourceTree = "<group>"; };
-		2675C87F247C57539D5BF982 /* Pods-Storegrab.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab.release.xcconfig"; path = "Target Support Files/Pods-Storegrab/Pods-Storegrab.release.xcconfig"; sourceTree = "<group>"; };
-		3DB2D49B89EA7CCF9FB479D9 /* libPods-Storegrab-StoregrabTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storegrab-StoregrabTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2950DE81490E98F545A5D2FA /* Pods-Storegrab-StoregrabTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab-StoregrabTests.debug.xcconfig"; path = "Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests.debug.xcconfig"; sourceTree = "<group>"; };
+		388BEBE099F8AB0169DD26D5 /* libPods-Storegrab-StoregrabTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storegrab-StoregrabTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6132EF172BDFF13200BBE14D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Storegrab/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		71A9BD72C8CB54EE724C533A /* libPods-Storegrab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Storegrab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Storegrab/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		92A078A79C07B470C7C842B9 /* Pods-Storegrab-StoregrabTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab-StoregrabTests.release.xcconfig"; path = "Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests.release.xcconfig"; sourceTree = "<group>"; };
+		B06A86E8D6EE3D00746F7770 /* Pods-Storegrab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab.debug.xcconfig"; path = "Target Support Files/Pods-Storegrab/Pods-Storegrab.debug.xcconfig"; sourceTree = "<group>"; };
 		B1AAD18D2BB73B0E008DECEC /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		B1AAD18E2BB73B0E008DECEC /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		B1AAD18F2BB73B0E008DECEC /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -81,9 +81,9 @@
 		B1AAD19D2BB73B0E008DECEC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		B1AAD19E2BB73B0E008DECEC /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		B1AAD19F2BB73B0E008DECEC /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		CDF7D56C1CBEE40794EC786A /* Pods-Storegrab-StoregrabTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab-StoregrabTests.debug.xcconfig"; path = "Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE09E9132759FF1B94CC6DD7 /* Pods-Storegrab.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab.release.xcconfig"; path = "Target Support Files/Pods-Storegrab/Pods-Storegrab.release.xcconfig"; sourceTree = "<group>"; };
+		D63F575485DFDF008524161C /* Pods-Storegrab-StoregrabTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab-StoregrabTests.release.xcconfig"; path = "Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F4F3506A6C7D39F26FAB41DB /* Pods-Storegrab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storegrab.debug.xcconfig"; path = "Target Support Files/Pods-Storegrab/Pods-Storegrab.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0BCBCE737E64B794555486B /* libPods-Storegrab-StoregrabTests.a in Frameworks */,
+				9A1D062EF1F0B91421AF1E50 /* libPods-Storegrab-StoregrabTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF840349F05EC8F50F9FA1D6 /* libPods-Storegrab.a in Frameworks */,
+				1B95D1A8A700571296B70EAE /* libPods-Storegrab.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,8 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				04FEBA5D692D0787CAD27BF5 /* libPods-Storegrab.a */,
-				3DB2D49B89EA7CCF9FB479D9 /* libPods-Storegrab-StoregrabTests.a */,
+				71A9BD72C8CB54EE724C533A /* libPods-Storegrab.a */,
+				388BEBE099F8AB0169DD26D5 /* libPods-Storegrab-StoregrabTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -209,10 +209,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F4F3506A6C7D39F26FAB41DB /* Pods-Storegrab.debug.xcconfig */,
-				2675C87F247C57539D5BF982 /* Pods-Storegrab.release.xcconfig */,
-				CDF7D56C1CBEE40794EC786A /* Pods-Storegrab-StoregrabTests.debug.xcconfig */,
-				92A078A79C07B470C7C842B9 /* Pods-Storegrab-StoregrabTests.release.xcconfig */,
+				B06A86E8D6EE3D00746F7770 /* Pods-Storegrab.debug.xcconfig */,
+				BE09E9132759FF1B94CC6DD7 /* Pods-Storegrab.release.xcconfig */,
+				2950DE81490E98F545A5D2FA /* Pods-Storegrab-StoregrabTests.debug.xcconfig */,
+				D63F575485DFDF008524161C /* Pods-Storegrab-StoregrabTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -224,12 +224,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "StoregrabTests" */;
 			buildPhases = (
-				E9AF3B639380AAA5C0E2517B /* [CP] Check Pods Manifest.lock */,
+				BDB4897CEE49DB1BB076EF63 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				A7FBE09666C1704A26CD5967 /* [CP] Embed Pods Frameworks */,
-				EC1FEDC7E3F0236450AB57B2 /* [CP] Copy Pods Resources */,
+				7278C341D8EF4550765F8CC4 /* [CP] Embed Pods Frameworks */,
+				7B35E69242280E8502934A0F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -245,13 +245,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Storegrab" */;
 			buildPhases = (
-				38C8A27EC1484240C65988A8 /* [CP] Check Pods Manifest.lock */,
+				65DC58D6A0490E8A5C752FE8 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				C1966CA42711D4666B00336D /* [CP] Embed Pods Frameworks */,
-				1D5B2D4D009479D66F9814F4 /* [CP] Copy Pods Resources */,
+				C2BD6DB31F4ABBBB7DD61992 /* [CP] Embed Pods Frameworks */,
+				C72BB35427C2843097BB32DA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -354,24 +354,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		1D5B2D4D009479D66F9814F4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		38C8A27EC1484240C65988A8 /* [CP] Check Pods Manifest.lock */ = {
+		65DC58D6A0490E8A5C752FE8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,7 +376,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A7FBE09666C1704A26CD5967 /* [CP] Embed Pods Frameworks */ = {
+		7278C341D8EF4550765F8CC4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -410,24 +393,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C1966CA42711D4666B00336D /* [CP] Embed Pods Frameworks */ = {
+		7B35E69242280E8502934A0F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E9AF3B639380AAA5C0E2517B /* [CP] Check Pods Manifest.lock */ = {
+		BDB4897CEE49DB1BB076EF63 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -449,21 +432,38 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EC1FEDC7E3F0236450AB57B2 /* [CP] Copy Pods Resources */ = {
+		C2BD6DB31F4ABBBB7DD61992 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab-StoregrabTests/Pods-Storegrab-StoregrabTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C72BB35427C2843097BB32DA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storegrab/Pods-Storegrab-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -499,7 +499,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDF7D56C1CBEE40794EC786A /* Pods-Storegrab-StoregrabTests.debug.xcconfig */;
+			baseConfigurationReference = 2950DE81490E98F545A5D2FA /* Pods-Storegrab-StoregrabTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -526,7 +526,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92A078A79C07B470C7C842B9 /* Pods-Storegrab-StoregrabTests.release.xcconfig */;
+			baseConfigurationReference = D63F575485DFDF008524161C /* Pods-Storegrab-StoregrabTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -550,7 +550,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F4F3506A6C7D39F26FAB41DB /* Pods-Storegrab.debug.xcconfig */;
+			baseConfigurationReference = B06A86E8D6EE3D00746F7770 /* Pods-Storegrab.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -577,7 +577,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2675C87F247C57539D5BF982 /* Pods-Storegrab.release.xcconfig */;
+			baseConfigurationReference = BE09E9132759FF1B94CC6DD7 /* Pods-Storegrab.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

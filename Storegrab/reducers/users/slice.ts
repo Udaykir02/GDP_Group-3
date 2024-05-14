@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserType, LoginPayload, LoginSuccessPayload, LoginFailurePayload, RegisterFailurePayload, LogoutFailurePayload, VerifyOtpSuccessPayload } from './types';
+import { UserType, LoginPayload, LoginSuccessPayload, LoginFailurePayload, RegisterFailurePayload, LogoutFailurePayload, VerifyOtpSuccessPayload, UserData } from './types';
 
 interface AuthState {
+    user: UserData | null;
     token: string | null;
     error: string | null;
     loading: boolean;
@@ -9,6 +10,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+    user: null,
     token: null,
     error: null,
     loading: false,
@@ -20,7 +22,8 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         loginSuccess: (state, action: PayloadAction<LoginSuccessPayload>) => {
-            state.token = action.payload;
+            state.token = action.payload.token;
+            state.user = action.payload.userData
             state.error = null;
         },
         loginFailure: (state, action: PayloadAction<LoginFailurePayload>) => {
@@ -49,7 +52,7 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-        verifyOTPSuccess: (state,action: PayloadAction<VerifyOtpSuccessPayload>) => {
+        verifyOTPSuccess: (state, action: PayloadAction<VerifyOtpSuccessPayload>) => {
             state.resetToken = action.payload;
             state.loading = false;
             state.error = null;
@@ -66,11 +69,19 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        addToCartSuccess(state, action) {
+            state.loading = false;
+            state.user = action.payload.user;
+        },
+        addToCartFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload.error;
+        },
         // Define reducers for registration success and failure if needed
     },
 });
 
-export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure } = authSlice.actions;
+export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure } = authSlice.actions;
 
 
 export default authSlice.reducer;
