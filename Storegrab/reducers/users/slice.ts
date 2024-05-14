@@ -52,7 +52,7 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-        verifyOTPSuccess: (state,action: PayloadAction<VerifyOtpSuccessPayload>) => {
+        verifyOTPSuccess: (state, action: PayloadAction<VerifyOtpSuccessPayload>) => {
             state.resetToken = action.payload;
             state.loading = false;
             state.error = null;
@@ -69,11 +69,19 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        addToCartSuccess(state, action) {
+            state.loading = false;
+            state.user = action.payload.user;
+        },
+        addToCartFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload.error;
+        },
         // Define reducers for registration success and failure if needed
     },
 });
 
-export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure } = authSlice.actions;
+export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure } = authSlice.actions;
 
 
 export default authSlice.reducer;

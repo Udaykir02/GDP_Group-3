@@ -1,6 +1,7 @@
 // Define the type for the user data received from the server
 export interface UserType {
     token: string;
+    userData: UserData
     // Add other user properties if needed
 }
 

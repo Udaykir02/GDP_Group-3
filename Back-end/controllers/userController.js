@@ -289,7 +289,7 @@ const addToCart = async (userId, skuId, qty) => {
     // Save the updated user document
     await user.save();
 
-    return { success: true, message: 'Item added to cart successfully' };
+    return { success: true, data: {message: 'Item added to cart successfully', user: user} };
   } catch (error) {
     console.error('Error adding item to cart:', error);
     return { success: false, message: 'Error adding item to cart' };
@@ -302,7 +302,7 @@ const addToCartController = async (req, res) => {
   try {
     const result = await addToCart(userId, skuId, qty);
     if (result.success) {
-      res.status(200).json({ message: result.message });
+      res.status(200).json({ message: result.message, data: result.data });
     } else {
       res.status(400).json({ error: result.message });
     }

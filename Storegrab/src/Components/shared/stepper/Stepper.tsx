@@ -11,6 +11,8 @@ import ProductStepper from './ProductStepper';
 
 import createStepperStyle from './StepperStyle';
 import { UserCartType } from '../../../../reducers/users/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartRequest } from '../../../../actions/userActions';
 interface IProps {
   par: number;
   quantity: number;
@@ -30,6 +32,9 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
   const [borderColor, setBorderColor] = useState(theme.colors.primary);
   const animationMinus = useRef(new Animated.Value(0)).current;
   const animationPlus = useRef(new Animated.Value(0)).current;
+  const { user, token } = useSelector((state: any)=> state.auth)
+
+  const dispatch = useDispatch();
 
   const dynamicShadowStyle = {
     ...Platform.select({
@@ -45,7 +50,12 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     }),
   };
 
+
+
   const handlePress = (change: any) => {
+    const objectPattern = { userId: user?.userId, skuId: inventory?.skuId, qty: change, token: token } 
+    console.log(objectPattern);
+    dispatch(addToCartRequest(user?.userId,inventory?.skuId, change,token ));
     const animation = change > 0 ? animationPlus : animationMinus;
     if (change > 0) {
       setShadowColor(theme.colors.primary)
@@ -74,7 +84,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
       }),
     ]).start();
 
-
+    
     setCount((prevCount) => Math.max(0, prevCount + change));
   };
 

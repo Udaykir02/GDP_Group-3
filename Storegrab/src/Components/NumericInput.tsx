@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, Platform, TouchableOpacity, TouchableNativeFeedback, StyleSheet } from 'react-native';
 
 // import { Text } from 'galio-framework';
@@ -63,7 +63,8 @@ interface NumericInputProps {
   onBlur?: () => void;
   onFocus?: () => void;
   renderOptions?: () => void;
-  decrease: any
+  decrease: any,
+  inventory?: any
 }
 
 const NumericInput: React.FC<NumericInputProps> = (props:any) => {
@@ -135,9 +136,13 @@ const NumericInput: React.FC<NumericInputProps> = (props:any) => {
     
   }
 
+  useEffect(()=>{
+    console.log("This-is-a-check"+props.inventory)
+  },[])
+
   return (
     <View style={[styles.inputContainerPlusMinus, props.containerStyle]}>
-        <Stepper par={10} quantity={0} deal={true} isCase={true} handleTextInputFocus={handleTextInputFocus}/>
+        <Stepper par={10} quantity={0} deal={true} isCase={true} handleTextInputFocus={handleTextInputFocus} inventory={props.inventory}/>
       {/* <Button onPress={props.type === 'plus-minus' ? dec : undefined} style={[styles.leftButtonStyle, { backgroundColor: "#000" }]}>
         <MyIcon name={props.type === 'plus-minus' ? 'md-remove' : 'ios-arrow-down'} style={[styles.icon,{fontSize: 30}]} />
       </Button>
