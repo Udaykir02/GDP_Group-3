@@ -165,7 +165,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
 
     // Return the token
-    res.status(200).json({ token: token, userData: { userId: user.userId, email: user.username, fname: user.fname, lname: user.lname, emailVerified: user.emailVerified, address: user.address, vendors: user.vendors, notificationActive: user.notificationActive, vendorpreferences: user.vendorpreferences, userRecomendations: user.userRecomendations } });
+    res.status(200).json({ token: token, userData: { userId: user.userId, email: user.username, fname: user.fname, lname: user.lname, emailVerified: user.emailVerified, address: user.address, vendors: user.vendors, notificationActive: user.notificationActive, vendorpreferences: user.vendorpreferences, userRecomendations: user.userRecomendations, cart: user.cart } });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -242,6 +242,7 @@ const resetPasswordPostToken = async (req, res) => {
 const addToCart = async (userId, skuId, qty) => {
   try {
     // Find the user by userId
+    console.log(userId+"--->")
     const user = await User.findOne({ userId });
 
     if (!user) {
@@ -304,11 +305,38 @@ const addToCartController = async (req, res) => {
     if (result.success) {
       res.status(200).json({ message: result.message, data: result.data });
     } else {
+      console.log(result.message)
       res.status(400).json({ error: result.message });
     }
   } catch (error) {
+    
     console.error('Error adding item to cart:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
+const renewToken = async (req, res) => {
+  try {
+    const refreshToken = req.body.refreshToken; // Assuming the refresh token is sent in the request body
+
+    // Verify the refresh token
+    const decoded = jwt.verify(refreshToken, 'your_secret_key');
+
+    // Check if the user exists
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Generate a new access token
+    const accessToken = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '12h' });
+
+    // Return the new access token
+    res.status(200).json({ token: accessToken, userData: { userId: user?.userId, email: user?.username, fname: user?.fname, lname: user?.lname, emailVerified: user?.emailVerified, address: user?.address, vendors: user?.vendors, notificationActive: user?.notificationActive, vendorpreferences: user?.vendorpreferences, userRecomendations: user?.userRecomendations, cart: user?.cart } });
+  } catch (error) {
+    // If token verification fails or any other error occurs, return an error response
+    res.status(401).json({ message: 'Invalid or expired refresh token' });
   }
 }
 
@@ -327,4 +355,4 @@ const addToCartController = async (req, res) => {
 //   // Other user-related controller functions...
 // };
 
-module.exports = { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController }
+module.exports = { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController, renewToken }

@@ -6,13 +6,14 @@ import Footer from './Footer';
 import RegisterContainer from '../Containers/RegisterContainer/RegisterContainer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContainer from '../Containers/AuthContainer/AuthContainer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RegionContainer from '../Components/Region';
 import VendorSubscriptionPage from '../Components/Subscription';
 import ResetPasswordScreen from '../Components/ResetPasswordScreen';
 import Filters from '../Components/Filters';
 import VendorScreen from '../Components/VendorScreen';
 import Cart from '../Components/Cart';
+import { renewTokenRequest } from '../../actions/userActions';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -36,11 +37,21 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const RootNavigation = () => {
   const [accessToken,setAccessToken] = React.useState('')
   const token = useSelector((state:any) => state.auth.token);
+  const dispatch = useDispatch();
+  React.useEffect(()=>{
+    renewToken()
+  },[])
   React.useEffect(()=>{
     getTokenFromStorage()
   },[token])
 
-  
+  const renewToken = async ()=>{
+    const token = await AsyncStorage.getItem('auth_token');
+    if(token !== null){
+      dispatch(renewTokenRequest(token))
+    }
+  }
+
   const getTokenFromStorage = async () => {
     try {
       const token = await AsyncStorage.getItem('auth_token');

@@ -54,7 +54,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
 
   const handlePress = (change: any) => {
     const objectPattern = { userId: user?.userId, skuId: inventory?.skuId, qty: change, token: token } 
-    console.log(objectPattern);
+    console.log(JSON.stringify(user?.userId)+"-->");
     dispatch(addToCartRequest(user?.userId,inventory?.skuId, change,token ));
     const animation = change > 0 ? animationPlus : animationMinus;
     if (change > 0) {

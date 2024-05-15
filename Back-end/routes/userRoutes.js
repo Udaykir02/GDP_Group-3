@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController } = require("../controllers/userController");
+const { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController, renewToken } = require("../controllers/userController");
 const { verifyTokenAndUser } = require('../controllers/verifyTokenAndUser');
 
 // // Route for adding users
@@ -28,6 +28,8 @@ router.post('/verify',verifyOtp);
 router.post('/password-reset',verifyTokenAndUser,resetPasswordPostToken)
 
 router.post('/addToCart',verifyTokenAndUser,addToCartController)
+
+router.post('/renewToken',verifyTokenAndUser, renewToken)
 
 
 

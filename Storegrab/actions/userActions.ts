@@ -52,3 +52,8 @@ export const addToCartRequest = (userId: any, skuId: any, qty: any, token: any )
     type: 'ADD_TO_CART_REQUEST',
     payload: { userId, skuId, qty, token },
 })
+
+export const renewTokenRequest = (token:any) => ({
+    type: 'RENEW_TOKEN_REQUEST',
+    payload: token,
+});
