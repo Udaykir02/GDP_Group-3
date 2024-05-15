@@ -178,7 +178,13 @@ const HomeContainer = ({
     };
 
     const getTotal = () => {
-        // Your getTotal logic here
+        let total = 0;
+        let cart = user?.cart;
+        for (let i = 0; i < cart.length; i++) {
+            console.log(cart[i])
+            total += cart[i].qty * cart[i].price;
+        }
+        return total
     };
 
     return (
@@ -210,17 +216,17 @@ const HomeContainer = ({
                     style={styles.articles}
                 />
             </View>: null}
-            {(user?.cart?.length>0)?
+            {/* {(user?.cart?.length>0)?
                 <View style={[styles.shadow]}>
                     <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center'}}>
                         <TouchableOpacity  style={styles.optionsButton} onPress={() => { navigation.navigate('Cart') }}>
                             <View style={{ width: 'auto', flexDirection: 'row' }}>
                                 <View style={{ width: '70%'}}>
                                     <Text>
-                                        {cartitems.length + ((cartitems.length === 1) ? ' ITEM' : ' ITEMS')}
+                                        {user?.cart?.length + ((user?.cart?.length === 1) ? ' ITEM' : ' ITEMS')}
                                     </Text>
                                     <Text>
-                                        {'\u20B9' + getTotal()}<Text> plus charges</Text>
+                                        {'\u0024' + getTotal()}<Text> plus charges</Text>
                                     </Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'flex-end'}}>
@@ -231,7 +237,7 @@ const HomeContainer = ({
                             </View>
                         </TouchableOpacity>
                     </View>
-                </View>:null}
+                </View>:null} */}
         </View>
     );
 };

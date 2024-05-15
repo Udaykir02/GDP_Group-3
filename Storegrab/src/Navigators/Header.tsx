@@ -19,6 +19,7 @@ const Header: React.FC<Props> = ({ name }) => {
   const navigation = useNavigation();
   const address = useSelector((state:any)=> state.location.defaultLocation)
   const { selectedVendor } = useSelector((state:any)=> state.vendor)
+  const { user } = useSelector((state:any)=> state.auth)
   const dispatch = useDispatch();
   const styles = StyleSheet.create({
     viewContainer: {
@@ -56,6 +57,15 @@ const Header: React.FC<Props> = ({ name }) => {
       borderBottomColor: 'black',
       borderStyle: 'dotted',
       flex: 1,
+    },
+    redDot: {
+      position: 'absolute',
+      backgroundColor: 'red',
+      width: 8,
+      height: 8,
+      borderRadius: 5,
+      top: 25, // Adjust position as needed
+      right: 20, // Adjust position as needed
     },
   });
   const { colors }: AppTheme = useTheme();
@@ -109,7 +119,8 @@ const Header: React.FC<Props> = ({ name }) => {
           <Appbar.Content title={<Image source={require('../Assets/images/logo.png')} style={styles.image} />} />
         )}
         {name != 'Scan To Order' && (
-          <Appbar.Action icon="magnify" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => {}} />
+          <><Appbar.Action icon="magnify" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => {}} />
+          <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={()=>{ navigation.navigate('Cart')}}  />{(user?.cart?.length>0)?<View style={styles.redDot} />:null}</>
         )}
       </Appbar.Header>
     </>

@@ -7,9 +7,10 @@ const paymentSheetController = async (req, res) => {
     try {
         const { amount } = req.body;
 
+        
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amount,
-            currency: currency,
+            currency: 'usd',
             customer: req.user.customer.id,
             // In the latest version of the API, specifying the `automatic_payment_methods` parameter
             // is optional because Stripe enables its functionality by default.
@@ -18,6 +19,7 @@ const paymentSheetController = async (req, res) => {
             },
         });
 
+        console.log(paymentIntent)
         res.status(200).json({
             paymentIntent: paymentIntent.client_secret,
             ephemeralKey: req.user.ephemeralKey.secret,
@@ -26,6 +28,7 @@ const paymentSheetController = async (req, res) => {
         });
     }
     catch (error) {
+        console.log(error.message)
         res.status(500).json({ message: error.message });
     }
 

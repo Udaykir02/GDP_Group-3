@@ -28,6 +28,7 @@ const authSlice = createSlice({
         },
         loginFailure: (state, action: PayloadAction<LoginFailurePayload>) => {
             state.error = action.payload;
+            state.token  = null;
         },
         registerSuccess: (state) => {
             state.loading = false;
@@ -71,17 +72,25 @@ const authSlice = createSlice({
         },
         addToCartSuccess(state, action) {
             state.loading = false;
-            state.user = action.payload.user;
         },
         addToCartFailure(state, action) {
             state.loading = false;
             state.error = action.payload.error;
         },
+        renewTokenSuccess: (state, action: PayloadAction<LoginSuccessPayload>) => {
+            state.token = action.payload.token;
+            state.user = action.payload.userData
+            state.error = null;
+        },
+        renewTokenFailure: (state, action: PayloadAction<LoginFailurePayload>) => {
+            state.error = action.payload;
+            state.token = null
+        },
         // Define reducers for registration success and failure if needed
     },
 });
 
-export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure } = authSlice.actions;
+export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure } = authSlice.actions;
 
 
 export default authSlice.reducer;

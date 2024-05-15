@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import { put, takeLatest, call } from "redux-saga/effects";
 import { UserType } from "../reducers/users/types";
-import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure } from "../reducers/users/slice";
+import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure } from "../reducers/users/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {  loginRequest } from "../actions/userActions";
 import { updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
@@ -125,6 +125,22 @@ function* addToCartSaga(action: any) {
   }
 }
 
+// Define saga worker function
+function* renewTokenSaga(action: any) {
+  try {
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/renewToken`, {
+      refreshToken: action.payload
+    }, { headers: { Authorization: `${action.payload}` } });
+    const token = response.data.token;
+    const userData = response.data.userData;
+    yield AsyncStorage.setItem('auth_token', token);
+    yield put(renewTokenSuccess({token, userData}));
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(renewTokenFailure(JSON.stringify(error)));
+  }
+}
+
 // Generator function
 export function* watchAuthUser() {
   yield takeLatest('LOGIN_REQUEST', login);
@@ -135,4 +151,5 @@ export function* watchAuthUser() {
   yield takeLatest('PASSWORD_RESET_REQUEST', handleResetPassword);
   yield takeLatest('GET_PRODUCTS_REQUEST', handleVendorProductsSaga);
   yield takeLatest('ADD_TO_CART_REQUEST', addToCartSaga);
+  yield takeLatest('RENEW_TOKEN_REQUEST',renewTokenSaga);
 }
