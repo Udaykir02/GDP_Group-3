@@ -162,7 +162,7 @@ const loginUser = async (req, res) => {
     user.otpAttempts = 0;
     await user.save();
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '12h' });
 
     // Return the token
     res.status(200).json({ token: token, userData: { userId: user.userId, email: user.username, fname: user.fname, lname: user.lname, emailVerified: user.emailVerified, address: user.address, vendors: user.vendors, notificationActive: user.notificationActive, vendorpreferences: user.vendorpreferences, userRecomendations: user.userRecomendations, cart: user.cart } });
@@ -271,6 +271,9 @@ const addToCart = async (userId, skuId, qty) => {
     if (existingCartItemIndex !== -1) {
       // Update the quantity of the existing item in the cart
       user.cart[existingCartItemIndex].qty += qty;
+      if(user.cart[existingCartItemIndex].qty === 0){
+        user.cart.splice(existingCartItemIndex,1) 
+      }
     } else {
       // Add the item to the cart if it doesn't exist
       user.cart.push({
