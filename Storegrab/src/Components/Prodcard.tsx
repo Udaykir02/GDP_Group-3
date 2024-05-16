@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Alert, View, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import NumericInput from './NumericInput';
 import { Card } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
-import { UserCartType } from '@/../reducers/users/types';
 // import { Text, theme } from 'galio-framework';
 
 
@@ -69,7 +68,6 @@ const Prodcard: React.FC<ProdcardProps> = ({
     const [isHorizontal, setIsHorizontal] = useState<boolean>(horizontal);
     const dispatch = useDispatch();
     const {colors} = useAppTheme();
-    const { user, token } = useSelector((state: any)=> state.auth)
     const styles = StyleSheet.create({
         card: {
             backgroundColor: '#fff',
@@ -221,7 +219,7 @@ const Prodcard: React.FC<ProdcardProps> = ({
                                 inputStyle={{ backgroundColor: '#f7ebeb', borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#adadad' }}
                                 rounded={true}
                                 textColor={'#32325D'}
-                                inventory={user?.cart?.find((element: UserCartType) => element.skuId === item.skuId) ? user?.cart?.find((element: UserCartType) => element.skuId === item.skuId) : item}
+                                inventory={item}
                             />
                         </View>
                     </View>

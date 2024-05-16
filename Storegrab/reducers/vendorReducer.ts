@@ -40,12 +40,7 @@ const vendorSlice = createSlice({
             state.moreproducts = true;
         },
         updateProducts(state, action) {
-            const { skuId, qty } = action.payload;
-            console.log(state.products.find((element:any)=>element.skuId === skuId))
-            if(qty > 0)
-            state.products.find((element:any)=>element.skuId === skuId).qty += qty;
-            else
-            state.products.find((element:any)=>element.skuId === skuId).qty -= qty;
+            state.products.push(action.payload);
         },
         changeProduct(state, action) {
             const { index, units, cart } = action.payload;
@@ -89,7 +84,7 @@ const vendorSlice = createSlice({
         updateVendorProductsFailure: (state, action) => {
             state.loading = false;
             state.error = action.payload;;
-        }
+        }  
     }
 });
 

@@ -14,8 +14,6 @@ import Filters from '../Components/Filters';
 import VendorScreen from '../Components/VendorScreen';
 import Cart from '../Components/Cart';
 import { renewTokenRequest } from '../../actions/userActions';
-import { useStripe } from '@stripe/stripe-react-native';
-import { Linking } from 'react-native';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -40,41 +38,6 @@ const RootNavigation = () => {
   const [accessToken,setAccessToken] = React.useState('')
   const token = useSelector((state:any) => state.auth.token);
   const dispatch = useDispatch();
-
-  const { handleURLCallback } = useStripe();
-
-  const handleDeepLink = React.useCallback(
-    async (url: string | null) => {
-      if (url) {
-        const stripeHandled = await handleURLCallback(url);
-        if (stripeHandled) {
-          // This was a Stripe URL - you can return or add extra handling here as you see fit
-        } else {
-          // This was NOT a Stripe URL – handle as you normally would
-        }
-      }
-    },
-    [handleURLCallback]
-  );
-
-  React.useEffect(() => {
-    const getUrlAsync = async () => {
-      const initialUrl = await Linking.getInitialURL();
-      handleDeepLink(initialUrl);
-    };
-
-    getUrlAsync();
-
-    const deepLinkListener = Linking.addEventListener(
-      'url',
-      (event: { url: string }) => {
-        handleDeepLink(event.url);
-      }
-    );
-
-    return () => deepLinkListener.remove();
-  }, [handleDeepLink]);
-
   React.useEffect(()=>{
     renewToken()
   },[])
