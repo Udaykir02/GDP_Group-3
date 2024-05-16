@@ -18,6 +18,7 @@ import MyIcon from './MyIcon';
 import Prodcard from './Prodcard';
 import { argonTheme } from '../constants';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import { placeOrders } from '@/../actions/userActions';
 
 const Cart = ({ navigation }: any) => {
     const [tip, setTip] = useState(0);
@@ -26,6 +27,7 @@ const Cart = ({ navigation }: any) => {
     const [cash, setCash] = useState(false);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false)
+    const [paymentIntentId, setPaymentIntentId] = useState();
     const { user, token } = useSelector((state: any) => state.auth)
     const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor } = useSelector((state: any) => state.vendor)
     const { defaultlocation } = useSelector((state: any) => state.location)
@@ -163,7 +165,7 @@ const Cart = ({ navigation }: any) => {
     const getTotal = () => {
         let total = 0;
         let cart = user?.cart;
-        for (let i = 0; i < cart.length; i++) {
+        for (let i = 0; i < cart?.length; i++) {
             total += cart[i].qty * cart[i].price;
         }
         return total
@@ -279,13 +281,14 @@ const Cart = ({ navigation }: any) => {
                 // add other body parameters if needed
             }),
         });
-        const { paymentIntent, ephemeralKey, customer, publishableKey } = await response.json();
+        const { paymentIntent, ephemeralKey, customer, publishableKey, paymentIntentId } = await response.json();
 
         return {
             paymentIntent,
             ephemeralKey,
             customer,
-            publishableKey
+            publishableKey,
+            paymentIntentId
         };
     };
 
@@ -301,10 +304,12 @@ const Cart = ({ navigation }: any) => {
             ephemeralKey,
             customer,
             publishableKey,
+            paymentIntentId
         } = await fetchPaymentSheetParams();
+            setPaymentIntentId(paymentIntentId);
             console.log(paymentIntent,ephemeralKey,customer,publishableKey)
         try{
-            await initPaymentSheet({
+            const response: any = await initPaymentSheet({
                 merchantDisplayName: "Storegrab",
                 customerId: customer,
                 customerEphemeralKeySecret: ephemeralKey,
@@ -314,8 +319,11 @@ const Cart = ({ navigation }: any) => {
                 allowsDelayedPaymentMethods: true,
                 defaultBillingDetails: {
                     name: 'Jane Doe',
-                }
+                },
             });
+            
+
+            console.log("payment_log"+JSON.stringify(response))
         }
         catch(error){
             // console.log(error)
@@ -331,6 +339,9 @@ const Cart = ({ navigation }: any) => {
     const openPaymentSheet = async () => {
         try{
             await presentPaymentSheet();
+            console.log(paymentIntentId)
+            const orderReq = {userId: user?.userId, paymentIntentId: paymentIntentId,  vendorId: selectedVendor?.vendorId, items: user?.cart}
+            dispatch(placeOrders(orderReq));
         }
         catch(error){
             Alert.alert(`Error code: ${error.code}`, error.message);
@@ -387,7 +398,7 @@ const Cart = ({ navigation }: any) => {
                 </View>
                 <CheckoutButton onPress={() => { }} loading={false} />
             </View>
-            <View>
+{           (user?.cart && user.cart.length >0) ?<View>
                 <View style={[styles.shadow]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity style={styles.optionsButton} onPress={() => {openPaymentSheet() }}>
@@ -401,7 +412,7 @@ const Cart = ({ navigation }: any) => {
                                     </Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'flex-end' }}>
-                                    <Text>
+                                    <Text style={{ fontWeight: 'bold'}}>
                                         Pay <MyIcon name='Entypo|controller-play' style={{ fontSize: 15, color: "#fff" }} />
                                     </Text>
                                 </View>
@@ -409,7 +420,7 @@ const Cart = ({ navigation }: any) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </View>:null}
         </View>
     )
 }

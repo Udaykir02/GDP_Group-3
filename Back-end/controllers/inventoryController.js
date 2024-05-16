@@ -36,9 +36,8 @@ const getInventoryBySkuId = async (req, res) => {
   try {
     // Extract the SKU ID from the request parameters
     const { skuids } = req.body;
-    console.log(skuids)
     const inventoryArray = [];
-    
+
     for (let i = 0; i < skuids.length; i++) {
       const inventory = await Inventory.findOne({ skuId: skuids[i] });
       inventoryArray.push(inventory);
@@ -56,6 +55,28 @@ const getInventoryBySkuId = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
+const getInventoryQty = async (req, res) => {
+  try {
+    // Extract the SKU ID from the request parameters
+    const { skuid } = req.body;
+
+
+    const inventory = await Inventory.findOne({ skuId: skuid });
+
+    // If inventory data exists, send it in the response
+    if (inventory) {
+      res.status(200).json({ success: true, data: inventory });
+    } else {
+      // If no inventory data found, send an appropriate message
+      res.status(404).json({ success: false, message: 'Inventory not found for the provided SKU IDs' });
+    }
+  } catch (error) {
+    // If an error occurs, send an error response
+    console.log(error.message)
+    res.status(500).json({ success: false, error: error.message });
+  }
+}
 
 
 const updateInventory = async (req, res) => {
@@ -80,7 +101,7 @@ const updateInventory = async (req, res) => {
       categories: categories,
       image: image,
       brand: brand
-  });
+    });
 
     res.status(200).json({ message: 'Inventory data updated successfully' });
   } catch (error) {
@@ -88,4 +109,4 @@ const updateInventory = async (req, res) => {
   }
 };
 
-module.exports = { insertInventory, getInventoryBySkuId, updateInventory }
+module.exports = { insertInventory, getInventoryBySkuId, updateInventory,  getInventoryQty}

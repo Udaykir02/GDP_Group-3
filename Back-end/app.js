@@ -75,7 +75,7 @@ const stripeRoutes = require('./routes/stripeRoutes');
 
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
-// const orderRoutes = require('./routes/orderRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 // const paymentRoutes = require('./routes/paymentRoutes');
 // const ratingReviewRoutes = require('./routes/ratingReviewRoutes');
 // const customerSupportRoutes = require('./routes/customerSupportRoutes');
@@ -107,7 +107,7 @@ app.use('/vendorapi',vendorRoutes);
 app.use('/inventory', inventoryRoutes);
 app.use('/stripe',stripeRoutes)
 // app.use('/api', vendorRoutes);
-// app.use('/api', orderRoutes);
+app.use('/order', orderRoutes);
 // app.use('/api', paymentRoutes);
 // app.use('/api', ratingReviewRoutes);
 // app.use('/api', customerSupportRoutes);
