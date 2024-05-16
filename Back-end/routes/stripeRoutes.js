@@ -7,6 +7,6 @@ const { verifyTokenAndUser } = require('../controllers/verifyTokenAndUser');
 
 
 router.post('/payment-sheet',verifyTokenAndUser,paymentSheetController);
-router.post('/place-order',verifyTokenAndUser,placeOrder);
+router.post('/place-order',placeOrder);
 
 module.exports = router;

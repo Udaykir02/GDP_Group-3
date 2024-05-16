@@ -4,7 +4,7 @@ import { Card, Divider, Icon, Text } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
 import { responsiveScreenHeight, responsiveScreenWidth } from 'react-native-responsive-dimensions';
 
-const DeliveryCard: React.FC = () => {
+const DeliveryCard: React.FC = ({order}:any) => {
   const { colors } = useAppTheme();
 
   const styles = StyleSheet.create({
@@ -128,7 +128,7 @@ const DeliveryCard: React.FC = () => {
       <Card style={styles.cardContainer}>
         <View>
           <Text variant="titleMedium" style={{ color: colors.primary }}>
-            Today Estimated Arrival 1-4 pm
+            Estimated {order.endtime}
           </Text>
           <View style={[styles.contentContainer, { alignItems: 'center', marginVertical: 10 }]}>
             <Icon source="truck-outline" size={24} color={colors.primary} />
@@ -260,7 +260,7 @@ const DeliveryCard: React.FC = () => {
                 left: '20%'
               }}
             >
-              {setTruckContainerText(157, 'DRY')}
+              {setTitleValueUi('Order Id', order?.orderId)}
             </View>
             <View
               style={{
@@ -270,7 +270,7 @@ const DeliveryCard: React.FC = () => {
                 left: '44.5%'
               }}
             >
-              {setTruckContainerText(42, 'COOLER')}
+              {setTitleValueUi('Payment Status', order?.paymentStatus)}
             </View>
             <View
               style={{
@@ -280,7 +280,7 @@ const DeliveryCard: React.FC = () => {
                 left: '69.5%'
               }}
             >
-              {setTruckContainerText(28, 'FREEZER')}
+              {setTitleValueUi('Status', order?.status)}
             </View>
           </View>
         </View>
@@ -288,7 +288,7 @@ const DeliveryCard: React.FC = () => {
         <View style={styles.footerContainer}>
           <View style={styles.footerLeftContainer}>
             <View style={styles.footerChildContainer}>
-              {setTitleValueUi('Items', 124)}
+              {setTitleValueUi('Items', order?.items?.length)}
             </View>
             <View style={styles.footerChildContainer}>
 
@@ -296,7 +296,7 @@ const DeliveryCard: React.FC = () => {
           </View>
           <View style={{ alignItems: 'flex-end', justifyContent: 'space-between' }}>
             <Text variant="titleMedium" style={{ color: colors.textDefault }}>
-              $4,578.93
+              ${order?.totalCost}
             </Text>
           </View>
         </View>

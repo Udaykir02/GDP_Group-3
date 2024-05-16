@@ -2,10 +2,11 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import { put, takeLatest, call } from "redux-saga/effects";
 import { UserType } from "../reducers/users/types";
-import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure } from "../reducers/users/slice";
+import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure, clearCart } from "../reducers/users/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {  loginRequest } from "../actions/userActions";
-import { updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
+import { loginRequest } from "../actions/userActions";
+import { updateProducts, updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
+import { getOrdersSuccess, getOrdersFailure, placeOrderSuccess, placeOrderFailure } from "../reducers/orderReducer";
 
 
 
@@ -103,7 +104,7 @@ function* handleResetPassword(action: any) {
 function* handleVendorProductsSaga(action: any) {
   try {
     const { skuids, token } = action.payload;
-    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
+    const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
       skuids: skuids
     },{ headers: { Authorization: `${token}` } });
     console.log(JSON.stringify(response.data.data))
@@ -141,6 +142,35 @@ function* renewTokenSaga(action: any) {
   }
 }
 
+function* getOrdersSaga(action: any) {
+  try {
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/order/orders`, {
+      userId: action.payload
+    }, { headers: { Authorization: `${action.payload}` } });
+    const orders: any = response.data;
+    yield put(getOrdersSuccess(orders));
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(getOrdersFailure(JSON.stringify(error)));
+  }
+}
+
+function* placeOrderSaga(action: any) {
+  try {
+    console.log("hello")
+    const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/stripe/place-order`, {
+      userId: action.payload.userId, paymentIntentId: action.payload.paymentIntentId, vendorId: action.payload.vendorId, items: action.payload.items
+    }, { headers: { Authorization: `${action.payload}` } });
+    const order = response.data.order;
+    yield put(placeOrderSuccess(order));
+    yield put(clearCart());
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    console.log(error)
+    yield put(placeOrderFailure(JSON.stringify(error)));
+  }
+}
+
 // Generator function
 export function* watchAuthUser() {
   yield takeLatest('LOGIN_REQUEST', login);
@@ -151,5 +181,7 @@ export function* watchAuthUser() {
   yield takeLatest('PASSWORD_RESET_REQUEST', handleResetPassword);
   yield takeLatest('GET_PRODUCTS_REQUEST', handleVendorProductsSaga);
   yield takeLatest('ADD_TO_CART_REQUEST', addToCartSaga);
-  yield takeLatest('RENEW_TOKEN_REQUEST',renewTokenSaga);
+  yield takeLatest('RENEW_TOKEN_REQUEST', renewTokenSaga);
+  yield takeLatest('GET_ORDERS_REQUEST', getOrdersSaga);
+  yield takeLatest('PLACE_ORDER_REQUEST', placeOrderSaga);
 }
