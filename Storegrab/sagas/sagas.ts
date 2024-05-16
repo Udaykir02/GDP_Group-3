@@ -2,10 +2,11 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import { put, takeLatest, call } from "redux-saga/effects";
 import { UserType } from "../reducers/users/types";
-import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure } from "../reducers/users/slice";
+import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure, clearCart } from "../reducers/users/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {  loginRequest } from "../actions/userActions";
-import { updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
+import { loginRequest } from "../actions/userActions";
+import { updateProducts, updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
+import { getOrdersSuccess, getOrdersFailure, placeOrderSuccess, placeOrderFailure } from "../reducers/orderReducer";
 
 
 
@@ -18,7 +19,7 @@ function* login(action: any) {
     const token = response.data.token;
     const userData = response.data.userData;
     yield AsyncStorage.setItem('auth_token', token);
-    yield put(loginSuccess({token, userData}));
+    yield put(loginSuccess({ token, userData }));
     // Navigate to home screen or perform any other action
   } catch (error) {
     yield put(loginFailure(JSON.stringify(error)));
@@ -46,7 +47,7 @@ function* logout(action: any) {
     yield put(logoutSuccess());
     // Optionally, you can automatically login the user after registration
     // yield call(login, { payload: action.payload });
-  } catch (error:any) {
+  } catch (error: any) {
     yield put(logoutFailure(JSON.stringify(error.message)));
   }
 }
@@ -92,7 +93,7 @@ function* handleResetPassword(action: any) {
     yield call(axios.post, `${process.env.BASE_URL}/api/password-reset`, {
       email: email,
       newPassword: newPassword
-    },{ headers: { Authorization: `${token}` } });
+    }, { headers: { Authorization: `${token}` } });
     yield put(resetPasswordSuccess());
   } catch (error: any) {
     yield put(resetPasswordFailure(error.message));
@@ -105,7 +106,7 @@ function* handleVendorProductsSaga(action: any) {
     const { skuids, token } = action.payload;
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
       skuids: skuids
-    },{ headers: { Authorization: `${token}` } });
+    }, { headers: { Authorization: `${token}` } });
     console.log(JSON.stringify(response.data.data))
     yield put(updateVendorProductsSuccess(response.data?.data));
   } catch (error: any) {
@@ -117,10 +118,11 @@ function* handleVendorProductsSaga(action: any) {
 function* addToCartSaga(action: any) {
   try {
     const { userId, skuId, qty, token } = action.payload;
-    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/addToCart`,{userId:userId, skuId:skuId, qty: qty},{ headers: { Authorization: `${token}` } });
-    console.log(JSON.stringify(response));
-    yield put(addToCartSuccess(response.data));
-  } catch (error:any) {
+    console.log(JSON.stringify("---->responsecheck" + userId + skuId + qty + token));
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/addToCart`, { userId: userId, skuId: skuId, qty: qty }, { headers: { Authorization: `${token}` } });
+    console.log(JSON.stringify("---->responsecheck" + response));
+    yield put(addToCartSuccess(response?.data?.data?.user));
+  } catch (error: any) {
     yield put(addToCartFailure(error.response.data));
   }
 }
@@ -134,10 +136,37 @@ function* renewTokenSaga(action: any) {
     const token = response.data.token;
     const userData = response.data.userData;
     yield AsyncStorage.setItem('auth_token', token);
-    yield put(renewTokenSuccess({token, userData}));
+    yield put(renewTokenSuccess({ token, userData }));
     // Navigate to home screen or perform any other action
   } catch (error) {
     yield put(renewTokenFailure(JSON.stringify(error)));
+  }
+}
+
+function* getOrdersSaga(action: any) {
+  try {
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/order/orders`, {
+      userId: action.payload
+    }, { headers: { Authorization: `${action.payload}` } });
+    const orders = response.data;
+    yield put(getOrdersSuccess(orders));
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(getOrdersFailure(JSON.stringify(error)));
+  }
+}
+
+function* placeOrderSaga(action: any) {
+  try {
+    const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/stripe/place-order`, {
+      userId: action.payload.userId, paymentIntentId: action.payload.paymentIntentId, vendorId: action.payload.vendorId, items: action.payload.items
+    }, { headers: { Authorization: `${action.payload}` } });
+    const order = response.data.order;
+    yield put(placeOrderSuccess(order));
+    yield put(clearCart());
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(placeOrderFailure(JSON.stringify(error)));
   }
 }
 
@@ -151,5 +180,7 @@ export function* watchAuthUser() {
   yield takeLatest('PASSWORD_RESET_REQUEST', handleResetPassword);
   yield takeLatest('GET_PRODUCTS_REQUEST', handleVendorProductsSaga);
   yield takeLatest('ADD_TO_CART_REQUEST', addToCartSaga);
-  yield takeLatest('RENEW_TOKEN_REQUEST',renewTokenSaga);
+  yield takeLatest('RENEW_TOKEN_REQUEST', renewTokenSaga);
+  yield takeLatest('GET_ORDERS_REQUEST', getOrdersSaga);
+  yield takeLatest('PLACE_ORDER_REQUEST', placeOrderSaga);
 }

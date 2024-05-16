@@ -1,3 +1,4 @@
+import { userAddresses } from '@/../actions/addressActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserType, LoginPayload, LoginSuccessPayload, LoginFailurePayload, RegisterFailurePayload, LogoutFailurePayload, VerifyOtpSuccessPayload, UserData } from './types';
 
@@ -72,6 +73,7 @@ const authSlice = createSlice({
         },
         addToCartSuccess(state, action) {
             state.loading = false;
+            state.user = action.payload
         },
         addToCartFailure(state, action) {
             state.loading = false;
@@ -86,11 +88,16 @@ const authSlice = createSlice({
             state.error = action.payload;
             state.token = null
         },
+        clearCart: (state) => {
+            if(state.user)
+            state.user.cart = null
+            state.error = null;
+        },
         // Define reducers for registration success and failure if needed
     },
 });
 
-export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure } = authSlice.actions;
+export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure , clearCart} = authSlice.actions;
 
 
 export default authSlice.reducer;

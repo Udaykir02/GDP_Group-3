@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const orderController = require('../controllers/orderController');
+const { createOrder, getAllOrders, getOrder, updateOrder, deleteOrder} = require('../controllers/orderController');
 
 // Route for adding orders
-router.post('/orders', async (req, res) => {
-  try {
-    const newOrder = await orderController.addOrder(req.body);
-    res.status(201).json(newOrder);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
+router.post('/create', createOrder);
+router.post('/orders', getAllOrders);
+router.post('/get', getOrder);
+router.post('/update', updateOrder);
+router.post('/delete', deleteOrder);
 // Define other routes for orders as needed
 
 module.exports = router;
