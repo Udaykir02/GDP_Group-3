@@ -61,6 +61,6 @@ orderSchema.pre('save', function(next) {
     next();
 });
 
-const order = mongoose.model('Payment', orderSchema);
+const order = mongoose.model('Order', orderSchema);
 
 module.exports = order;

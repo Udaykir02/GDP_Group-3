@@ -51,8 +51,8 @@ const placeOrder = async (req, res) => {
                 zip: "10001"
             }
             const shipping = {
-                address: addressSchema,
-                origin: addressSchema,
+                address: address,
+                origin: address,
                 carrier: 'truck',
                 tracking: orderId
             };
@@ -67,7 +67,7 @@ const placeOrder = async (req, res) => {
                 currency: paymentIntent.currency,
                 totalCost: paymentIntent.Orderamount,
                 items: items,
-                shipping: shippingSchema
+                shipping: shipping
             }
             const order = new Order(orderBody);
             await order.save();

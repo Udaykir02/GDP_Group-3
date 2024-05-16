@@ -3,6 +3,7 @@ import locationReducer from './locationReducer';
 import authReducer from './users/slice';
 import cartReducer from './cartReducer';
 import vendorReducer from './vendorReducer';
+import orderReducer from './orderReducer';
 
 export type StateType = {
   // Reducers types here
@@ -11,6 +12,7 @@ export type StateType = {
   address: ReturnType<typeof addressReducer>;
   cart: ReturnType<typeof cartReducer>;
   vendor: ReturnType<typeof vendorReducer>;
+  orders: ReturnType<typeof orderReducer>;
 };
 
 
@@ -20,7 +22,8 @@ const rootReducers = {
   location: locationReducer,
   address: addressReducer,
   cart: cartReducer,
-  vendor: vendorReducer
+  vendor: vendorReducer,
+  order: orderReducer
 };
 
 export default rootReducers;

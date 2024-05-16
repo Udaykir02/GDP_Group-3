@@ -18,6 +18,7 @@ import MyIcon from './MyIcon';
 import Prodcard from './Prodcard';
 import { argonTheme } from '../constants';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import { placeOrders } from '../../actions/userActions';
 
 const Cart = ({ navigation }: any) => {
     const [tip, setTip] = useState(0);
@@ -26,6 +27,7 @@ const Cart = ({ navigation }: any) => {
     const [cash, setCash] = useState(false);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false)
+    const [paymentIntentId, setPaymentIntentId] = useState();
     const { user, token } = useSelector((state: any) => state.auth)
     const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor } = useSelector((state: any) => state.vendor)
     const { defaultlocation } = useSelector((state: any) => state.location)
@@ -163,7 +165,7 @@ const Cart = ({ navigation }: any) => {
     const getTotal = () => {
         let total = 0;
         let cart = user?.cart;
-        for (let i = 0; i < cart.length; i++) {
+        for (let i = 0; i < cart?.length; i++) {
             total += cart[i].qty * cart[i].price;
         }
         return total
@@ -196,56 +198,56 @@ const Cart = ({ navigation }: any) => {
         )
     }
 
-    const makePayment = async () => {
-        let total = getTotal() + charges;
-        total = total + (total * (tip / 100));
-        total = total.toFixed(2);
-        var options = {
-            description: 'Payment',
-            image: 'https://firebasestorage.googleapis.com/v0/b/meri-dukan-9b512.appspot.com/o/cart%2FWDVEFT89GTB9CWF7.png?alt=media&token=4d686440-ef0b-4e4f-8620-95119f42a97a',
-            currency: 'INR',
-            key: 'rzp_test_TfrlPnWktXhFGw',
-            amount: total * 100,
-            name: 'Pay',
-            prefill: {
-                email: privatedata.user.email,
-                contact: privatedata.user.phone,
-                name: privatedata.user.name
-            },
-            theme: { color: '#e2bb88' }
-        }
-        setLoading(true);
-        try {
-            const res = await RazorpayCheckout.open(options);
-            if (res.razorpay_payment_id) {
-                var payment_id = res.razorpay_payment_id;
-                var payment = {
-                    payment_id: payment_id,
-                    tip: tip,
-                    address: choosenaddress.address,
-                    location: choosenlocation.location,
-                    cash: cash,
-                    total: total
-                }
-                addOrder({ order: payment });
-                setLoading(false);
-                initialCart();
-                Alert.alert(
-                    "Order Placed",
-                    "Your order is on the way",
-                    [
-                        {
-                            text: "OK",
-                            onPress: () => navigation.goBack()
-                        }
-                    ]
-                )
-            }
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-        }
-    }
+    // const makePayment = async () => {
+    //     let total = getTotal() + charges;
+    //     total = total + (total * (tip / 100));
+    //     total = total.toFixed(2);
+    //     var options = {
+    //         description: 'Payment',
+    //         image: 'https://firebasestorage.googleapis.com/v0/b/meri-dukan-9b512.appspot.com/o/cart%2FWDVEFT89GTB9CWF7.png?alt=media&token=4d686440-ef0b-4e4f-8620-95119f42a97a',
+    //         currency: 'INR',
+    //         key: 'rzp_test_TfrlPnWktXhFGw',
+    //         amount: total * 100,
+    //         name: 'Pay',
+    //         prefill: {
+    //             email: privatedata.user.email,
+    //             contact: privatedata.user.phone,
+    //             name: privatedata.user.name
+    //         },
+    //         theme: { color: '#e2bb88' }
+    //     }
+    //     setLoading(true);
+    //     try {
+    //         const res = await RazorpayCheckout.open(options);
+    //         if (res.razorpay_payment_id) {
+    //             var payment_id = res.razorpay_payment_id;
+    //             var payment = {
+    //                 payment_id: payment_id,
+    //                 tip: tip,
+    //                 address: choosenaddress.address,
+    //                 location: choosenlocation.location,
+    //                 cash: cash,
+    //                 total: total
+    //             }
+    //             addOrder({ order: payment });
+    //             setLoading(false);
+    //             initialCart();
+    //             Alert.alert(
+    //                 "Order Placed",
+    //                 "Your order is on the way",
+    //                 [
+    //                     {
+    //                         text: "OK",
+    //                         onPress: () => navigation.goBack()
+    //                     }
+    //                 ]
+    //             )
+    //         }
+    //     } catch (error) {
+    //         setLoading(false);
+    //         console.log(error);
+    //     }
+    // }
 
     //   if (cartitems.length === 0) {
     //     return (
@@ -268,43 +270,52 @@ const Cart = ({ navigation }: any) => {
     };
 
     const fetchPaymentSheetParams = async () => {
-        const response = await fetch(`${process.env.BASE_URL}/stripe/payment-sheet`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`
-            },
-            body: JSON.stringify({
-                amount: getTotal(),
-                // add other body parameters if needed
-            }),
-        });
-        const { paymentIntent, ephemeralKey, customer, publishableKey } = await response.json();
+        console.log("I am here"+`${process.env.BASE_URL}/stripe/payment-sheet`)
+            const response = await fetch(`${process.env.BASE_URL}/stripe/payment-sheet`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`
+                },
+                body: JSON.stringify({
+                    amount: getTotal(),
+                    // add other body parameters if needed
+                }),
+            });
+            const { paymentIntent, ephemeralKey, customer, publishableKey, paymentIntentId } = await response.json();
+    
+            return {
+                paymentIntent,
+                ephemeralKey,
+                customer,
+                publishableKey,
+                paymentIntentId
+            };
 
-        return {
-            paymentIntent,
-            ephemeralKey,
-            customer,
-            publishableKey
-        };
+
     };
 
-    useEffect(()=>{
+    useEffect(() => {
+        console.log('hi-bye')
         initializePaymentSheet()
-},[])
+    }, [])
 
 
 
     const initializePaymentSheet = async () => {
-        const {
-            paymentIntent,
-            ephemeralKey,
-            customer,
-            publishableKey,
-        } = await fetchPaymentSheetParams();
-            console.log(paymentIntent,ephemeralKey,customer,publishableKey)
-        try{
-            await initPaymentSheet({
+        // console.log("I am here"+`${process.env.BASE_URL}/stripe/payment-sheet`)
+        try {
+            const {
+                paymentIntent,
+                ephemeralKey,
+                customer,
+                publishableKey,
+                paymentIntentId
+            } = await fetchPaymentSheetParams();
+            setPaymentIntentId(paymentIntentId);
+            console.log(paymentIntent, ephemeralKey, customer, publishableKey)
+
+            const response: any = await initPaymentSheet({
                 merchantDisplayName: "Storegrab",
                 customerId: customer,
                 customerEphemeralKeySecret: ephemeralKey,
@@ -314,36 +325,43 @@ const Cart = ({ navigation }: any) => {
                 allowsDelayedPaymentMethods: true,
                 defaultBillingDetails: {
                     name: 'Jane Doe',
-                }
+                },
             });
+
+
+            console.log("payment_log" + JSON.stringify(response))
         }
-        catch(error){
+        catch (error) {
             // console.log(error)
             setLoading(true);
         }
         // const { error } 
         // if (!error) {
 
-            
+
         // }
     };
 
     const openPaymentSheet = async () => {
-        try{
+        try {
             await presentPaymentSheet();
+            console.log(paymentIntentId)
+            const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: selectedVendor?.vendorId, items: user?.cart }
+            await dispatch(placeOrders(orderReq));
+            navigation.navigate('Cart')
         }
-        catch(error){
+        catch (error) {
             Alert.alert(`Error code: ${error.code}`, error.message);
 
         }
         // const { error } = 
-    
+
         // if (error) {
         // } else {
         //   Alert.alert('Success', 'Your order is confirmed!');
         // }
-      };
-    
+    };
+
 
 
 
@@ -387,10 +405,10 @@ const Cart = ({ navigation }: any) => {
                 </View>
                 <CheckoutButton onPress={() => { }} loading={false} />
             </View>
-            <View>
+            {(user?.cart && user.cart.length > 0) ? <View>
                 <View style={[styles.shadow]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <TouchableOpacity style={styles.optionsButton} onPress={() => {openPaymentSheet() }}>
+                        <TouchableOpacity style={styles.optionsButton} onPress={() => { openPaymentSheet() }}>
                             <View style={{ width: 'auto', flexDirection: 'row' }}>
                                 <View style={{ width: '70%' }}>
                                     <Text>
@@ -401,7 +419,7 @@ const Cart = ({ navigation }: any) => {
                                     </Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'flex-end' }}>
-                                    <Text>
+                                    <Text style={{ fontWeight: 'bold' }}>
                                         Pay <MyIcon name='Entypo|controller-play' style={{ fontSize: 15, color: "#fff" }} />
                                     </Text>
                                 </View>
@@ -409,7 +427,7 @@ const Cart = ({ navigation }: any) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </View> : null}
         </View>
     )
 }
