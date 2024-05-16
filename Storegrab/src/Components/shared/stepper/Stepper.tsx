@@ -13,7 +13,6 @@ import createStepperStyle from './StepperStyle';
 import { UserCartType } from '../../../../reducers/users/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartRequest } from '../../../../actions/userActions';
-import axios from 'axios';
 interface IProps {
   par: number;
   quantity: number;
@@ -27,43 +26,15 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
 
   const styles = createStepperStyle(theme)
 
-
+  const [count, setCount] = useState(quantity);
   const [productQuantityCase, setProductQuantityCase] = useState<String>("Each");
   const [shadowColor, setShadowColor] = useState('transparent');
   const [borderColor, setBorderColor] = useState(theme.colors.primary);
   const animationMinus = useRef(new Animated.Value(0)).current;
   const animationPlus = useRef(new Animated.Value(0)).current;
   const { user, token } = useSelector((state: any)=> state.auth)
-  const { selectedVendor} = useSelector((state:any)=>state.vendor)
-  const [ inventoryQty, setInventoryQty] = useState(inventory.qty)
-  const [count, setCount] = useState(user?.cart?.find((element:any)=>element.skuId === inventory.skuId)?.qty ?user?.cart?.find((element:any)=>element.skuId === inventory.skuId)?.qty:0);
+
   const dispatch = useDispatch();
-
-  useEffect(()=>{
-    const config = {
-      method: 'post',
-      url: 'http://localhost:3000/inventory/getInventoryQty',
-      data: { skuid: inventory.skuId} // Add the request body
-    };
-    axios(config)
-      .then(response => {
-        setInventoryQty(response.data.data.qty)
-        console.log('Response:', response.data.data.qty);
-      })
-      .catch(error => {
-        // setVendors([])
-      });
-  },[])
-
-  useEffect(()=>{
-    console.log("new log")
-    const product = user?.cart?.find((element:string)=> element === inventory.skuId)
-    console.log("new log"+product)
-    if(product){
-      setCount(product.qty)
-    }
-
-  },[user?.cart])
 
   const dynamicShadowStyle = {
     ...Platform.select({
@@ -82,18 +53,15 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
 
 
   const handlePress = (change: any) => {
-    console.log(change+"--->")
-    console.log(inventoryQty+"inventoryQty")
+    const objectPattern = { userId: user?.userId, skuId: inventory?.skuId, qty: change, token: token } 
     console.log(JSON.stringify(user?.userId)+"-->");
     dispatch(addToCartRequest(user?.userId,inventory?.skuId, change,token ));
     const animation = change > 0 ? animationPlus : animationMinus;
     if (change > 0) {
-      setInventoryQty(Number(inventoryQty)-change)
       setShadowColor(theme.colors.primary)
       setBorderColor(theme.colors.primary)
     }
     else {
-      setInventoryQty(Number(inventoryQty)+change)
       setShadowColor(theme.colors.coreMarkOrange)
       setBorderColor(theme.colors.coreMarkOrange)
     }
@@ -188,10 +156,11 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
                 <Text style={{ ...styles.buttonText, color: count > 0 ? theme.colors.primary : "#C1C7CD" }}><MaterialCommunityIcons name="minus" size={32} /></Text>
               </Animated.View>
             </TouchableOpacity>
+
             <View style={styles.inputContainer}>
               <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{count}</Text>
             </View>
-            <TouchableOpacity onPress={() => handlePress(1)} disabled={inventoryQty === 0}>
+            <TouchableOpacity onPress={() => handlePress(1)}>
               <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
                 <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
               </Animated.View>

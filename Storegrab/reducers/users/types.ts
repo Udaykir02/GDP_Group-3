@@ -38,7 +38,7 @@ export type UserCartType  = {
   }
 
 export type UserData = {
-    userId?: string, email?: string,fname?: string, lname?: string, emailVerified?: boolean, address?: AddressType, vendors?: [string], notificationActive?: boolean, vendorpreferences?: [String], userRecomendations?: [String], cart?: [UserCartType] | null
+    userId?: string, email?: string,fname?: string, lname?: string, emailVerified?: boolean, address?: AddressType, vendors?: [string], notificationActive?: boolean, vendorpreferences?: [String], userRecomendations?: [String], cart?: [UserCartType]
 }
 
 // Define the type for the login success action payload
