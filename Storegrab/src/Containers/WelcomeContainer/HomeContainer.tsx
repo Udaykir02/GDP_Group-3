@@ -164,10 +164,6 @@ const HomeContainer = ({
         );
     };
 
-    const renderHeader = () => {
-        // Your renderHeader logic here
-        return (<></>)
-    };
 
     const renderMore = async () => {
         // Your renderMore logic here
@@ -187,6 +183,18 @@ const HomeContainer = ({
         return total
     };
 
+    const handleResetPassword = () => {
+        navigation.navigate('ProductFilter')
+    }
+    const renderHeader = () => {
+        // if(!defaultlocation)
+        //   return (<></>)
+        return (
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 15 }}>
+            <Button icon={'menu'} mode={'outlined'} onPress={handleResetPassword} >Filters</Button>
+          </View>
+        )
+      }
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             {selectedVendor !== null ? <View style={{ flex: 1 }}>

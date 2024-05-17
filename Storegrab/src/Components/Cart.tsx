@@ -320,12 +320,13 @@ const Cart = ({ navigation }: any) => {
                 customerId: customer,
                 customerEphemeralKeySecret: ephemeralKey,
                 paymentIntentClientSecret: paymentIntent,
-                // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-                //methods that complete payment after a delay, like SEPA Debit and Sofort.
-                allowsDelayedPaymentMethods: true,
+                // // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+                // //methods that complete payment after a delay, like SEPA Debit and Sofort.
+                // allowsDelayedPaymentMethods: true,
                 defaultBillingDetails: {
                     name: 'Jane Doe',
                 },
+                returnURL: 'Storegrab://stripe-redirect',
             });
 
 
@@ -344,7 +345,12 @@ const Cart = ({ navigation }: any) => {
 
     const openPaymentSheet = async () => {
         try {
-            await presentPaymentSheet();
+            const { error } = await presentPaymentSheet();
+            if (error) {
+                console.log(`Error code: ${error.code}`, error.message);
+              } else {
+                console.log('Success', 'Your order is confirmed!');
+              }
             console.log(paymentIntentId)
             const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: selectedVendor?.vendorId, items: user?.cart }
             await dispatch(placeOrders(orderReq));

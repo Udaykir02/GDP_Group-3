@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Animated, Image, Pressable, StyleSheet, View } from 'react-native';
 import { Card, Divider, Icon, Text } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
@@ -7,6 +7,9 @@ import { responsiveScreenHeight, responsiveScreenWidth } from 'react-native-resp
 const DeliveryCard: React.FC = ({order}:any) => {
   const { colors } = useAppTheme();
 
+  useEffect(()=>{
+    console.log("--->deliverycard"+JSON.stringify(order))
+  })
   const styles = StyleSheet.create({
     footerContainer: {
       display: 'flex',
@@ -123,19 +126,34 @@ const DeliveryCard: React.FC = ({order}:any) => {
     }).start();
   };
 
+// Function to get the estimated time remaining
+const getEstimatedTimeRemaining = () => {
+  const endTimeDate: any = new Date(order.endTime);
+  const currentTimeDate:any = new Date();
+
+  // Calculate the time difference in milliseconds
+  const timeDifference = endTimeDate - currentTimeDate;
+
+  // Calculate days, hours, minutes, and seconds
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+  return days.toString()+"d "+hours.toString()+"h" ;
+}
+
   return (
-    <View>
+    <View style={{ marginVertical: 10}}>
       <Card style={styles.cardContainer}>
         <View>
-          <Text variant="titleMedium" style={{ color: colors.primary }}>
-            Estimated {order.endtime}
-          </Text>
+          <Text variant="titleMedium" style={{ color: colors.primary }}>Estimated {getEstimatedTimeRemaining()}</Text>
           <View style={[styles.contentContainer, { alignItems: 'center', marginVertical: 10 }]}>
             <Icon source="truck-outline" size={24} color={colors.primary} />
             <Text style={{ color: colors.primary, fontWeight: '700' }}>On the Way</Text>
           </View>
         </View>
-        {setTitleValueUi('Vendor', 'Marshalls')}
+        {setTitleValueUi('Vendor', order.vendorId)}
         <View style={{ marginTop: 10 }}>
           <View
             style={{

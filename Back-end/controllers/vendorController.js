@@ -1,5 +1,5 @@
 const Vendor = require('../models/Vendor');
-
+const Inventory = require('../models/inventory')
 module.exports = {
   addVendor: async (vendorData) => {
     try {
@@ -76,4 +76,30 @@ const insertVendorWithGeopoint = async (req, res) => {
   }
 };
 
-module.exports = { findNearestVendor, insertVendorWithGeopoint };
+const addVendorIdToProducts = async (req, res) => {
+  try {
+    const vendorId = req.body.vendorId;
+    const vendor = await Vendor.findOne({ vendorId });
+
+    if (!vendor) {
+      return res.status(404).json({ message: 'Vendor not found' });
+    }
+
+    // Update each product with the vendorId
+    const productsUpdate = vendor.products.map(async (skuId) => {
+      return await Inventory.findOneAndUpdate(
+        { skuId },
+        {$set: {vendorId: vendorId}}
+      );
+    });
+
+    // Wait for all the updates to complete
+    await Promise.all(productsUpdate);
+
+    res.status(200).json({ message: 'Vendor ID added to products successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { findNearestVendor, insertVendorWithGeopoint, addVendorIdToProducts };

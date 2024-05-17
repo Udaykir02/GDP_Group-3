@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { findNearestVendor, insertVendorWithGeopoint } = require('../controllers/vendorController');
+const { findNearestVendor, insertVendorWithGeopoint, addVendorIdToProducts } = require('../controllers/vendorController');
 const { verifyTokenAndUser } = require("../controllers/verifyTokenAndUser");
 
 // Route to find the nearest vendor based on user's current geopoint
@@ -18,6 +18,7 @@ router.post('/nearest-vendor', findNearestVendor);
 // });
 
 router.post('/vendors', insertVendorWithGeopoint);
+router.post('/insert', addVendorIdToProducts);
 
 // Define other routes for vendors as needed
 

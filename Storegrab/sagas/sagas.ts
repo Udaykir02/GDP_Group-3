@@ -148,6 +148,12 @@ function* getOrdersSaga(action: any) {
       userId: action.payload
     }, { headers: { Authorization: `${action.payload}` } });
     const orders: any = response.data;
+    console.log("--->orders_saga"+(JSON.stringify(orders)))
+    for (let i = 0; i < orders.length; i++) {
+      const element = orders[i]._id;
+      console.log(element)
+      
+    }
     yield put(getOrdersSuccess(orders));
     // Navigate to home screen or perform any other action
   } catch (error) {
@@ -162,6 +168,8 @@ function* placeOrderSaga(action: any) {
       userId: action.payload.userId, paymentIntentId: action.payload.paymentIntentId, vendorId: action.payload.vendorId, items: action.payload.items
     }, { headers: { Authorization: `${action.payload}` } });
     const order = response.data.order;
+
+    console.log("order_details"+JSON.stringify(order))
     yield put(placeOrderSuccess(order));
     yield put(clearCart());
     // Navigate to home screen or perform any other action

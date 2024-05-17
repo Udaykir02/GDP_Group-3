@@ -41,8 +41,8 @@ function App(): React.JSX.Element {
   return (
     <StripeProvider
     publishableKey={"pk_test_51OzvLoI9X94W95wYlv93WNVV36Yue6aXop1QuiLwpSc9CgSJyusa9IwidvNsxuJ3otfvjTalLrwBzwRogHRvWWZ900BfxC74LG"}
-    merchantIdentifier="merchant.identifier" // required for Apple Pay
     urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+    merchantIdentifier="merchant.com.{{Storegrab}}" // required for Apple Pay
     >
     <Provider store={store}>
     <PaperProvider>
