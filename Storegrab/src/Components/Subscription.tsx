@@ -29,10 +29,6 @@ const VendorSubscriptionPage: React.FC = () => {
         <Text style={styles.value}>${monthlyCost.toFixed(2)}</Text>
       </View>
       <View style={styles.actionsContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleUpgradePlan}>
-            {/* <MyIcon name={"MaterialCommunityIcons|arrow-upward"} style={{fontSize: 24, color: "white"}} /> */}
-            <Text style={styles.buttonText}>Upgrade Plan</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleCancelSubscription}>
         {/* <MyIcon name={"MaterialCommunityIcons|cancel"} style={{fontSize: 24, color: "white"}} /> */}
 

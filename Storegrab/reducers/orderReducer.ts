@@ -20,6 +20,7 @@ const ordersSlice = createSlice({
             state.error = action.payload;
         },
         placeOrderSuccess: (state, action: PayloadAction<any>) => {
+            console.log(action.payload)
             state.orders.push(action.payload)
         },
         placeOrderFailure: (state, action: PayloadAction<any>) => {

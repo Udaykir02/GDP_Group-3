@@ -16,6 +16,7 @@ import Cart from '../Components/Cart';
 import { renewTokenRequest } from '../../actions/userActions';
 import { useStripe } from '@stripe/stripe-react-native';
 import { Linking } from 'react-native';
+import ProductFilter from '../Components/ProductFilter';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export type RootStackParamList = {
   Filter: undefined;
   Vendor: undefined;
   Cart: undefined;
+  ProductFilter: undefined;
 };
 
 const MainContainer = () => {
@@ -129,8 +131,9 @@ const RootNavigation = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Root">
       <Stack.Screen name="Root" component={MainContainer} />
       <Stack.Screen name="Region" component={RegionContainer} />
-      <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} />
+      <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} options={{headerShown: true, headerBackTitle: 'back'}}/>
       <Stack.Screen name="Filter" component={Filters} options={{headerShown: true, headerBackTitle: 'back'}}/>
+      <Stack.Screen name="ProductFilter" component={ProductFilter} options={{headerShown: true, headerBackTitle: 'back'}}/>
       <Stack.Screen name="Vendor" component={VendorScreen} options={{headerShown: true, headerBackTitle: 'back'}}/>
       <Stack.Screen name="Cart" component={Cart} options={{headerShown: true, headerBackTitle: 'back'}}/>
     </Stack.Navigator>

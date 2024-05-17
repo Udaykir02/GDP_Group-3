@@ -30,6 +30,7 @@ export default function <C>() {
         },
         articles: {
             width: 'auto',
+            paddingHorizontal: 2
         },
         navbar: {
             paddingVertical: 0,

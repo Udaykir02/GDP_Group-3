@@ -31,27 +31,46 @@ const insertInventory = async (req, res) => {
   }
 };
 
-// Controller function to get inventory by SKU ID
 const getInventoryBySkuId = async (req, res) => {
   try {
-    // Extract the SKU ID from the request parameters
-    const { skuids } = req.body;
-    const inventoryArray = [];
+    // Extract the SKU IDs and optional filters from the request body
+    const { skuids, minPrice, maxPrice, categories, brand } = req.body;
+    const query = {
+      skuId: { $in: skuids }
+    };
 
-    for (let i = 0; i < skuids.length; i++) {
-      const inventory = await Inventory.findOne({ skuId: skuids[i] });
-      inventoryArray.push(inventory);
+    // Add price range filter if provided
+    if (minPrice !== undefined && maxPrice !== undefined) {
+      query.price = { $gte: minPrice, $lte: maxPrice };
+    } else if (minPrice !== undefined) {
+      query.price = { $gte: minPrice };
+    } else if (maxPrice !== undefined) {
+      query.price = { $lte: maxPrice };
     }
+
+    // Add categories filter if provided
+    if (categories && categories.length > 0) {
+      query.categories = { $in: categories };
+    }
+
+    // Add brand filter if provided
+    if (brand) {
+      query.brand = brand;
+    }
+
+    // Fetch inventory items that match the query
+    const inventoryArray = await Inventory.find(query);
+
     // If inventory data exists, send it in the response
     if (inventoryArray.length > 0) {
       res.status(200).json({ success: true, data: inventoryArray });
     } else {
       // If no inventory data found, send an appropriate message
-      res.status(404).json({ success: false, message: 'Inventory not found for the provided SKU IDs' });
+      res.status(404).json({ success: false, message: 'Inventory not found for the provided SKU IDs and filters' });
     }
   } catch (error) {
     // If an error occurs, send an error response
-    console.log(error.message)
+    console.error(error.message);
     res.status(500).json({ success: false, error: error.message });
   }
 };

@@ -19,10 +19,16 @@ const paymentSheetController = async (req, res) => {
             },
         });
 
+        // Generate an ephemeral key for the customer
+        const ephemeralKey = await stripe.ephemeralKeys.create(
+            { customer: req.user.customer.id },
+            { apiVersion: '2024-04-10' }
+        );
+
         console.log(paymentIntent)
         res.status(200).json({
             paymentIntent: paymentIntent.client_secret,
-            ephemeralKey: req.user.ephemeralKey.secret,
+            ephemeralKey: ephemeralKey.secret,
             customer: req.user.customer.id,
             publishableKey: process.env.STRIPE_PUBLISHER_KEY,
             paymentIntentId: paymentIntent.id
@@ -40,7 +46,7 @@ const placeOrder = async (req, res) => {
         const { userId, paymentIntentId, vendorId, items } = req.body;
 
         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-        if(paymentIntent.status === 'succeeded'){
+        if (paymentIntent.status === 'succeeded') {
             const orderId = uuid.v4();
             const address = {
                 country: "USA",
@@ -71,12 +77,12 @@ const placeOrder = async (req, res) => {
             }
             const order = new Order(orderBody);
             await order.save();
-    
+
             res.status(200).json({
                 success: true, order: order
             });
         }
-        else{
+        else {
             return res.status(404).json({ message: 'Payment error, please try again' });
         }
     }

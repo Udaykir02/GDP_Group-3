@@ -15,7 +15,8 @@ const inventorySchema = new Schema({
   categories: [String],
   image: String,
   description: String,
-  brand: String
+  brand: String,
+  vendorId: String
 });
 
 const Inventory = mongoose.model('Inventory', inventorySchema);

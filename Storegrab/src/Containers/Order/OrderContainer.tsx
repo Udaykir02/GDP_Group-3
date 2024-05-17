@@ -23,12 +23,10 @@ const OrderContainer: React.FC = () => {
   const { colors } = useAppTheme();
   return (
     <AppPageWrapper>
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
-   <View style={{ flex: 1 }}>
         <FlatList
             data={orders}
             // ListHeaderComponent={renderHeader}
-            renderItem={({ item, index }) => (
+            renderItem={({ item, index }:any) => (
                 <DeliveryCard order={item}/>
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -39,8 +37,7 @@ const OrderContainer: React.FC = () => {
             // onEndReached={() => fetchMore()}
             style={styles.articles}
         />
-    </View>
-</View></AppPageWrapper>
+  </AppPageWrapper>
   );
 };
 
