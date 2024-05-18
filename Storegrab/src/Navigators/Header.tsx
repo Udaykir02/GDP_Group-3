@@ -33,7 +33,7 @@ const Header: React.FC<Props> = ({ name }) => {
     iconContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginRight: 10 },
     imageContainer: { padding: 16, flex: 1, paddingLeft: 10 },
     navigationContainer: { padding: 16, flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 0 },
-    title: {
+    title: selectedVendor && selectedVendor?.vendor_name?{color: "#32325D", fontWeight: 'bold', fontSize: 18}:{
       fontSize: 18
     },
     image: {
@@ -125,7 +125,7 @@ const Header: React.FC<Props> = ({ name }) => {
     return (<>
       <Appbar.Header mode="small" elevated style={{ backgroundColor: colors.brightWhite, marginRight: 16 }}>
         <Appbar.BackAction onPress={() => { dispatch(clearState()); navigation.goBack() }} />
-        <SearchComponent searchTextChange={searchTextChange} searchStyle={{ width: '85%', marginLeft: 8 }} placeHolder={'Search Anything'} searchText={searchText} />
+        <SearchComponent searchTextChange={searchTextChange} searchStyle={{ width: '75%', marginLeft: 8 }} placeHolder={'Search Anything'} searchText={searchText} />
         <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Cart') }} />{((cartData && cartData.length) > 0) ? <View style={styles.redDot} /> : null}
       </Appbar.Header>
     </>)

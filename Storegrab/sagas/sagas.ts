@@ -116,7 +116,7 @@ function* handleVendorProductsSaga(action: any) {
   try {
     const { skuids, token, brand, categories, minPrice, maxPrice } = action.payload;
     const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
-      skuids: skuids
+      skuids: skuids, brand: brand, categories: categories, minPrice: minPrice, maxPrice: maxPrice
     },{ headers: { Authorization: `${token}` } });
     console.log(JSON.stringify(response.data.data))
     yield put(updateVendorProductsSuccess(response.data?.data));

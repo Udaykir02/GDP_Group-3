@@ -22,7 +22,7 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
   const { token } = useSelector((state: any) => state.auth)
   const { colors } = useAppTheme();
   const isReduxModalVisible = useSelector((state: any) => state.location.isModalVisible)
-  const { defaultlocation } = useSelector((state: any)=> state.location);
+  const { defaultlocation } = useSelector((state: any) => state.location);
   const dispatch = useDispatch();
   const controlModal = (flag: boolean) => {
     dispatch(setModalVisible(flag));
@@ -69,8 +69,8 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
   }, [isReduxModalVisible])
 
   const renderHeader = () => {
-    // if(!defaultlocation)
-    //   return (<></>)
+    if (!vendors || vendors.length === 0)
+      return (<></>);
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Text style={styles.title}>{`${radius} miles radius`}</Text>

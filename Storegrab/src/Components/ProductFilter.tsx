@@ -82,10 +82,12 @@ const ProductFilter = ({ navigation }: any) => {
 
 
     const handleSubmit = () => {
+        console.log(valueCategories)
+        console.log(value);
         dispatch(updateMaxPrice(min));
         dispatch(updateMaxPrice(sliderRadius));
         dispatch(updateBrand(value));
-        dispatch(updateCategories(value));
+        dispatch(updateCategories(valueCategories));
         navigation.goBack();
     }
 
@@ -112,17 +114,6 @@ const ProductFilter = ({ navigation }: any) => {
             justifyContent: 'flex-start',
             paddingHorizontal: 15
         }}>
-            <FilterItem title={String(min) + "Price"} filterValue={`${sliderRadius} price`}>
-                <Slider
-                    style={{ width: width - 10 * 2, height: 40, paddingHorizontal: 15 }}
-                    value={sliderRadius}
-                    onValueChange={onSliderValueChange}
-                    minimumValue={min}
-                    maximumValue={max}
-                    minimumTrackTintColor="#000"
-                    maximumTrackTintColor="#000000"
-                />
-            </FilterItem>
 
             {<FilterItem title="Categories">
                 <View style={{
