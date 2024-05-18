@@ -66,13 +66,18 @@ const AccountContainer: React.FC = () => {
 
         </View>
         <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
+        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('EditProfile')}}>
+          <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleSubscriptions}>
           <Text style={styles.buttonText}>Subscriptions</Text>
         </TouchableOpacity>
+
       </View>
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </AppPageWrapper>
   );
