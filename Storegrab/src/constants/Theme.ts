@@ -5,7 +5,7 @@ export default {
     SECONDARY: '#F7FAFC',
     LABEL: '#FE2472',
     INFO: '#11CDEF',
-    ERROR: '#F5365C',
+    ERROR: '#4CAF50',
     SUCCESS: '#2DCE89',
     WARNING: '#FB6340',
     /*not yet changed */

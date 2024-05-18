@@ -15,55 +15,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCartRequest } from '../../../../actions/userActions';
 import axios from 'axios';
 interface IProps {
-  par: number;
+  handleChange?: (change: number) => void;
   quantity: number;
-  deal: boolean;
-  isCase: boolean;
-  handleTextInputFocus: () => void,
-  inventory: UserCartType
 }
-const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputFocus, inventory }: IProps) => {
+const Stepper = ({ handleChange, quantity }: IProps) => {
   const theme: AppTheme = useTheme();
 
   const styles = createStepperStyle(theme)
 
 
-  const [productQuantityCase, setProductQuantityCase] = useState<String>("Each");
   const [shadowColor, setShadowColor] = useState('transparent');
   const [borderColor, setBorderColor] = useState(theme.colors.primary);
   const animationMinus = useRef(new Animated.Value(0)).current;
   const animationPlus = useRef(new Animated.Value(0)).current;
-  const { user, token } = useSelector((state: any)=> state.auth)
-  const { selectedVendor} = useSelector((state:any)=>state.vendor)
-  const [ inventoryQty, setInventoryQty] = useState(inventory.qty)
-  const [count, setCount] = useState(user?.cart?.find((element:any)=>element.skuId === inventory.skuId)?.qty ?user?.cart?.find((element:any)=>element.skuId === inventory.skuId)?.qty:0);
-  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    const config = {
-      method: 'post',
-      url: 'http://localhost:3000/inventory/getInventoryQty',
-      data: { skuid: inventory.skuId} // Add the request body
-    };
-    axios(config)
-      .then(response => {
-        setInventoryQty(response.data.data.qty)
-        console.log('Response:', response.data.data.qty);
-      })
-      .catch(error => {
-        // setVendors([])
-      });
-  },[])
-
-  useEffect(()=>{
-    console.log("new log")
-    const product = user?.cart?.find((element:string)=> element === inventory.skuId)
-    console.log("new log"+product)
-    if(product){
-      setCount(product.qty)
-    }
-
-  },[user?.cart])
 
   const dynamicShadowStyle = {
     ...Platform.select({
@@ -82,24 +47,20 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
 
 
   const handlePress = (change: any) => {
-    console.log(change+"--->")
-    console.log(inventoryQty+"inventoryQty")
-    console.log(JSON.stringify(user?.userId)+"-->");
-    dispatch(addToCartRequest(user?.userId,inventory?.skuId, change,token ));
+    // dispatch(addToCartRequest(user?.userId,inventory?.skuId, change,token ));
     const animation = change > 0 ? animationPlus : animationMinus;
+    handleChange && handleChange(change)
     if (change > 0) {
-      setInventoryQty(Number(inventoryQty)-change)
       setShadowColor(theme.colors.primary)
       setBorderColor(theme.colors.primary)
     }
     else {
-      setInventoryQty(Number(inventoryQty)+change)
       setShadowColor(theme.colors.coreMarkOrange)
       setBorderColor(theme.colors.coreMarkOrange)
     }
 
-    if (count >= 9999 && change > 0) {
-      setCount(9999)
+    if (quantity>= 9999 && change > 0) {
+      // setCount(9999)
       return;
     }
 
@@ -117,7 +78,7 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
     ]).start();
 
     
-    setCount((prevCount) => Math.max(0, prevCount + change));
+    // setCount((prevCount) => Math.max(0, prevCount + change));
   };
 
 
@@ -163,41 +124,39 @@ const Stepper = ({ par = 10, quantity = 0, deal = true, isCase, handleTextInputF
       clearTimeout(timer);
     }
   }
-    , [count]);
+    , [quantity]);
 
-  const handleProductCase = (caseType: String) => {
-    setProductQuantityCase(caseType);
-  }
 
   return (
     <View style={[styles.mainContainer]}>
-      {productQuantityCase === '' ? <ProductStepper handleProductCase={handleProductCase} price={5.96} deal={true} /> : <View style={{ ...styles.outerContainer, ...dynamicShadowStyle, borderColor: borderColor }}>
+      
+      <View style={{ ...styles.outerContainer, ...dynamicShadowStyle, borderColor: borderColor }}>
         {Platform.OS === 'android' && <View style={{ ...styles.androidShadow, borderColor: shadowColor }} />}
 
-        <View style={{ ...styles.innerContainer, backgroundColor: count > 0 ? theme.colors.primarySuperLight : theme.colors.backgroundDefault }}>
+        <View style={{ ...styles.innerContainer, backgroundColor: quantity> 0 ? theme.colors.primarySuperLight : theme.colors.backgroundDefault }}>
 
-          {(count === 0) ? <><TouchableOpacity onPress={() => handlePress(1)}><View style={styles.inputContainer}>
+          {(quantity=== 0) ? <><TouchableOpacity onPress={() => handlePress(1)}><View style={styles.inputContainer}>
             <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{'Add'}</Text>
           </View></TouchableOpacity>
             <TouchableOpacity onPress={() => handlePress(1)}>
               <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
                 <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
               </Animated.View>
-            </TouchableOpacity></> : <><TouchableOpacity onPress={() => handlePress(-1)} disabled={count === 0}>
+            </TouchableOpacity></> : <><TouchableOpacity onPress={() => handlePress(-1)} disabled={quantity=== 0}>
               <Animated.View style={[styles.button, animatedMinusButtonStyle]}>
-                <Text style={{ ...styles.buttonText, color: count > 0 ? theme.colors.primary : "#C1C7CD" }}><MaterialCommunityIcons name="minus" size={32} /></Text>
+                <Text style={{ ...styles.buttonText, color: quantity> 0 ? theme.colors.primary : "#C1C7CD" }}><MaterialCommunityIcons name="minus" size={32} /></Text>
               </Animated.View>
             </TouchableOpacity>
             <View style={styles.inputContainer}>
-              <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{count}</Text>
+              <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{quantity}</Text>
             </View>
-            <TouchableOpacity onPress={() => handlePress(1)} disabled={inventoryQty === 0}>
+            <TouchableOpacity onPress={() => handlePress(1)}>
               <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
                 <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
               </Animated.View>
             </TouchableOpacity></>}
         </View>
-      </View>}
+      </View>
     </View>
   );
 };

@@ -10,10 +10,15 @@ const initialState: any = {
     lastproduct: {},
     refreshing: false,
     radius: 5,
-    vendorTypes: ['grocery', 'boutique', 'artisanal', 'market','food', 'antique', 'book', 'craft', 'pet'],
+    vendorTypes: ['grocery', 'boutique', 'artisanal', 'market', 'food', 'antique', 'book', 'craft', 'pet'],
     selectedVendor: null,
     loading: false,
-    error: null
+    error: null,
+    brand: [],
+    minPrice: undefined,
+    maxPrice: undefined,
+    categories: [],
+    inventoryQty: []
 };
 
 const vendorSlice = createSlice({
@@ -41,11 +46,11 @@ const vendorSlice = createSlice({
         },
         updateProducts(state, action) {
             const { skuId, qty } = action.payload;
-            console.log(state.products.find((element:any)=>element.skuId === skuId))
-            if(qty > 0)
-            state.products.find((element:any)=>element.skuId === skuId).qty += qty;
+            console.log(state.products.find((element: any) => element.skuId === skuId))
+            if (qty > 0)
+                state.products.find((element: any) => element.skuId === skuId).qty += qty;
             else
-            state.products.find((element:any)=>element.skuId === skuId).qty -= qty;
+                state.products.find((element: any) => element.skuId === skuId).qty -= qty;
         },
         changeProduct(state, action) {
             const { index, units, cart } = action.payload;
@@ -89,6 +94,64 @@ const vendorSlice = createSlice({
         updateVendorProductsFailure: (state, action) => {
             state.loading = false;
             state.error = action.payload;;
+        },
+        updateBrand: (state, action) => {
+            state.brand = action.payload;
+        },
+        updateMinPrice: (state, action) => {
+            state.minPrice = action.payload;
+        },
+        updateMaxPrice: (state, action) => {
+            state.maxPrice = action.payload;
+        },
+        updateCategories: (state, action) => {
+            state.categories = action.payload;
+        },
+        clearVendor: (state) => {
+            state.vendorshops = [];
+            state.vendorpage = 0;
+            state.hasmore = true;
+            state.products = [];
+            state.moreproducts = true;
+            state.lastproduct = {};
+            state.refreshing = false;
+            state.radius = 5;
+            state.vendorTypes = ['grocery', 'boutique', 'artisanal', 'market', 'food', 'antique', 'book', 'craft', 'pet'];
+            state.selectedVendor = null;
+            state.loading = false;
+            state.error = null;
+            state.brand = [];
+            state.minPrice = undefined;
+            state.maxPrice = undefined;
+            state.categories = [];
+            state.inventoryQty = [];
+        },
+        increaseProductQuantity: (state, action) => {
+            const skuId = action.payload;
+            const existingItem = state.products.find((prodItem: any) => prodItem.skuId === skuId);
+            const existingInventoryItem = state.inventoryQty.find((prodItem: any) => prodItem.skuId === skuId);
+
+            if (existingItem) {
+                existingItem.qty += 1;
+            }
+            if (existingInventoryItem) {
+                existingInventoryItem.qty += 1;
+            }    
+
+        },
+        decreaseProductQuantity: (state, action) => {
+            const skuId = action.payload;
+            const existingItem = state.products.find((prodItem: any) => prodItem.skuId === skuId);
+            const existingInventoryItem = state.inventoryQty.find((prodItem: any) => prodItem.skuId === skuId);
+            if (existingItem && existingItem.qty > 0) {
+                existingItem.qty -= 1;
+            }
+            if (existingInventoryItem && existingInventoryItem.qty > 0) {
+                existingInventoryItem.qty -= 1;
+            }
+        },
+        inventoryRequestSuccess: (state, action) => {
+            state.inventoryQty = action.payload;
         }
     }
 });
@@ -110,7 +173,15 @@ export const {
     updateVendorType,
     updateSelectedVendor,
     updateVendorProductsSuccess,
-    updateVendorProductsFailure
+    updateVendorProductsFailure,
+    updateBrand,
+    updateMinPrice,
+    updateMaxPrice,
+    updateCategories,
+    clearVendor,
+    increaseProductQuantity,
+    decreaseProductQuantity,
+    inventoryRequestSuccess
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;

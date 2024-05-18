@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Image, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Image, Pressable, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Card, Divider, Icon, Text } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
 import { responsiveScreenHeight, responsiveScreenWidth } from 'react-native-responsive-dimensions';
+import { useNavigation } from '@react-navigation/native';
 
 const DeliveryCard: React.FC = ({order}:any) => {
   const { colors } = useAppTheme();
+  const navigation = useNavigation();
 
   useEffect(()=>{
     console.log("--->deliverycard"+JSON.stringify(order))
@@ -144,6 +146,7 @@ const getEstimatedTimeRemaining = () => {
 }
 
   return (
+    <TouchableWithoutFeedback onPress={()=>{ navigation.navigate('OrderScreen', {order: order})}}>
     <View style={{ marginVertical: 10}}>
       <Card style={styles.cardContainer}>
         <View>
@@ -278,7 +281,7 @@ const getEstimatedTimeRemaining = () => {
                 left: '20%'
               }}
             >
-              {setTitleValueUi('Order Id', order?.orderId)}
+
             </View>
             <View
               style={{
@@ -320,6 +323,7 @@ const getEstimatedTimeRemaining = () => {
         </View>
       </Card>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

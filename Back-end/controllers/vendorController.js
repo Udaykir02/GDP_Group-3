@@ -22,12 +22,12 @@ const findNearestVendor = async (req, res) => {
         $geoNear: {
           near: { type: 'Point', coordinates: [longitude, latitude] },
           distanceField: 'distance',
-          spherical: true ,       
+          spherical: true,
         }
       },
       {
         $match: {
-          distance: { $lte: miles  * 1609.34 } // Convert miles to meters (1 mile = 1609.34 meters)
+          distance: { $lte: miles * 1609.34 } // Convert miles to meters (1 mile = 1609.34 meters)
         }
       }
     ]
@@ -79,22 +79,26 @@ const insertVendorWithGeopoint = async (req, res) => {
 const addVendorIdToProducts = async (req, res) => {
   try {
     const vendorId = req.body.vendorId;
-    const vendor = await Vendor.findOne({ vendorId });
+    const vendor = await Vendor.find();
 
     if (!vendor) {
       return res.status(404).json({ message: 'Vendor not found' });
     }
 
-    // Update each product with the vendorId
-    const productsUpdate = vendor.products.map(async (skuId) => {
-      return await Inventory.findOneAndUpdate(
-        { skuId },
-        {$set: {vendorId: vendorId}}
-      );
-    });
+    for (let index = 0; index < vendor.length; index++) {
+      // Update each product with the vendorId
+      const productsUpdate = vendor[index].products.map(async (skuId) => {
+        return await Inventory.findOneAndUpdate(
+          { skuId },
+          { $set: { vendor_name: vendor[index].vendor_name } }
+        );
+      });
 
-    // Wait for all the updates to complete
-    await Promise.all(productsUpdate);
+      // Wait for all the updates to complete
+      await Promise.all(productsUpdate);
+    }
+
+
 
     res.status(200).json({ message: 'Vendor ID added to products successfully' });
   } catch (error) {

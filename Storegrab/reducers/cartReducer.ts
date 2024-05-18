@@ -1,110 +1,66 @@
+// Import createSlice from Redux Toolkit
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: any = {
-  cartitems: [],
-  orderitems: [],
-  orders: [],
-  moreorders: true,
-  lastorder: {},
-  order_refreshing: false,
-  favourites: [],
-  morefavourites: true,
-  lastfavourite: {},
-  fav_refreshing: false  
+// Initial state for the cart
+const initialState:any = {
+  cart: []
 };
 
+
+// Create the cart slice
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    initialCart(state, action) {
-      state.cartitems = action.payload;
+    addUserCart: (state, action) => {
+      console.log("--->"+JSON.stringify(action.payload))
+      state.cart = action.payload;
+      console.log("--->newtoken"+JSON.stringify(state.cart))
     },
-    initialOrder(state, action) {
-      state.orderitems = action.payload;
+    addItemToCart: (state, action) => {
+      const item = action.payload;
+      state.cart.push(item);
     },
-    removeOrder(state, action) {
-      state.orderitems.splice(action.payload, 1);
+    removeItemFromCart: (state, action) => {
+      const skuId = action.payload;
+      state.cart = state.cart.filter((cartItem: any) => cartItem.skuId !== skuId);
     },
-    changeOrder(state, action) {
-      state.orderitems[action.payload.index] = action.payload.data;
+    updateItemInCart: (state, action) => {
+      const item = action.payload;
+      const existingItem = state.cart.find((cartItem:any) => cartItem.skuId === item.skuId);
+      if (existingItem) {
+        // Update item properties
+        existingItem.qty = item.qty;
+        existingItem.size = item.size;
+        existingItem.price = item.price;
+        // Update other properties if necessary
+      }
     },
-    addOrder(state, action) {
-      state.orderitems.unshift(action.payload);
+    clearCart: () => {
+      return initialState;
     },
-    addItem(state, action) {
-      state.cartitems.push(action.payload);
+    resetCart: (state) => {
+      state.cart = [];
     },
-    removeItem(state, action) {
-      state.cartitems.splice(action.payload, 1);
+    increaseItemQuantity: (state, action) => {
+      const skuId = action.payload;
+      const existingItem = state.cart.find((cartItem:any) => cartItem.skuId === skuId);
+      if (existingItem) {
+        existingItem.qty += 1;
+      }
     },
-    removeUnits(state, action) {
-      state.cartitems.splice(action.payload, 1);
+    decreaseItemQuantity: (state, action) => {
+      const skuId = action.payload;
+      const existingItem = state.cart.find((cartItem:any) => cartItem.skuId === skuId);
+      if (existingItem && existingItem.qty > 1) {
+        existingItem.qty -= 1;
+      }
     },
-    removeUnits2(state, action) {
-      const { index, units, total } = action.payload;
-      state.cartitems[index].units = units;
-      state.cartitems[index].total = total;
-    },
-    addOrders(state, action) {
-      state.orders = action.payload;
-    },
-    updateOrders(state, action) {
-      state.orders.push(action.payload);
-    },
-    ordersPagination(state, action) {
-      state.lastorder = action.payload.lastorder;
-      state.moreorders = action.payload.moreorders;
-    },
-    ordersRefreshing(state, action) {
-      state.order_refreshing = action.payload;
-    },
-    ordersFavourite(state, action) {
-      state.orders[action.payload.index].favourite = action.payload.value;
-    },
-    addFavourites(state, action) {
-      state.favourites = action.payload;
-    },
-    updateFavourites(state, action) {
-      state.favourites.push(action.payload);
-    },
-    favouritesPagination(state, action) {
-      state.lastfavourite = action.payload.lastorder;
-      state.morefavourites = action.payload.moreorders;
-    },
-    favRefreshing(state, action) {
-      state.fav_refreshing = action.payload;
-    },
-    addFavourite(state, action) {
-      state.favourites.unshift(action.payload);
-    },
-    removeFavourite(state, action) {
-      state.favourites.splice(action.payload, 1);
-    }		
   }
 });
 
-export const {
-  initialCart,
-  initialOrder,
-  removeOrder,
-  changeOrder,
-  addOrder,
-  addItem,
-  removeItem,
-  removeUnits,
-  removeUnits2,
-  addOrders,
-  updateOrders,
-  ordersPagination,
-  ordersRefreshing,
-  ordersFavourite,
-  addFavourites,
-  updateFavourites,
-  favouritesPagination,
-  favRefreshing,
-  addFavourite,
-  removeFavourite
-} = cartSlice.actions;
+// Export actions
+export const { addItemToCart, removeItemFromCart, updateItemInCart, clearCart, addUserCart, resetCart, increaseItemQuantity, decreaseItemQuantity } = cartSlice.actions;
 
+// Export the reducer
 export default cartSlice.reducer;

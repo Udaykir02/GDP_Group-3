@@ -17,7 +17,8 @@ const OrderContainer: React.FC = () => {
   const { user }=  useSelector((state: any)=> state.auth)
   const { orders } = useSelector((state: any)=>state.order)
   useEffect(()=>{
-    dispatch(getOrders(user.userId))
+    console.log('user', user?.userId?user.userId:'')
+    dispatch(getOrders(user?.userId?user.userId:''))
   },[])
 
   const { colors } = useAppTheme();

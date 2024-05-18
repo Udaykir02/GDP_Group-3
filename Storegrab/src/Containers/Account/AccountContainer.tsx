@@ -5,9 +5,10 @@ import { Text, Button } from 'react-native-paper'; // Import Button from react-n
 import { useAppTheme } from '../../styles/theme/theme';
 import AppPageWrapper from '../../shared/AppPageWrapper';
 import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch
-import { logoutRequest } from '../../../actions/userActions'; // Import your logout action creator
+import { logoutRequest, resetRequest } from '../../../actions/userActions'; // Import your logout action creator
 import { useNavigation } from '@react-navigation/native';
 import MyIcon from '../../Components/MyIcon';
+
 
 const AccountContainer: React.FC = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);

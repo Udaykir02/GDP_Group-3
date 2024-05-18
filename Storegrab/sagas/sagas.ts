@@ -4,9 +4,13 @@ import { put, takeLatest, call } from "redux-saga/effects";
 import { UserType } from "../reducers/users/types";
 import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure, clearCart } from "../reducers/users/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { loginRequest } from "../actions/userActions";
-import { updateProducts, updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
-import { getOrdersSuccess, getOrdersFailure, placeOrderSuccess, placeOrderFailure } from "../reducers/orderReducer";
+import { loginRequest, resetRequest } from "../actions/userActions";
+import { clearVendor, inventoryRequestSuccess, updateProducts, updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
+import { getOrdersSuccess, getOrdersFailure, placeOrderSuccess, placeOrderFailure, clearOrders } from "../reducers/orderReducer";
+import { clearState, fetchInventoryAndVendorDetailsFailure, fetchInventoryAndVendorDetailsStart, fetchInventoryAndVendorDetailsSuccess } from "../reducers/searchReducer";
+import { addUserCart, resetCart } from "../reducers/cartReducer";
+import { clearLocation } from "../reducers/locationReducer";
+import { clearAddresses } from "../reducers/addressReducer";
 
 
 
@@ -19,6 +23,7 @@ function* login(action: any) {
     const token = response.data.token;
     const userData = response.data.userData;
     yield AsyncStorage.setItem('auth_token', token);
+    yield put(addUserCart(userData?.cart));
     yield put(loginSuccess({token, userData}));
     // Navigate to home screen or perform any other action
   } catch (error) {
@@ -45,6 +50,12 @@ function* logout(action: any) {
   try {
     yield AsyncStorage.setItem('auth_token', '');
     yield put(logoutSuccess());
+    yield put(resetRequest());
+    yield put(reserCart());
+    yield put(clearOrders());
+    yield put(clearVendor());
+    yield put(clearState());
+    yield put(clearLocation());
     // Optionally, you can automatically login the user after registration
     // yield call(login, { payload: action.payload });
   } catch (error:any) {
@@ -103,7 +114,7 @@ function* handleResetPassword(action: any) {
 //update vendor products saga
 function* handleVendorProductsSaga(action: any) {
   try {
-    const { skuids, token } = action.payload;
+    const { skuids, token, brand, categories, minPrice, maxPrice } = action.payload;
     const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
       skuids: skuids
     },{ headers: { Authorization: `${token}` } });
@@ -119,10 +130,9 @@ function* addToCartSaga(action: any) {
   try {
     const { userId, skuId, qty, token } = action.payload;
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/addToCart`,{userId:userId, skuId:skuId, qty: qty},{ headers: { Authorization: `${token}` } });
-    console.log(JSON.stringify(response));
-    yield put(addToCartSuccess(response.data));
+
   } catch (error:any) {
-    yield put(addToCartFailure(error.response.data));
+    console.log(error)
   }
 }
 
@@ -135,6 +145,8 @@ function* renewTokenSaga(action: any) {
     const token = response.data.token;
     const userData = response.data.userData;
     yield AsyncStorage.setItem('auth_token', token);
+    console.log('userData'+JSON.stringify(userData.cart))  
+    yield put(addUserCart(userData?.cart));
     yield put(renewTokenSuccess({token, userData}));
     // Navigate to home screen or perform any other action
   } catch (error) {
@@ -171,13 +183,48 @@ function* placeOrderSaga(action: any) {
 
     console.log("order_details"+JSON.stringify(order))
     yield put(placeOrderSuccess(order));
-    yield put(clearCart());
+    yield put(resetCart());
     // Navigate to home screen or perform any other action
   } catch (error) {
     console.log(error)
     yield put(placeOrderFailure(JSON.stringify(error)));
   }
 }
+
+function* fetchInventoryAndVendorDetailsSaga(action:any) {
+  try {
+    console.log(action.payload.searchText)
+    const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/search`, {
+      skuids: undefined, 
+      minPrice: undefined,
+      maxPrice: undefined, 
+      categories: undefined, 
+      brand:undefined ,
+      searchTerm: action.payload.searchText
+    }, { headers: { Authorization: `${action.payload.token}` } });
+    const inventoryResult = response.data.inventoryResult;
+    const vendorResult = response.data.vendorResult;
+    yield put(fetchInventoryAndVendorDetailsSuccess({ inventoryData: inventoryResult, vendorData: vendorResult }));
+  } catch (error:any) {
+    yield put(fetchInventoryAndVendorDetailsFailure({ error: error.message }));
+  }
+}
+
+
+function* handleInventoryQtySaga(action: any) {
+  try {
+    const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventoryQuantity`, {
+      skuIds: action.payload.skuIds
+    }, { headers: { Authorization: `${action.payload.token}` } });
+
+    yield put(inventoryRequestSuccess(response.data));
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 
 // Generator function
 export function* watchAuthUser() {
@@ -192,4 +239,6 @@ export function* watchAuthUser() {
   yield takeLatest('RENEW_TOKEN_REQUEST', renewTokenSaga);
   yield takeLatest('GET_ORDERS_REQUEST', getOrdersSaga);
   yield takeLatest('PLACE_ORDER_REQUEST', placeOrderSaga);
+  yield takeLatest('SEARCH_PRODUCTS_REQUEST', fetchInventoryAndVendorDetailsSaga);
+  yield takeLatest('INVENTORY_REQUEST', handleInventoryQtySaga)
 }

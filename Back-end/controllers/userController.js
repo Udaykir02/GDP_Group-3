@@ -162,7 +162,7 @@ const loginUser = async (req, res) => {
     user.otpAttempts = 0;
     await user.save();
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '12h' });
+    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '40h' });
 
     // Return the token
     res.status(200).json({ token: token, userData: { userId: user.userId, email: user.username, fname: user.fname, lname: user.lname, emailVerified: user.emailVerified, address: user.address, vendors: user.vendors, notificationActive: user.notificationActive, vendorpreferences: user.vendorpreferences, userRecomendations: user.userRecomendations, cart: user.cart } });
@@ -333,7 +333,7 @@ const renewToken = async (req, res) => {
     }
 
     // Generate a new access token
-    const accessToken = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '12h' });
+    const accessToken = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '40h' });
 
     // Return the new access token
     res.status(200).json({ token: accessToken, userData: { userId: user?.userId, email: user?.username, fname: user?.fname, lname: user?.lname, emailVerified: user?.emailVerified, address: user?.address, vendors: user?.vendors, notificationActive: user?.notificationActive, vendorpreferences: user?.vendorpreferences, userRecomendations: user?.userRecomendations, cart: user?.cart } });
@@ -342,6 +342,27 @@ const renewToken = async (req, res) => {
     res.status(401).json({ message: 'Invalid or expired refresh token' });
   }
 }
+
+const resetCart = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    // Find the user by userId and reset the cart
+    const user = await User.findOneAndUpdate(
+      { userId: userId },
+      { $set: { cart: [] } }, // Reset the cart to an empty array
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'Cart reset successfully', cart: user.cart });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
 
 
 
@@ -358,4 +379,4 @@ const renewToken = async (req, res) => {
 //   // Other user-related controller functions...
 // };
 
-module.exports = { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController, renewToken }
+module.exports = { registerUser, loginUser, resetPasswordController, verifyOtp, resetPasswordPostToken, addToCartController, renewToken, resetCart }
