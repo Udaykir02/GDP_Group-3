@@ -14,6 +14,7 @@ import axios from 'axios';
 import { setDefaultLocation, setMapRegion } from '../../../reducers/locationReducer';
 import { useNavigation } from '@react-navigation/native';
 import MyIcon from '../MyIcon';
+import LocationSearchBox from '../LocationSearchBox';
 
 const { width } = Dimensions.get('screen');
 
@@ -169,7 +170,7 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <View style={{ paddingTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                     <View style={{ flex: 1, alignItems: 'center' }}>
-                        <SearchComponent searchTextChange={searchTextChange} />
+                        <LocationSearchBox searchTextChange={searchTextChange} />
                     </View>
 
                     <TouchableOpacity style={{ alignSelf: 'center', marginRight: 10 }} onPress={() => { controlModal(false)}}>
@@ -181,7 +182,7 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
                     data={searchText.length > 2 ? search : addresses}
                     ListHeaderComponent={renderHeader}
                     renderItem={({ item, index }) => (
-                        <TouchableHighlight onPress={() => handleSubmit(index)}>
+                        <TouchableOpacity onPress={() => handleSubmit(index)}>
                             <View style={{ paddingHorizontal: 10, paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
                                 <MyIcon name='Entypo|location-pin' style={{ fontSize: 25, color: "#000"}} />
                                 <View style={{ flex: 1, marginLeft: 10 }}>
@@ -193,7 +194,7 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
                                     </Text>
                                 </View>
                             </View>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     extraData={searchText.length > 2 ? search : addresses}

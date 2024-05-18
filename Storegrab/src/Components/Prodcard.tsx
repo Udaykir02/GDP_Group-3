@@ -193,16 +193,20 @@ const Prodcard: React.FC<ProdcardProps> = ({
                 <View style={{ flex: isHorizontal ? 0.7 : 1, justifyContent: 'space-between' }}>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                         <View style={[{ flex: 0.4 }, isHorizontal ? { marginHorizontal: 5 } : { marginVertical: 5 }]}>
-                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 14 }]}>{item.item}</Text>
-                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'normal', fontSize: 12 }]}>{item.skuId}</Text>
-                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>{'\u0024' + item.price}</Text>
+                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 14 }]}>{item?.item}</Text>
+                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'normal', fontSize: 12 }]}>{item?.features}</Text>
+                           
                         </View>
                         <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center' : 'flex-end', justifyContent: isHorizontal ? 'center' : 'flex-end' }}>
+                        <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'\u0024' + item?.price}</Text>
                             <Stepper quantity={getQuantity()} handleChange={handleChange} />
                         </View>
                     </View>
+                    <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
+                    <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>Description: {item?.description}</Text>
+                    </View>
                     <View style={[{ justifyContent: 'space-between' }, isHorizontal ? { marginHorizontal: 5 } : { marginVertical: 5 }]}>
-                        <Text style={[styles.cardTitle, { fontSize: 12, fontWeight: 'normal' }]}>{item.features}</Text>
+                        <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>{item.brand}</Text>
                     </View>
                 </View>
             </View>

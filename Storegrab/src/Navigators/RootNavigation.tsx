@@ -26,6 +26,7 @@ import VendorSearch from '../Components/Vendors/VendorSearch';
 import Header from './Header';
 import OrderScreen from '../Components/OrderScreen';
 import EditUserProfile from '../Components/EditProfile';
+import { argonTheme } from '../constants';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -188,20 +189,20 @@ const RootNavigation = () => {
       <Tab.Navigator
         initialRouteName="Feed"
         screenOptions={{
-          tabBarActiveTintColor: '#e91e63',
+          tabBarActiveTintColor: argonTheme.COLORS.PRIMARY,
           tabBarLabelStyle: { fontSize: 12 },
-          tabBarStyle: { backgroundColor: 'powderblue' },
+          tabBarStyle: { backgroundColor: '#fff' },
         }}
       >
         <Tab.Screen
           name="InventorySearch"
           component={InventorySearch}
-          options={{ tabBarLabel: 'InventorySearch' }}
+          options={{ tabBarLabel: 'products', }}
         />
         <Tab.Screen
           name="VendorSearch"
           component={VendorSearch}
-          options={{ tabBarLabel: 'VendorSearch' }}
+          options={{ tabBarLabel: 'shops' }}
         />
       </Tab.Navigator>
     );
