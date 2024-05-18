@@ -231,10 +231,10 @@ const Cart = ({ navigation }: any) => {
                 keyExtractor={(item) => item.skuId}
                 contentContainerStyle={styles.list}
             />
-            <View style={styles.totalContainer}>
+            {(cartData && cartData.length > 0) ?<View style={styles.totalContainer}>
                 <Text style={styles.totalText}>Total Cost:</Text>
                 <Text style={styles.totalAmount}>${getTotal()}</Text>
-            </View>
+            </View>:null}
 
             {(cartData && cartData.length > 0) ?
                 <View style={[styles.shadow, { marginBottom: 10}]}>

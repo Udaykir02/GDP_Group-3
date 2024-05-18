@@ -78,6 +78,10 @@ const placeOrder = async (req, res) => {
                 shipping: shipping
             }
             const order = new Order(orderBody);
+            const user = await User.findOne({ userId });
+            user.cart = []
+            await user.save();
+
             await order.save();
 
   

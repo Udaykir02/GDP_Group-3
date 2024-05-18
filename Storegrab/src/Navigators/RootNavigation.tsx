@@ -25,6 +25,7 @@ import InventorySearch from '../Components/WelcomeContainer/InventorySearch';
 import VendorSearch from '../Components/Vendors/VendorSearch';
 import Header from './Header';
 import OrderScreen from '../Components/OrderScreen';
+import EditUserProfile from '../Components/EditProfile';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -43,6 +44,7 @@ export type RootStackParamList = {
   ProductFilter: undefined;
   Search: undefined;
   OrderScreen: undefined;
+  EditProfile: undefined;
 };
 
 const MainContainer = () => {
@@ -242,6 +244,7 @@ const RootNavigation = () => {
       <Stack.Screen name="Vendor" component={VendorScreen} options={{ headerShown: true, headerBackTitle: 'back', title: 'Vendor Details' }} />
       <Stack.Screen name="Cart" component={Cart} options={{ headerShown: true, headerBackTitle: 'back', title: "Cart" }} />
       <Stack.Screen name="OrderScreen" component={OrderScreen} options={{ headerShown: true, headerBackTitle: 'back', title: "Order Details" }} />
+      <Stack.Screen name="EditProfile" component={EditUserProfile} options={{ headerShown: true, headerBackTitle: 'back', title: "Edit Profile" }} />
     </Stack.Navigator>
   );
 };

@@ -51,7 +51,7 @@ function* logout(action: any) {
     yield AsyncStorage.setItem('auth_token', '');
     yield put(logoutSuccess());
     yield put(resetRequest());
-    yield put(reserCart());
+    yield put(resetCart());
     yield put(clearOrders());
     yield put(clearVendor());
     yield put(clearState());

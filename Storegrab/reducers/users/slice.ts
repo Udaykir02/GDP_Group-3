@@ -93,11 +93,14 @@ const authSlice = createSlice({
             state.user.cart = null
             state.error = null;
         },
+        updateUser:(state, action) => {
+            state.user = action.payload
+        }
         // Define reducers for registration success and failure if needed
     },
 });
 
-export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure , clearCart} = authSlice.actions;
+export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure , clearCart, updateUser} = authSlice.actions;
 
 
 export default authSlice.reducer;
