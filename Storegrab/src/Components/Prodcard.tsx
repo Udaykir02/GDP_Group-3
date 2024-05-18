@@ -6,6 +6,10 @@ import NumericInput from './NumericInput';
 import { Card } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
 import { UserCartType } from '@/../reducers/users/types';
+import Stepper from './shared/stepper/Stepper';
+import { addItemToCart, decreaseItemQuantity, increaseItemQuantity, removeItemFromCart, updateItemInCart } from '../../reducers/cartReducer';
+import { decreaseProductQuantity, increaseProductQuantity } from '../../reducers/vendorReducer';
+import { addToCartRequest } from '../../actions/userActions';
 // import { Text, theme } from 'galio-framework';
 
 
@@ -44,32 +48,17 @@ interface ProdcardProps {
     shop: Shop;
     location: Location;
     cartitems: CartItem[];
-    removeProduct: (args: { index: number; units: number; cart: number }) => void;
-    removeProduct2: (args: { index: number; units: number; cartindex: number; cartunits: number; total: number }) => void;
-    removeUnits: (index: number) => void;
-    removeUnits2: (args: { index: number; units: number; total: number }) => void;
 }
 
 const Prodcard: React.FC<ProdcardProps> = ({
-    navigation,
     item,
     horizontal,
-    full,
     style,
-    ctaColor,
     imageStyle,
-    shop,
-    location,
-    cartitems,
-    removeProduct,
-    removeProduct2,
-    removeUnits,
-    removeUnits2,
 }) => {
     const [isHorizontal, setIsHorizontal] = useState<boolean>(horizontal);
-    const dispatch = useDispatch();
-    const {colors} = useAppTheme();
-    const { user, token } = useSelector((state: any)=> state.auth)
+    const { colors } = useAppTheme();
+    const { user, token } = useSelector((state: any) => state.auth)
     const styles = StyleSheet.create({
         card: {
             backgroundColor: '#fff',
@@ -123,59 +112,13 @@ const Prodcard: React.FC<ProdcardProps> = ({
             elevation: 5,
             borderRadius: 8,
             marginVertical: 10
-          },
+        },
     });
+    const dispatch = useDispatch();
 
-    const removeCart = (object: { product: any }) => {
-        // return new Promise((resolve, reject) => {
-        //   var remove_Cart = fire.functions('asia-east2').httpsCallable('removeCart');
-        //   remove_Cart(object).then((result: { data: { type: string } }) => {
-        //     if (result.data.type === 'success') {
-        //       //resolve(result.data.payload);
-        //     }
-        //   });
-        // });
-    };
-
-    const updateCart = (object: { product: any }) => {
-        // return new Promise((resolve, reject) => {
-        //   var update_Cart = fire.functions('asia-east2').httpsCallable('updateCart');
-        //   update_Cart(object).then((result: { data: { type: string } }) => {
-        //     if (result.data.type === 'success') {
-        //       //resolve(result.data.payload);
-        //     }
-        //   });
-        // });
-    };
+    const cartData = useSelector((state: any) => state.usercart.cart)
 
 
-    const decrease = () => {
-        // if (item.units === 1 && item.cart.length === 1) {
-        //     const uniqueID = item.cart[0].uniqueID;
-        //     const loc = location;
-        //     dispatch(removeProduct({ index: loc, units: 0, cart: 0 }));
-        //     cartitems.forEach((cartItem, i) => {
-        //         if (cartItem.uniqueID === uniqueID) {
-        //             removeCart({ product: cartItem });
-        //             dispatch(removeUnits(i));
-        //         }
-        //     });
-        // } else if (item.units > 1 && item.cart.length === 1) {
-        //     const units = item.units - 1;
-        //     const total = units * item.cart[0].cost;
-        //     const uniqueID = item.cart[0].uniqueID;
-        //     const loc = location;
-        //     dispatch(removeProduct2({ index: loc, units, cartindex: 0, cartunits: units, total }));
-        //     cartitems.forEach((cartItem, i) => {
-        //         if (cartItem.uniqueID === uniqueID) {
-        //             dispatch(removeUnits2({ index: i, units, total }));
-        //             updateCart({ product: cartItem });
-        //         }
-        //     });
-        // } else {
-        //     navigation.navigate('Customization', { product: item, shop, location });
-        // }
-    };
 
     const imageStyles = [
         !isHorizontal ? styles.fullImage : styles.horizontalImage,
@@ -188,9 +131,58 @@ const Prodcard: React.FC<ProdcardProps> = ({
         styles.shadow,
     ];
 
-    useEffect(()=>{
-        console.log("This-is-a-check"+item)
-      },[])
+
+
+
+    const handleChange = (change: number) => {
+        let cartItem = cartData.find((cartItem: any) => cartItem.skuId === item?.skuId)
+        dispatch(addToCartRequest(user?.userId,item?.skuId, change,token ));
+        if(cartItem){
+            if(cartItem.qty === 1 && change < 0){
+                dispatch(removeItemFromCart(cartItem?.skuId))
+                dispatch(increaseProductQuantity(cartItem?.skuId))
+            }
+            else if(change > 0) {
+                if(item?.qty > 0){
+                    dispatch(increaseItemQuantity(cartItem?.skuId))
+                    dispatch(decreaseProductQuantity(cartItem?.skuId))
+                }
+                
+            }   
+            else {
+                dispatch(decreaseItemQuantity(cartItem?.skuId))
+                dispatch(increaseProductQuantity(cartItem?.skuId))
+            }
+        }
+        else{
+            if(change > 0){
+                if(item.qty > 0){
+                    const newCartItem: any = {
+                        skuId: item?.skuId,
+                        item:  item?.item,
+                        price: item?.price,
+                        qty: change,
+                        size: item?.size,
+                        features: item?.features,
+                        categories: item?.categories,
+                        image: item?.image,
+                        description: item?.description,
+                        brand: item?.brand,
+                        vendorId: item?.vendorId,
+                        vendor_name: item?.vendor_name,
+                      }
+                    dispatch(addItemToCart(newCartItem))
+                    dispatch(decreaseProductQuantity(cartItem?.skuId))
+                }
+
+            }
+        }
+
+    }
+
+    const getQuantity = () =>{
+        return (cartData && cartData.length > 0 && cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty)?cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty: 0
+    }
 
     return (
         <TouchableWithoutFeedback onPress={() => setIsHorizontal(!isHorizontal)}>
@@ -200,32 +192,16 @@ const Prodcard: React.FC<ProdcardProps> = ({
                 </View>
                 <View style={{ flex: isHorizontal ? 0.7 : 1, justifyContent: 'space-between' }}>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                        <View style={[{ flex: 0.4 },isHorizontal? {marginHorizontal: 5}:{marginVertical: 5}]}>
+                        <View style={[{ flex: 0.4 }, isHorizontal ? { marginHorizontal: 5 } : { marginVertical: 5 }]}>
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 14 }]}>{item.item}</Text>
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'normal', fontSize: 12 }]}>{item.skuId}</Text>
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>{'\u0024' + item.price}</Text>
                         </View>
-                        <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center': 'flex-end', justifyContent: isHorizontal ?'center':'flex-end' }}>
-                            <NumericInput
-                                value={item.qty}
-                                decrease={decrease}
-                                onChange={(value: any) => { }}
-                                editable={false}
-                                leftButtonBackgroundColor="#fdfeff"
-                                rightButtonBackgroundColor="#fdfeff"
-                                totalWidth={80}
-                                totalHeight={25}
-                                borderColor={'#adadad'}
-                                separatorWidth={0.5}
-                                minValue={0}
-                                inputStyle={{ backgroundColor: '#f7ebeb', borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#adadad' }}
-                                rounded={true}
-                                textColor={'#32325D'}
-                                inventory={user?.cart?.find((element: UserCartType) => element.skuId === item.skuId) ? user?.cart?.find((element: UserCartType) => element.skuId === item.skuId) : item}
-                            />
+                        <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center' : 'flex-end', justifyContent: isHorizontal ? 'center' : 'flex-end' }}>
+                            <Stepper quantity={getQuantity()} handleChange={handleChange} />
                         </View>
                     </View>
-                    <View style={[{ justifyContent: 'space-between' },isHorizontal? {marginHorizontal: 5}:{marginVertical: 5}]}>
+                    <View style={[{ justifyContent: 'space-between' }, isHorizontal ? { marginHorizontal: 5 } : { marginVertical: 5 }]}>
                         <Text style={[styles.cardTitle, { fontSize: 12, fontWeight: 'normal' }]}>{item.features}</Text>
                     </View>
                 </View>

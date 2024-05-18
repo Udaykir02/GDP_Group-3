@@ -67,3 +67,12 @@ export const placeOrders = (data:any) => ({
     type: 'PLACE_ORDER_REQUEST',
     payload: data,
 });
+
+export const resetRequest = () => ({
+    type: 'RESET_REQUEST',
+});
+
+export const inventoryRequest = (skuIds:any, token:any) => ({
+    type: 'INVENTORY_REQUEST',
+    payload: {skuIds, token},
+});

@@ -59,7 +59,17 @@ const mapSlice = createSlice({
     },
     setModalVisible: (state, action: PayloadAction<any>) => {
       state.isModalVisible = action.payload;
-    },  
+    }, 
+    clearLocation: (state) => {
+      state.chosenLocation = {};
+      state.chosenRegion = {
+        latitude: 18.44082130082575,
+        latitudeDelta: 0.019175200768195566,
+        longitude: 79.1182143241167,
+        longitudeDelta: 0.01609325408935547,
+      };
+      state.chosenAddress = {};
+    } 
   },
 });
 
@@ -69,6 +79,7 @@ export const {
   setMapRegion,
   setChosenRegion,
   setChosenAddress,
-  setModalVisible
+  setModalVisible,
+  clearLocation
 } = mapSlice.actions;
 export default mapSlice.reducer;

@@ -20,12 +20,15 @@ const ordersSlice = createSlice({
             state.error = action.payload;
         },
         placeOrderSuccess: (state, action: PayloadAction<any>) => {
-            console.log(action.payload)
             state.orders.push(action.payload)
         },
         placeOrderFailure: (state, action: PayloadAction<any>) => {
             state.error = action.payload;
         },
+        clearOrders: (state) => {
+            state.orders = [];
+            state.error = null; 
+        }
     },
 });
 
@@ -34,5 +37,6 @@ export const {
     getOrdersFailure,
     placeOrderSuccess,
     placeOrderFailure,
+    clearOrders
 } = ordersSlice.actions;
 export default ordersSlice.reducer;

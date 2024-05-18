@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, Animated, TouchableOpacity } from 'react-native';
 
 import LoginContainer from '../Containers/LoginContainer/LoginContainer';
 import Footer from './Footer';
@@ -18,6 +19,16 @@ import { useStripe } from '@stripe/stripe-react-native';
 import { Linking } from 'react-native';
 import ProductFilter from '../Components/ProductFilter';
 
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import HomeContainer from '../Containers/WelcomeContainer/HomeContainer';
+import InventorySearch from '../Components/WelcomeContainer/InventorySearch';
+import VendorSearch from '../Components/Vendors/VendorSearch';
+import Header from './Header';
+import OrderScreen from '../Components/OrderScreen';
+
+const Tab = createMaterialTopTabNavigator();
+
+
 const AuthStack = createNativeStackNavigator();
 
 export type RootStackParamList = {
@@ -30,6 +41,8 @@ export type RootStackParamList = {
   Vendor: undefined;
   Cart: undefined;
   ProductFilter: undefined;
+  Search: undefined;
+  OrderScreen: undefined;
 };
 
 const MainContainer = () => {
@@ -39,8 +52,8 @@ const MainContainer = () => {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigation = () => {
-  const [accessToken,setAccessToken] = React.useState('')
-  const token = useSelector((state:any) => state.auth.token);
+  const [accessToken, setAccessToken] = React.useState('')
+  const token = useSelector((state: any) => state.auth.token);
   const dispatch = useDispatch();
 
   const { handleURLCallback } = useStripe();
@@ -77,16 +90,16 @@ const RootNavigation = () => {
     return () => deepLinkListener.remove();
   }, [handleDeepLink]);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     renewToken()
-  },[])
-  React.useEffect(()=>{
+  }, [])
+  React.useEffect(() => {
     getTokenFromStorage()
-  },[token])
+  }, [token])
 
-  const renewToken = async ()=>{
+  const renewToken = async () => {
     const token = await AsyncStorage.getItem('auth_token');
-    if(token !== null){
+    if (token !== null) {
       dispatch(renewTokenRequest(token))
     }
   }
@@ -107,6 +120,90 @@ const RootNavigation = () => {
       console.error('Error retrieving token:', error);
     }
   };
+
+  // const  MyTabBar = ({ state, descriptors, navigation, position }:any) =>{
+  //   return (
+  //     <View style={{ flexDirection: 'row' }}>
+  //       {state?.routes?.map((route:any, index:any) => {
+  //         const { options } = descriptors[route.key];
+  //         const label =
+  //           options.tabBarLabel !== undefined
+  //             ? options.tabBarLabel
+  //             : options.title !== undefined
+  //             ? options.title
+  //             : route.name;
+
+  //         const isFocused = state.index === index;
+
+  //         const onPress = () => {
+  //           const event = navigation.emit({
+  //             type: 'tabPress',
+  //             target: route.key,
+  //             canPreventDefault: true,
+  //           });
+
+  //           if (!isFocused && !event.defaultPrevented) {
+  //             navigation.navigate(route.name, route.params);
+  //           }
+  //         };
+
+  //         const onLongPress = () => {
+  //           navigation.emit({
+  //             type: 'tabLongPress',
+  //             target: route.key,
+  //           });
+  //         };
+
+  //         const inputRange = state?.routes?.map((_, i) => i);
+  //         const opacity = position.interpolate({
+  //           inputRange,
+  //           outputRange: inputRange.map(i => (i === index ? 1 : 0)),
+  //         });
+
+  //         return (
+  //           <TouchableOpacity
+  //             accessibilityRole="button"
+  //             accessibilityState={isFocused ? { selected: true } : {}}
+  //             accessibilityLabel={options.tabBarAccessibilityLabel}
+  //             testID={options.tabBarTestID}
+  //             onPress={onPress}
+  //             onLongPress={onLongPress}
+  //             style={{ flex: 1 }}
+  //           >
+  //             <Animated.Text style={{ opacity }}>
+  //               {label}
+  //             </Animated.Text>
+  //           </TouchableOpacity>
+  //         );
+  //       })}
+  //     </View>
+  //   );
+  // }
+
+
+  const MyTopTabs = () => {
+    return (
+      <Tab.Navigator
+        initialRouteName="Feed"
+        screenOptions={{
+          tabBarActiveTintColor: '#e91e63',
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarStyle: { backgroundColor: 'powderblue' },
+        }}
+      >
+        <Tab.Screen
+          name="InventorySearch"
+          component={InventorySearch}
+          options={{ tabBarLabel: 'InventorySearch' }}
+        />
+        <Tab.Screen
+          name="VendorSearch"
+          component={VendorSearch}
+          options={{ tabBarLabel: 'VendorSearch' }}
+        />
+      </Tab.Navigator>
+    );
+  }
   if (accessToken === '') {
     return (<AuthStack.Navigator
       screenOptions={{
@@ -131,11 +228,20 @@ const RootNavigation = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Root">
       <Stack.Screen name="Root" component={MainContainer} />
       <Stack.Screen name="Region" component={RegionContainer} />
-      <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} options={{headerShown: true, headerBackTitle: 'back'}}/>
-      <Stack.Screen name="Filter" component={Filters} options={{headerShown: true, headerBackTitle: 'back'}}/>
-      <Stack.Screen name="ProductFilter" component={ProductFilter} options={{headerShown: true, headerBackTitle: 'back'}}/>
-      <Stack.Screen name="Vendor" component={VendorScreen} options={{headerShown: true, headerBackTitle: 'back'}}/>
-      <Stack.Screen name="Cart" component={Cart} options={{headerShown: true, headerBackTitle: 'back'}}/>
+      <Stack.Screen name="Search"
+        options={{
+          headerShown: true,
+          header: ({ navigation, route, options, back }: any) => {
+            return <Header {...back} {...navigation} {...route} {...options} />;
+          }
+        }}
+        component={MyTopTabs} />
+      <Stack.Screen name="VendorSubscription" component={VendorSubscriptionPage} options={{ headerShown: true, headerBackTitle: 'back', title: 'Subscription' }} />
+      <Stack.Screen name="Filter" component={Filters} options={{ headerShown: true, headerBackTitle: 'back', title: 'Vendor Filter' }} />
+      <Stack.Screen name="ProductFilter" component={ProductFilter} options={{ headerShown: true, headerBackTitle: 'back', title: 'Product Filter' }} />
+      <Stack.Screen name="Vendor" component={VendorScreen} options={{ headerShown: true, headerBackTitle: 'back', title: 'Vendor Details' }} />
+      <Stack.Screen name="Cart" component={Cart} options={{ headerShown: true, headerBackTitle: 'back', title: "Cart" }} />
+      <Stack.Screen name="OrderScreen" component={OrderScreen} options={{ headerShown: true, headerBackTitle: 'back', title: "Order Details" }} />
     </Stack.Navigator>
   );
 };

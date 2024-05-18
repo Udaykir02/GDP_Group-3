@@ -19,7 +19,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateRadius, updateVendorType } from "../../reducers/vendorReducer";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { argonTheme } from '../constants';
+import { updateBrand, updateCategories, updateMaxPrice, updateMinPrice } from '../../reducers/vendorReducer';
 const { width, height } = Dimensions.get('screen');
+
 
 
 const vendors = [
@@ -38,24 +40,25 @@ const vendors = [
 const ProductFilter = ({ navigation }: any) => {
 
 
-    const { products, selectedVendor } = useSelector((state: any) => state.vendor)
+    const { products, selectedVendor, brand, categories, minPrice, maxPrice } = useSelector((state: any) => state.vendor)
     const { token, user } = useSelector((state: any) => state.auth)
-    const [min, setMin] = useState(products.length> 0 ? products[0].price:0);
-    const [max, setMax] = useState(products.length> 0 ? products[0].price:0);
-    const [sliderRadius, setSliderRadius] = useState(products.length> 0 ? products[0].price:0);
+
     const { goBack, setOptions } = useNavigation();
     const { bottom } = useSafeAreaInsets();
     const dispatch = useDispatch();
-
+    
+    const [min, setMin] = useState(minPrice?minPrice:(products.length> 0 ? products[0].price:0));
+    const [max, setMax] = useState(maxPrice?maxPrice:(products.length> 0 ? products[0].price:0));
+    const [sliderRadius, setSliderRadius] = useState(maxPrice?maxPrice:(products.length> 0 ? products[0].price:0));
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(Array.from(new Set(products.map((product: any) => product.brand))));
+    const [value, setValue] = useState(brand? brand :(Array.from(new Set(products.map((product: any) => product.brand)))));
     const [items, setItems] = useState<any>(Array.from(new Set(products.map((product: any) => product.brand))).map((brand: any) => ({
         label: brand.charAt(0).toUpperCase() + brand.slice(1),
         value: brand
     })));
 
     const [openCategories, setOpenCategories] = useState(false);
-    const [valueCategories, setValueCategories] = useState(Array.from(new Set(products.flatMap((product: any) => product.categories))));
+    const [valueCategories, setValueCategories] = useState(categories?categories:(Array.from(new Set(products.flatMap((product: any) => product.categories)))));
     const [itemsCategories, setItemsCategories] = useState<any>(Array.from(new Set(products.flatMap((product: any) => product.categories))).map((category: any) => ({
         label: category.charAt(0).toUpperCase() + category.slice(1),
         value: category
@@ -79,14 +82,16 @@ const ProductFilter = ({ navigation }: any) => {
 
 
     const handleSubmit = () => {
-        // dispatch(updateRadius(sliderRadius));
-        // dispatch(updateVendorType(dropDownArray));
-        // console.log(dropDownArray)
+        dispatch(updateMaxPrice(min));
+        dispatch(updateMaxPrice(sliderRadius));
+        dispatch(updateBrand(value));
+        dispatch(updateCategories(value));
         navigation.goBack();
     }
 
     const onSliderValueChange = (value:any) =>{
 
+        setSliderRadius(value)
     }
 
     const onValueChange = (value:any) =>{
@@ -95,9 +100,10 @@ const ProductFilter = ({ navigation }: any) => {
     }
 
     const onCategoryValueChange = (value:any) =>{
-        
+
         setValueCategories(value)
     }
+
     return (
         <View style={{
             backgroundColor: '#fff',

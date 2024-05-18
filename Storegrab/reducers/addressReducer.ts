@@ -25,6 +25,9 @@ const addressSlice = createSlice({
     deleteAddress: (state, action: PayloadAction<number>) => {
       state.addresses.splice(action.payload, 1);
     },
+    clearAddresses: (state) => {
+      state.addresses = [];
+    }
   },
 });
 
@@ -33,5 +36,6 @@ export const {
   updateAddress,
   editAddress,
   deleteAddress,
+  clearAddresses
 } = addressSlice.actions;
 export default addressSlice.reducer;

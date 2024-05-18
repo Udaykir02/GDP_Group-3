@@ -7,6 +7,9 @@ import { AppTheme } from '@/styles/theme/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setModalVisible } from '../../reducers/locationReducer';
+import SearchComponent from '../Components/SearchComponent';
+import { clearState, fetchInventoryAndVendorDetailsStart } from '../../reducers/searchReducer';
+import { searchProductsRequest } from '../../actions/vendorActions';
 
 interface Props {
   name?: string;
@@ -16,6 +19,8 @@ interface Props {
 
 
 const Header: React.FC<Props> = ({ name }) => {
+  const [searchText,setSearchText] = React.useState('');
+  const cartData = useSelector((state:any)=> state.usercart.cart)
   const navigation = useNavigation();
   const address = useSelector((state:any)=> state.location.defaultLocation)
   const { selectedVendor } = useSelector((state:any)=> state.vendor)
@@ -95,6 +100,17 @@ const Header: React.FC<Props> = ({ name }) => {
     );
   };
 
+  const searchTextChange = (value:string) => {
+    setSearchText(value);
+    if(value && value != '' && value.length>4){
+      dispatch(searchProductsRequest(value,user?.token));
+    }
+    else if(!value || value == ''){
+      dispatch(clearState())
+    }
+      
+  }
+
   const getTitle = (name: string) => {
       switch(name){
         case "Vendors":
@@ -104,6 +120,14 @@ const Header: React.FC<Props> = ({ name }) => {
         default:
           return name 
       }
+  }
+  if(name == 'Search'){
+    return (    <>
+      <Appbar.Header mode="small" elevated style={{ backgroundColor: colors.brightWhite, marginRight: 16 }}>
+      <Appbar.BackAction onPress={() => {dispatch(clearState());navigation.goBack()}} />
+        <SearchComponent searchTextChange={searchTextChange} searchStyle={{ width: '85%', marginLeft: 8}} placeHolder={'Search Anything'} searchText={searchText}/>
+      </Appbar.Header>
+    </>)
   }
   return (
     <>
@@ -119,8 +143,8 @@ const Header: React.FC<Props> = ({ name }) => {
           <Appbar.Content title={<Image source={require('../Assets/images/logo.png')} style={styles.image} />} />
         )}
         {name != 'Scan To Order' && (
-          <><Appbar.Action icon="magnify" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => {}} />
-          <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={()=>{ navigation.navigate('Cart')}}  />{(user?.cart?.length>0)?<View style={styles.redDot} />:null}</>
+          <><Appbar.Action icon="magnify" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Search')}} />
+          <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={()=>{ navigation.navigate('Cart')}}  />{((cartData && cartData.length)>0)?<View style={styles.redDot} />:null}</>
         )}
       </Appbar.Header>
     </>

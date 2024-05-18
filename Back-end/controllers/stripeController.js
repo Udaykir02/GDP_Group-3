@@ -1,4 +1,6 @@
 const { verifyTokenAndUser } = require('./verifyTokenAndUser');
+const { resetCart } = require('./userController');
+var User = require('../models/account');
 
 const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 const Order = require('../models/order');
@@ -78,6 +80,7 @@ const placeOrder = async (req, res) => {
             const order = new Order(orderBody);
             await order.save();
 
+  
             res.status(200).json({
                 success: true, order: order
             });

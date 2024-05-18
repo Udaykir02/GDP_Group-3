@@ -15,6 +15,7 @@ import ApplicationNavigator from './src/Navigators/Application';
 import store from './store';
 import AppThemeProvider from './src/core/AppThemeProvider';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import { hasExpectedRequestMetadata } from '@reduxjs/toolkit/dist/matchers';
 
 const theme = {
   ...DefaultTheme,
@@ -56,5 +57,9 @@ function App(): React.JSX.Element {
   );
 }
 
+// End of the App component test                        
+  
+
+  
 
 export default App;

@@ -1,7 +1,7 @@
-import { removeUnits, removeUnits2 } from '../../reducers/cartReducer';
-import { removeProduct, removeProduct2 } from '../../reducers/vendorReducer';
+import { addItemToCart, decreaseItemQuantity, increaseItemQuantity, removeItemFromCart, removeUnits, removeUnits2, updateItemInCart } from '../../reducers/cartReducer';
+import { decreaseProductQuantity, increaseProductQuantity, removeProduct, removeProduct2 } from '../../reducers/vendorReducer';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Dimensions, ScrollView, TouchableOpacity, Alert, View, Text, FlatList } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, TouchableOpacity, Alert, View, Text, FlatList, Image } from 'react-native';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -18,149 +18,30 @@ import MyIcon from './MyIcon';
 import Prodcard from './Prodcard';
 import { argonTheme } from '../constants';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
-import { placeOrders } from '../../actions/userActions';
+import { addToCartRequest, inventoryRequest, placeOrders } from '../../actions/userActions';
+import Stepper from './shared/stepper/Stepper';
 
 const Cart = ({ navigation }: any) => {
-    const [tip, setTip] = useState(0);
-    const [charges] = useState(20);
-    const [fade, setFade] = useState(false);
-    const [cash, setCash] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [refreshing, setRefreshing] = useState(false)
+
     const [paymentIntentId, setPaymentIntentId] = useState();
     const { user, token } = useSelector((state: any) => state.auth)
-    const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor } = useSelector((state: any) => state.vendor)
+    const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor, inventoryQty } = useSelector((state: any) => state.vendor)
     const { defaultlocation } = useSelector((state: any) => state.location)
 
 
-    const {
-        cartitems,
-        orderitems,
-        orders,
-        moreorders,
-        lastorder,
-        order_refreshing,
-        favourites,
-        morefavourites,
-        lastfavourite,
-        fav_refreshing
-    } = useSelector((state: StateType) => state.cart)
+    const cartData = useSelector((state: any) => { return state.usercart.cart })
 
     const dispatch = useDispatch()
 
-    const removeCart = (object: any) => {
-        return new Promise(function (resolve, reject) {
-            var remove_Cart = fire.functions('asia-east2').httpsCallable('removeCart');
-            remove_Cart(object).then(function (result) {
-                if (result.data.type === 'success') {
-                    //resolve(result.data.payload);
-                }
-            })
-        })
-    }
 
-    const updateCart = (object: any) => {
-        return new Promise(function (resolve, reject) {
-            var update_Cart = fire.functions('asia-east2').httpsCallable('updateCart');
-            update_Cart(object).then(function (result) {
-                if (result.data.type === 'success') {
-                    //resolve(result.data.payload);
-                }
-            })
-        })
-    }
-
-    const renderOptions = (i: number) => {
-        const cartunits = cartitems[i].units + 1;
-        const total = cartunits * cartitems[i].cost;
-        const objectID = cartitems[i].objectID;
-        const uniqueID = cartitems[i].uniqueID;
-        for (let j = products.length - 1; j >= 0; j--) {
-            if (products[j].id === objectID) {
-                for (let k = products[j].cart.length - 1; k >= 0; k--) {
-                    if (products[j].cart[k].uniqueID === uniqueID) {
-                        const units = products[j].units + 1;
-                        removeProduct2({ index: j, units: units, cartindex: k, cartunits: cartunits, total: total });
-                    }
-                }
-            }
+    useEffect(() => {
+        const array = [];
+        for (let i = 0; i < cartData.length; i++) {
+            array.push(cartData[i].skuId);
         }
-        removeUnits2({ index: i, units: cartunits, total: total });
-        updateCart({ product: cartitems[i] });
-    }
+        dispatch(inventoryRequest(array, token));
+    }, [cartData.length])
 
-    const decrease = (i: number) => {
-        if (cartitems.length === 1) {
-            if (cartitems[i].units === 1) {
-                const objectID = cartitems[i].objectID;
-                const uniqueID = cartitems[i].uniqueID;
-                for (let j = products.length - 1; j >= 0; j--) {
-                    if (products[j].id === objectID) {
-                        for (let k = products[j].cart.length - 1; k >= 0; k--) {
-                            if (products[j].cart[k].uniqueID === uniqueID) {
-                                const units = products[j].units - 1;
-                                removeProduct({ index: j, units: units, cart: k });
-                            }
-                        }
-                    }
-                }
-                removeCart({ product: cartitems[i] });
-                removeUnits(i);
-                navigation.goBack();
-            } else if (cartitems[i].units > 1) {
-                const cartunits = cartitems[i].units - 1;
-                const total = cartunits * cartitems[i].cost;
-                const objectID = cartitems[i].objectID;
-                const uniqueID = cartitems[i].uniqueID;
-                for (let j = products.length - 1; j >= 0; j--) {
-                    if (products[j].id === objectID) {
-                        for (let k = products[j].cart.length - 1; k >= 0; k--) {
-                            if (products[j].cart[k].uniqueID === uniqueID) {
-                                const units = products[j].units - 1;
-                                removeProduct2({ index: j, units: units, cartindex: k, cartunits: cartunits, total: total });
-                            }
-                        }
-                    }
-                }
-                removeUnits2({ index: i, units: cartunits, total: total });
-                updateCart({ product: cartitems[i] });
-            }
-        } else if (cartitems.length > 1) {
-            if (cartitems[i].units === 1) {
-                const objectID = cartitems[i].objectID;
-                const uniqueID = cartitems[i].uniqueID;
-                for (let j = products.length - 1; j >= 0; j--) {
-                    if (products[j].id === objectID) {
-                        for (let k = products[j].cart.length - 1; k >= 0; k--) {
-                            if (products[j].cart[k].uniqueID === uniqueID) {
-                                const units = products[j].units - 1;
-                                removeProduct({ index: j, units: units, cart: k });
-                            }
-                        }
-                    }
-                }
-                removeCart({ product: cartitems[i] });
-                removeUnits(i);
-            } else if (cartitems[i].units > 1) {
-                const cartunits = cartitems[i].units - 1;
-                const total = cartunits * cartitems[i].cost;
-                const objectID = cartitems[i].objectID;
-                const uniqueID = cartitems[i].uniqueID;
-                for (let j = products.length - 1; j >= 0; j--) {
-                    if (products[j].id === objectID) {
-                        for (let k = products[j].cart.length - 1; k >= 0; k--) {
-                            if (products[j].cart[k].uniqueID === uniqueID) {
-                                const units = products[j].units - 1;
-                                removeProduct2({ index: j, units: units, cartindex: k, cartunits: cartunits, total: total });
-                            }
-                        }
-                    }
-                }
-                removeUnits2({ index: i, units: cartunits, total: total });
-                updateCart({ product: cartitems[i] });
-            }
-        }
-    }
 
     const getTotal = () => {
         let total = 0;
@@ -173,124 +54,28 @@ const Cart = ({ navigation }: any) => {
 
 
 
-    const renderItem = (item: any, i: number) => {
-        return (
-            <View key={i} style={styles.article}>
-                <TouchableOpacity onPress={() => navigation.navigate('Pro', { 'id': item.objectID })}>
-                    <Text style={styles.articleTitle}>{item.name}</Text>
-                </TouchableOpacity>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.articleText}>{item.qty}</Text>
-                    <Text style={styles.articleText}> x </Text>
-                    <Text style={styles.articleText}>${item.price}</Text>
-                    <Text style={styles.articleText}> = </Text>
-                    <Text style={styles.articleText}>${item.qty * item.price}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity onPress={() => decrease(i)}>
-                        <MyIcon name="AntDesign|minus" style={{ color: '#e2bb88', marginRight: 10, fontSize: 18 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => renderOptions(i)}>
-                        <MyIcon name="AntDesign|plus" style={{ color: '#e2bb88', fontSize: 18 }} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
-    }
-
-    // const makePayment = async () => {
-    //     let total = getTotal() + charges;
-    //     total = total + (total * (tip / 100));
-    //     total = total.toFixed(2);
-    //     var options = {
-    //         description: 'Payment',
-    //         image: 'https://firebasestorage.googleapis.com/v0/b/meri-dukan-9b512.appspot.com/o/cart%2FWDVEFT89GTB9CWF7.png?alt=media&token=4d686440-ef0b-4e4f-8620-95119f42a97a',
-    //         currency: 'INR',
-    //         key: 'rzp_test_TfrlPnWktXhFGw',
-    //         amount: total * 100,
-    //         name: 'Pay',
-    //         prefill: {
-    //             email: privatedata.user.email,
-    //             contact: privatedata.user.phone,
-    //             name: privatedata.user.name
-    //         },
-    //         theme: { color: '#e2bb88' }
-    //     }
-    //     setLoading(true);
-    //     try {
-    //         const res = await RazorpayCheckout.open(options);
-    //         if (res.razorpay_payment_id) {
-    //             var payment_id = res.razorpay_payment_id;
-    //             var payment = {
-    //                 payment_id: payment_id,
-    //                 tip: tip,
-    //                 address: choosenaddress.address,
-    //                 location: choosenlocation.location,
-    //                 cash: cash,
-    //                 total: total
-    //             }
-    //             addOrder({ order: payment });
-    //             setLoading(false);
-    //             initialCart();
-    //             Alert.alert(
-    //                 "Order Placed",
-    //                 "Your order is on the way",
-    //                 [
-    //                     {
-    //                         text: "OK",
-    //                         onPress: () => navigation.goBack()
-    //                     }
-    //                 ]
-    //             )
-    //         }
-    //     } catch (error) {
-    //         setLoading(false);
-    //         console.log(error);
-    //     }
-    // }
-
-    //   if (cartitems.length === 0) {
-    //     return (
-    //       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000' }}>
-    //         <Text style={{ color: '#fff' }}>No items in Cart</Text>
-    //       </View>
-    //     )
-    //   }
-    const renderHeader = () => {
-        // Your renderHeader logic here
-        return (<></>)
-    };
-
-    const renderMore = async () => {
-        // Your renderMore logic here
-    };
-
-    const fetchMore = () => {
-        // Your fetchMore logic here
-    };
-
     const fetchPaymentSheetParams = async () => {
-        console.log("I am here"+`${process.env.BASE_URL}/stripe/payment-sheet`)
-            const response = await fetch(`${process.env.BASE_URL}/stripe/payment-sheet`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `${token}`
-                },
-                body: JSON.stringify({
-                    amount: getTotal(),
-                    // add other body parameters if needed
-                }),
-            });
-            const { paymentIntent, ephemeralKey, customer, publishableKey, paymentIntentId } = await response.json();
-    
-            return {
-                paymentIntent,
-                ephemeralKey,
-                customer,
-                publishableKey,
-                paymentIntentId
-            };
+        console.log("I am here" + `${process.env.BASE_URL}/stripe/payment-sheet`)
+        const response = await fetch(`${process.env.BASE_URL}/stripe/payment-sheet`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`
+            },
+            body: JSON.stringify({
+                amount: getTotal()*100,
+                // add other body parameters if needed
+            }),
+        });
+        const { paymentIntent, ephemeralKey, customer, publishableKey, paymentIntentId } = await response.json();
+
+        return {
+            paymentIntent,
+            ephemeralKey,
+            customer,
+            publishableKey,
+            paymentIntentId
+        };
 
 
     };
@@ -348,16 +133,16 @@ const Cart = ({ navigation }: any) => {
             const { error } = await presentPaymentSheet();
             if (error) {
                 console.log(`Error code: ${error.code}`, error.message);
-              } else {
+            } else {
                 console.log('Success', 'Your order is confirmed!');
-              }
+            }
             console.log(paymentIntentId)
-            const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: selectedVendor?.vendorId, items: user?.cart }
+            const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: user?.cart }
             await dispatch(placeOrders(orderReq));
-            navigation.navigate('Cart')
+            navigation.navigate('Orders')
         }
         catch (error) {
-            Alert.alert(`Error code: ${error.code}`, error.message);
+            Alert.alert(`Error code: ${error?.code}`, error?.message);
 
         }
         // const { error } = 
@@ -368,64 +153,104 @@ const Cart = ({ navigation }: any) => {
         // }
     };
 
+    const handleRemoveItem = (skuId: string) => {
+        // const newCart = user?.cart.filter((item: any) => item.skuId !== skuId);
+        // dispatch(removeUnits(newCart));
+    }
+    const getQuantity = (item: any) =>{
+        return (cartData && cartData.length > 0 && cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty)?cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty: 0
+    }
 
 
+    const renderItem = ({ item, index }: any) => {
+        const handleChange = (change: number) => {
+            let cartItem = cartData.find((cartItem: any) => cartItem.skuId === item?.skuId)
+            let inventoryItem = inventoryQty.find((inventoryItem: any) => inventoryItem.skuId === item?.skuId)
+            dispatch(addToCartRequest(user?.userId,item?.skuId, change,token ));
+        
+            if(cartItem){
+                if(cartItem.qty === 1 && change < 0){
+                    dispatch(removeItemFromCart(cartItem?.skuId))
+                    dispatch(increaseProductQuantity(cartItem?.skuId))
+                }
+                else if(change > 0) {
+                    if(inventoryItem?.qty > 0){
+                        dispatch(increaseItemQuantity(cartItem?.skuId))
+                        dispatch(decreaseProductQuantity(cartItem?.skuId))
+                    }
+                    
+                }   
+                else {
+                    dispatch(decreaseItemQuantity(cartItem?.skuId))
+                    dispatch(increaseProductQuantity(cartItem?.skuId))
+                }
+            }
+            else{
+                if(change > 0){
+                    if(inventoryItem.qty > 0){
+                        const newCartItem: any = {
+                            skuId: item?.skuId,
+                            item:  item?.item,
+                            price: item?.price,
+                            qty: change,
+                            size: item?.size,
+                            features: item?.features,
+                            categories: item?.categories,
+                            image: item?.image,
+                            description: item?.description,
+                            brand: item?.brand,
+                            vendorId: item?.vendorId,
+                            vendor_name: item?.vendor_name,
+                          }
+                        dispatch(addItemToCart(newCartItem))
+                        dispatch(decreaseProductQuantity(cartItem?.skuId))
+                    }
+    
+                }
+            }
+    
+        }
+        return (
+        <View style={styles.itemContainer}>
+          <Image source={{ uri: item.image }} style={styles.image} />
+          <View style={styles.details}>
+            <Text style={styles.itemName}>{item.item}</Text>
+            <Text style={styles.itemCategory}>{item.categories.join(', ')}</Text>
+
+            <Text style={styles.itemPrice}>${item.price * item.qty}</Text>
+          </View>
+          <Stepper quantity={getQuantity(item)} handleChange={handleChange}/>
+        </View>
+      )};
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    data={user?.cart}
-                    ListHeaderComponent={renderHeader}
-                    renderItem={({ item, index }) => (
-                        <Prodcard
-                            item={item}
-                            shop={{ cta: true }}
-                            location={index}
-                            horizontal
-                            style={{ paddingHorizontal: 16, paddingVertical: 16 / 2 }}
-                            cartitems={user?.cart}
-                            removeProduct={removeProduct}
-                            removeProduct2={removeProduct2}
-                            removeUnits={removeUnits}
-                            removeUnits2={removeUnits2}
-                            navigation={navigation} full={false} ctaColor={""} imageStyle={{ borderRadius: 10 }} />
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                    extraData={user?.cart}
-                    onEndReachedThreshold={0.1}
-                    //   ListFooterComponent={(moreproducts) ? <View row space="evenly" style={{ paddingVertical: 16 }}><View flex center><ActivityIndicator size="large" /></View></View> : null}
-                    refreshing={refreshing}
-                    onEndReached={() => fetchMore()}
-                />
+            <FlatList
+                data={cartData}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.skuId}
+                contentContainerStyle={styles.list}
+            />
+            <View style={styles.totalContainer}>
+                <Text style={styles.totalText}>Total Cost:</Text>
+                <Text style={styles.totalAmount}>${getTotal()}</Text>
             </View>
-            <View style={styles.total}>
-                <View style={styles.totalPrice}>
-                    <Text style={{ fontFamily: 'HKGrotesk-Bold' }}>Total: </Text>
-                    <Text style={{ fontFamily: 'HKGrotesk-Bold' }}>${getTotal()}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Checkbox
-                        color='#e2bb88'
-                        onPress={() => setCash(!cash)} status={'checked'} />
-                </View>
-                <CheckoutButton onPress={() => { }} loading={false} />
-            </View>
-            {(user?.cart && user.cart.length > 0) ? <View>
-                <View style={[styles.shadow]}>
+
+            {(cartData && cartData.length > 0) ?
+                <View style={[styles.shadow, { marginBottom: 10}]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity style={styles.optionsButton} onPress={() => { openPaymentSheet() }}>
                             <View style={{ width: 'auto', flexDirection: 'row' }}>
                                 <View style={{ width: '70%' }}>
-                                    <Text>
+                                    <Text style={{ color: "#fff", fontWeight: 'bold'}}>
                                         {user?.cart?.length + ((user?.cart?.length === 1) ? ' ITEM' : ' ITEMS')}
                                     </Text>
-                                    <Text>
+                                    <Text style={{ color: "#fff", fontWeight: 'bold'}}>
                                         {'\u0024' + getTotal()}<Text> plus charges</Text>
                                     </Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'flex-end' }}>
-                                    <Text style={{ fontWeight: 'bold' }}>
+                                    <Text style={{ fontWeight: 'bold', color: "#fff", fontSize: 24 }}>
                                         Pay <MyIcon name='Entypo|controller-play' style={{ fontSize: 15, color: "#fff" }} />
                                     </Text>
                                 </View>
@@ -433,7 +258,7 @@ const Cart = ({ navigation }: any) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View> : null}
+            : null}
         </View>
     )
 }
@@ -442,6 +267,106 @@ const Cart = ({ navigation }: any) => {
 export default Cart;
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 16,
+        backgroundColor: '#fff',
+      },
+      header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+      },
+      list: {
+        paddingBottom: 20,
+      },
+      itemContainer: {
+        flexDirection: 'row',
+        padding: 10,
+        marginBottom: 10,
+        backgroundColor: '#f8f8f8',
+        borderRadius: 8,
+        alignItems: 'center',
+      },
+      image: {
+        width: 80,
+        height: 80,
+        marginRight: 10,
+        borderRadius: 8,
+      },
+      details: {
+        flex: 1,
+      },
+      itemName: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      itemCategory: {
+        fontSize: 14,
+        color: '#888',
+      },
+      stepperContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+      },
+      stepperButton: {
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ddd',
+        borderRadius: 5,
+      },
+      stepperButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      qtyText: {
+        marginHorizontal: 10,
+        fontSize: 16,
+      },
+      itemPrice: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 5,
+      },
+      removeButton: {
+        padding: 5,
+      },
+      removeButtonText: {
+        color: 'red',
+        fontSize: 18,
+      },
+      totalContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+      },
+      totalText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      totalAmount: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      checkoutButton: {
+        backgroundColor: '#007bff',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 10,
+      },
+      checkoutButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 18,
+      },
+      //This is the break
     articles: {
         width: width - 16 * 2,
         paddingVertical: 16,
@@ -485,12 +410,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: 150
     },
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -502,12 +421,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 510
-    },
-    image: {
-        flex: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     navbar: {
         paddingVertical: 0,
@@ -524,14 +437,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 6,
-        shadowOpacity: 0.2,
-        elevation: 3,
         borderRadius: 8
     },
     optionsButton: {
         width: "92%",
-        height: 50,
+        height: 60,
         paddingHorizontal: 16,
         backgroundColor: argonTheme.COLORS.ERROR,
         borderRadius: 8,
@@ -545,4 +455,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: argonTheme.COLORS.ERROR
     },
+    itemDetails: {
+        fontSize: 14,
+        color: '#555',
+    }
 });
