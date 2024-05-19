@@ -77,6 +77,8 @@ const placeOrder = async (req, res) => {
                 items: items,
                 shipping: shipping
             }
+
+            console.log(orderBody)
             const order = new Order(orderBody);
             const user = await User.findOne({ userId });
             user.cart = []

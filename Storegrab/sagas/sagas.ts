@@ -170,7 +170,7 @@ function* placeOrderSaga(action: any) {
     console.log("hello")
     const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/stripe/place-order`, {
       userId: action.payload.userId, paymentIntentId: action.payload.paymentIntentId, vendorId: action.payload.vendorId, items: action.payload.items
-    }, { headers: { Authorization: `${action.payload}` } });
+    }, { headers: { Authorization: `${action.payload.token}` } });
     const order = response.data.order;
 
     yield put(placeOrderSuccess(order));
