@@ -69,6 +69,14 @@ const mapSlice = createSlice({
         longitudeDelta: 0.01609325408935547,
       };
       state.chosenAddress = {};
+      state.defaultLocation = {};
+      state.region = {
+        latitude: 18.44082130082575,
+        latitudeDelta: 0.019175200768195566,
+        longitude: 79.1182143241167,
+        longitudeDelta: 0.01609325408935547,
+      };
+      state.isModalVisible = false;
     } 
   },
 });

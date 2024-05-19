@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MyIcon from './MyIcon';
+import { useSelector } from 'react-redux';
 
 const VendorSubscriptionPage: React.FC = () => {
+  const { user } = useSelector((state: any) => state.auth);
   // Assuming the vendor's current plan and monthly cost are fetched from backend
-  const currentPlan = 'Premium';
+  const currentPlan = 'Vendor Plan';
   const monthlyCost = 49.99; // Example cost in dollars
 
   const handleUpgradePlan = () => {
@@ -17,6 +19,13 @@ const VendorSubscriptionPage: React.FC = () => {
     console.log('Cancel subscription clicked');
   };
 
+  const getTotalCost = () => {
+    if(user && user.vendors && user?.vandors?.length){
+      return user?.vandors?.length * monthlyCost;
+    }
+    return monthlyCost;
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Subscription Details</Text>
@@ -28,12 +37,12 @@ const VendorSubscriptionPage: React.FC = () => {
         <Text style={styles.label}>Cost Per Month:</Text>
         <Text style={styles.value}>${monthlyCost.toFixed(2)}</Text>
       </View>
+      <View style={styles.subscriptionInfo}>
+        <Text style={styles.label}>Total Cost:</Text>
+        <Text style={styles.value}>${getTotalCost().toFixed(2)}</Text>
+      </View>
       <View style={styles.actionsContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleCancelSubscription}>
-        {/* <MyIcon name={"MaterialCommunityIcons|cancel"} style={{fontSize: 24, color: "white"}} /> */}
-
-          <Text style={styles.buttonText}>Cancel Subscription</Text>
-        </TouchableOpacity>
+          <Text style={styles.buttonText}>To Cancel Subscription, Contact Group 3</Text>
       </View>
     </View>
   );
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 5,

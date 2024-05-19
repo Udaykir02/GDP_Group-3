@@ -167,6 +167,7 @@ const loginUser = async (req, res) => {
     // Return the token
     res.status(200).json({ token: token, userData: { userId: user.userId, email: user.username, fname: user.fname, lname: user.lname, emailVerified: user.emailVerified, address: user.address, vendors: user.vendors, notificationActive: user.notificationActive, vendorpreferences: user.vendorpreferences, userRecomendations: user.userRecomendations, cart: user.cart } });
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({ message: error.message });
   }
 }

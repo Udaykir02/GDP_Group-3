@@ -22,7 +22,7 @@ import { addToCartRequest, inventoryRequest, placeOrders } from '../../actions/u
 import Stepper from './shared/stepper/Stepper';
 
 const Cart = ({ navigation }: any) => {
-
+    const [loading, setLoading] = useState(false);
     const [paymentIntentId, setPaymentIntentId] = useState();
     const { user, token } = useSelector((state: any) => state.auth)
     const { algoliatext, vendorshops, vendorpage, hasmore, products, moreproducts, lastproduct, selectedVendor, inventoryQty } = useSelector((state: any) => state.vendor)
@@ -46,8 +46,8 @@ const Cart = ({ navigation }: any) => {
     const getTotal = () => {
         let total = 0;
         let cart = user?.cart;
-        for (let i = 0; i < cart?.length; i++) {
-            total += cart[i].qty * cart[i].price;
+        for (let i = 0; i < cartData?.length; i++) {
+            total += cartData[i].qty * cartData[i].price;
         }
         return total
     };
@@ -63,7 +63,7 @@ const Cart = ({ navigation }: any) => {
                 'Authorization': `${token}`
             },
             body: JSON.stringify({
-                amount: getTotal()*100,
+                amount: getTotal() * 100,
                 // add other body parameters if needed
             }),
         });
@@ -132,14 +132,16 @@ const Cart = ({ navigation }: any) => {
         try {
             const { error } = await presentPaymentSheet();
             if (error) {
+                Alert.alert(`Error code: ${error.code}`, error.message);
                 console.log(`Error code: ${error.code}`, error.message);
             } else {
+                const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: user?.cart }
+                await dispatch(placeOrders(orderReq));
+                navigation.navigate('Orders')
                 console.log('Success', 'Your order is confirmed!');
             }
             console.log(paymentIntentId)
-            const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: user?.cart }
-            await dispatch(placeOrders(orderReq));
-            navigation.navigate('Orders')
+
         }
         catch (error) {
             Alert.alert(`Error code: ${error?.code}`, error?.message);
@@ -243,7 +245,7 @@ const Cart = ({ navigation }: any) => {
                             <View style={{ width: 'auto', flexDirection: 'row' }}>
                                 <View style={{ width: '70%' }}>
                                     <Text style={{ color: "#fff", fontWeight: 'bold'}}>
-                                        {user?.cart?.length + ((user?.cart?.length === 1) ? ' ITEM' : ' ITEMS')}
+                                        {cartData?.length + ((cartData?.length === 1) ? ' ITEM' : ' ITEMS')}
                                     </Text>
                                     <Text style={{ color: "#fff", fontWeight: 'bold'}}>
                                         {'\u0024' + getTotal()}<Text> plus charges</Text>

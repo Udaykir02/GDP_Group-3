@@ -58,9 +58,9 @@ export const renewTokenRequest = (token:any) => ({
     payload: token,
 });
 
-export const getOrders = (data:any) => ({
+export const getOrders = (data:any, token) => ({
     type: 'GET_ORDERS_REQUEST',
-    payload: data,
+    payload: {userId: data, token: token},
 });
 
 export const placeOrders = (data:any) => ({
