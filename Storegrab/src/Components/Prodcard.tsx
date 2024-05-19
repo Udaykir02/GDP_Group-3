@@ -221,6 +221,7 @@ const Prodcard: React.FC<ProdcardProps> = ({
                         <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center' : 'flex-end', justifyContent: isHorizontal ? 'center' : 'flex-end' }}>
                         <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'\u0024' + item?.price}</Text>
                             <Stepper quantity={getQuantity()} handleChange={handleChange} />
+                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12, marginTop: 10 }]}>In Stock: {item?.qty}</Text>
                         </View>
                     </View>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>

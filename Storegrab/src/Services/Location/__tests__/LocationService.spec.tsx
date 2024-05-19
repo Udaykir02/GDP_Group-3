@@ -25,7 +25,7 @@ describe('requestLocation', () => {
     // Place your location cordinates before checking the location sevice 
     const locationData = {
       coords: {
-        latitude: 37.7749,
+        latitude: 0,
         longitude: -122.4194,
         altitude: 0,
         accuracy: 0,

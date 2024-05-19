@@ -98,7 +98,7 @@ const Cart = ({ navigation }: any) => {
                 paymentIntentId
             } = await fetchPaymentSheetParams();
             setPaymentIntentId(paymentIntentId);
-            console.log(paymentIntent, ephemeralKey, customer, publishableKey)
+            console.log("hiiiiii",paymentIntent, ephemeralKey, customer, publishableKey)
 
             const response: any = await initPaymentSheet({
                 merchantDisplayName: "Storegrab",
@@ -118,7 +118,7 @@ const Cart = ({ navigation }: any) => {
             console.log("payment_log" + JSON.stringify(response))
         }
         catch (error) {
-            // console.log(error)
+            console.log(error)
             setLoading(true);
         }
         // const { error } 
@@ -130,12 +130,14 @@ const Cart = ({ navigation }: any) => {
 
     const openPaymentSheet = async () => {
         try {
+
             const { error } = await presentPaymentSheet();
             if (error) {
                 Alert.alert(`Error code: ${error.code}`, error.message);
                 console.log(`Error code: ${error.code}`, error.message);
             } else {
-                const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: user?.cart }
+                const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: user?.cart, token: token }
+                console.log("orderreqq"+JSON.stringify(orderReq))
                 await dispatch(placeOrders(orderReq));
                 navigation.navigate('Orders')
                 console.log('Success', 'Your order is confirmed!');
