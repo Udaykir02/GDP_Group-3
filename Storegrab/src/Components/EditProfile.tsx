@@ -22,6 +22,7 @@ interface User {
 
 const EditUserProfile = () => {
     const userData = useSelector((state: any) => state.auth.user);
+    const token = useSelector((state: any) => state.auth.token);
   const [user, setUser] = useState<User | null>(userData? userData : null);
   const [loading, setLoading] = useState(false);
 
@@ -33,6 +34,7 @@ const EditUserProfile = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `${token}`
       },
       body: JSON.stringify(user),
     })
@@ -76,9 +78,9 @@ const EditUserProfile = () => {
       />
       <TextInput
         style={styles.input}
-        value={user.username}
+        value={user?.email}
         onChangeText={text => setUser({ ...user, username: text })}
-        placeholder="Username"
+        placeholder="Email"
       />
       <TextInput
         style={styles.input}

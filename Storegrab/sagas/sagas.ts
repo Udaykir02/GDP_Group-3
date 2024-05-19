@@ -50,7 +50,6 @@ function* logout(action: any) {
   try {
     yield AsyncStorage.setItem('auth_token', '');
     yield put(logoutSuccess());
-    yield put(resetRequest());
     yield put(resetCart());
     yield put(clearOrders());
     yield put(clearVendor());
@@ -157,16 +156,9 @@ function* renewTokenSaga(action: any) {
 function* getOrdersSaga(action: any) {
   try {
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/order/orders`, {
-      userId: action.payload
-    }, { headers: { Authorization: `${action.payload}` } });
-    const orders: any = response.data;
-    console.log("--->orders_saga"+(JSON.stringify(orders)))
-    for (let i = 0; i < orders.length; i++) {
-      const element = orders[i]._id;
-      console.log(element)
-      
-    }
-    yield put(getOrdersSuccess(orders));
+      userId: action.payload.userId
+    }, { headers: { Authorization: `${action.payload.token}` } });
+    yield put(getOrdersSuccess(response?.data ? response?.data : []));
     // Navigate to home screen or perform any other action
   } catch (error) {
     yield put(getOrdersFailure(JSON.stringify(error)));
@@ -181,7 +173,6 @@ function* placeOrderSaga(action: any) {
     }, { headers: { Authorization: `${action.payload}` } });
     const order = response.data.order;
 
-    console.log("order_details"+JSON.stringify(order))
     yield put(placeOrderSuccess(order));
     yield put(resetCart());
     // Navigate to home screen or perform any other action
@@ -224,6 +215,44 @@ function* handleInventoryQtySaga(action: any) {
   }
 }
 
+function* getOrdersByIdSaga(action: any) {
+  try {
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/order/getOrderById`, {
+      vendorId: action.payload.vendorId
+    }, { headers: { Authorization: `${action.payload.token}` } });
+    yield put(getOrdersSuccess(response?.data ? response?.data : []));
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(getOrdersFailure(JSON.stringify(error)));
+  }
+}
+
+function* increaseQtySaga(action: any) {
+  try {
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/inventory/increaseQty`, {
+      skuId: action.payload.skuId,
+      amount: action.payload.amount
+    }, { headers: { Authorization: `${action.payload.token}` } });
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+function* decreaseQtySaga(action: any) {
+  try {
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/inventory/decreaseQty`, {
+      skuId: action.payload.skuId,
+      amount: action.payload.amount
+    }, { headers: { Authorization: `${action.payload.token}` } });
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(getOrdersFailure(JSON.stringify(error)));
+    console.log(error)
+  }
+}
+
+
 
 
 // Generator function
@@ -240,5 +269,8 @@ export function* watchAuthUser() {
   yield takeLatest('GET_ORDERS_REQUEST', getOrdersSaga);
   yield takeLatest('PLACE_ORDER_REQUEST', placeOrderSaga);
   yield takeLatest('SEARCH_PRODUCTS_REQUEST', fetchInventoryAndVendorDetailsSaga);
-  yield takeLatest('INVENTORY_REQUEST', handleInventoryQtySaga)
+  yield takeLatest('INVENTORY_REQUEST', handleInventoryQtySaga);
+  yield takeLatest('GET_VENDOR_REQUEST_BY_ID', getOrdersByIdSaga);
+  yield takeLatest('INCREASE_INVENTORY_QTY_REQUEST', increaseQtySaga);
+  yield takeLatest('DECREASE_INVENTORY_QTY_REQUEST', decreaseQtySaga);
 }

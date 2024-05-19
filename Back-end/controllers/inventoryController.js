@@ -226,4 +226,52 @@ const getInventoryQuantotyInArray = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching inventory quantities' });
   }
 }
-module.exports = { insertInventory, getInventoryBySkuId, updateInventory, getInventoryQty, getInventoryAndVendorDetails, getInventoryQuantotyInArray }
+
+// Controller to increase quantity
+const increaseQty = async (req, res) => {
+  try {
+      const { skuId, amount } = req.body;
+      if (!skuId || !amount || amount < 1) {
+          return res.status(400).json({ message: "Invalid SKU ID or amount" });
+      }
+
+      const inventoryItem = await Inventory.findOne({ skuId });
+      if (!inventoryItem) {
+          return res.status(404).json({ message: "Item not found" });
+      }
+
+      inventoryItem.qty += amount;
+      await inventoryItem.save();
+
+      res.status(200).json({ message: "Quantity increased successfully", item: inventoryItem });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+};
+
+// Controller to decrease quantity
+const decreaseQty = async (req, res) => {
+  try {
+      const { skuId, amount } = req.body;
+      if (!skuId || !amount) {
+          return res.status(400).json({ message: "Invalid SKU ID or amount" });
+      }
+
+      const inventoryItem = await Inventory.findOne({ skuId });
+      if (!inventoryItem) {
+          return res.status(404).json({ message: "Item not found" });
+      }
+
+      if (inventoryItem.qty < amount) {
+          return res.status(400).json({ message: "Insufficient quantity" });
+      }
+
+      inventoryItem.qty -= amount;
+      await inventoryItem.save();
+
+      res.status(200).json({ message: "Quantity decreased successfully", item: inventoryItem });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+};
+module.exports = { insertInventory, getInventoryBySkuId, updateInventory, getInventoryQty, getInventoryAndVendorDetails, getInventoryQuantotyInArray, increaseQty, decreaseQty }

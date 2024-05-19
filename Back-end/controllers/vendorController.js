@@ -106,4 +106,19 @@ const addVendorIdToProducts = async (req, res) => {
   }
 };
 
-module.exports = { findNearestVendor, insertVendorWithGeopoint, addVendorIdToProducts };
+
+const getVendorsByIds = async (req, res) => {
+  try {
+      const { vendorIds } = req.body; // Assuming vendor IDs are sent in the body of the request
+      if (!Array.isArray(vendorIds)) {
+          return res.status(400).json({ message: "vendorIds must be an array" });
+      }
+
+      const vendors = await Vendor.find({ vendorId: { $in: vendorIds } });
+      res.status(200).json(vendors);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { findNearestVendor, insertVendorWithGeopoint, addVendorIdToProducts, getVendorsByIds };

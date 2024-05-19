@@ -9,36 +9,48 @@ import DeliveryCard from '../../Components/DeliveryCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders, placeOrders } from '../../../actions/userActions';
 import createToBeImplementedStyle from "../Order/OrderContainerStyle";
+import { getVendorRequestByID } from '../../../actions/vendorActions';
 
 const OrderContainer: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const styles = createToBeImplementedStyle();
   const dispatch = useDispatch();
-  const { user }=  useSelector((state: any)=> state.auth)
-  const { orders } = useSelector((state: any)=>state.order)
-  useEffect(()=>{
-    console.log('user', user?.userId?user.userId:'')
-    dispatch(getOrders(user?.userId?user.userId:''))
-  },[])
+  const { user, vendorAdmin, token } = useSelector((state: any) => state.auth)
+  const { orders } = useSelector((state: any) => state.order)
+  const { selectedVendor } = useSelector((state: any) => state.vendor)
+  useEffect(() => {
+    if (vendorAdmin) {
+      if(selectedVendor && selectedVendor?.vendorId)
+      dispatch(getVendorRequestByID(selectedVendor?.vendorId,token))
+
+    } else {
+      console.log('user', user?.userId ? user.userId : '')
+      dispatch(getOrders(user?.userId ? user.userId : '', token))
+    }
+  }, [vendorAdmin])
+
+  useEffect(() => {   
+      console.log('orders', orders)
+  },[orders])
 
   const { colors } = useAppTheme();
   return (
     <AppPageWrapper>
-        <FlatList
-            data={orders}
-            // ListHeaderComponent={renderHeader}
-            renderItem={({ item, index }:any) => (
-                <DeliveryCard order={item}/>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            extraData={orders}
-            onEndReachedThreshold={0.1}
-            //   ListFooterComponent={(moreproducts) ? <View row space="evenly" style={{ paddingVertical: 16 }}><View flex center><ActivityIndicator size="large" /></View></View> : null}
-            refreshing={false}
-            // onEndReached={() => fetchMore()}
-            style={styles.articles}
-        />
-  </AppPageWrapper>
+      <FlatList
+        data={orders}
+        // ListHeaderComponent={renderHeader}
+        renderItem={({ item, index }: any) => (
+          <DeliveryCard order={item} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        extraData={orders}
+        onEndReachedThreshold={0.1}
+        //   ListFooterComponent={(moreproducts) ? <View row space="evenly" style={{ paddingVertical: 16 }}><View flex center><ActivityIndicator size="large" /></View></View> : null}
+        refreshing={false}
+        // onEndReached={() => fetchMore()}
+        style={styles.articles}
+      />
+    </AppPageWrapper>
   );
 };
 

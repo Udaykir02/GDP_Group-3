@@ -24,7 +24,7 @@ const Header: React.FC<Props> = ({ name }) => {
   const navigation = useNavigation();
   const address = useSelector((state: any) => state.location.defaultLocation)
   const { selectedVendor } = useSelector((state: any) => state.vendor)
-  const { user } = useSelector((state: any) => state.auth)
+  const { user, vendorAdmin } = useSelector((state: any) => state.auth)
   const dispatch = useDispatch();
   const styles = StyleSheet.create({
     viewContainer: {
@@ -112,6 +112,9 @@ const Header: React.FC<Props> = ({ name }) => {
   }
 
   const getTitle = (name: string) => {
+    if(vendorAdmin){
+      return name
+    }
     switch (name) {
       case "Vendors":
         return DottedUnderlineText(address?.formatted_address?.split(',')[0])
@@ -121,7 +124,7 @@ const Header: React.FC<Props> = ({ name }) => {
         return name
     }
   }
-  if (name == 'Search') {
+  if (name == 'Search' && !vendorAdmin) {
     return (<>
       <Appbar.Header mode="small" elevated style={{ backgroundColor: colors.brightWhite, marginRight: 16 }}>
         <Appbar.BackAction onPress={() => { dispatch(clearState()); navigation.goBack() }} />
@@ -138,12 +141,12 @@ const Header: React.FC<Props> = ({ name }) => {
           name != 'Orders' &&
           name != 'Resources' &&
           name != 'Account' && <Appbar.BackAction onPress={() => navigation.goBack()} />}
-        {name != 'Home' && name != 'Login' ? (
+        {(name != 'Home' && name != 'Login') ? (
           <Appbar.Content title={getTitle(name)} titleStyle={styles.title} />
         ) : (
           <Appbar.Content title={<Image source={require('../Assets/images/logo.png')} style={styles.image} />} />
         )}
-        {name != 'Scan To Order' && (
+        {(name != 'Scan To Order' && !vendorAdmin) && (
           <><Appbar.Action icon="magnify" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Search') }} />
             <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Cart') }} />{((cartData && cartData.length) > 0) ? <View style={styles.redDot} /> : null}</>
         )}

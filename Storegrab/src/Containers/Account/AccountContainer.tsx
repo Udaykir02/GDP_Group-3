@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { ScrollView, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper'; // Import Button from react-native-paper
+import { Text, Button, Switch } from 'react-native-paper'; // Import Button from react-native-paper
 
 import { useAppTheme } from '../../styles/theme/theme';
 import AppPageWrapper from '../../shared/AppPageWrapper';
@@ -8,13 +8,18 @@ import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch
 import { logoutRequest, resetRequest } from '../../../actions/userActions'; // Import your logout action creator
 import { useNavigation } from '@react-navigation/native';
 import MyIcon from '../../Components/MyIcon';
+import { updateVendorAdmin } from '../../../reducers/users/slice';
+import { resetCart } from '../../../reducers/cartReducer';
+import { clearOrders } from '../../../reducers/orderReducer';
+import { clearVendor } from '../../../reducers/vendorReducer';
+import { clearState } from '../../../reducers/searchReducer';
+import { clearLocation } from '../../../reducers/locationReducer';
 
 
 const AccountContainer: React.FC = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
 
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-  const { user} = useSelector((state:any)=>state.auth)
+  const { user, vendorAdmin } = useSelector((state: any) => state.auth)
 
   // return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
 
@@ -31,9 +36,18 @@ const AccountContainer: React.FC = () => {
   //   navigation.navigate('VendorSubscription');
   // }
 
-  const handleSubscriptions  = () => {
+  const handleSubscriptions = () => {
     navigation.navigate('VendorSubscription')
   }
+
+  const onToggleSwitch = () => {
+    dispatch(updateVendorAdmin(!vendorAdmin))
+    dispatch(resetCart());
+    dispatch(clearOrders());
+    dispatch(clearVendor());
+    dispatch(clearState());
+    dispatch(clearLocation());
+  };
 
   return (
     <AppPageWrapper>
@@ -43,7 +57,7 @@ const AccountContainer: React.FC = () => {
           source={{ uri: 'https://via.placeholder.com/150' }}
           style={styles.profileImage}
         /> */}
-          <Text style={styles.name}>{user?.fname+" "+user?.lname}</Text>
+          <Text style={styles.name}>{user?.fname + " " + user?.lname}</Text>
           <Text style={styles.username}>@{user?.userId}</Text>
         </View>
         <View style={styles.details}>
@@ -66,15 +80,20 @@ const AccountContainer: React.FC = () => {
 
         </View>
         <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('EditProfile')}}>
-          <Text style={styles.buttonText}>Edit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleSubscriptions}>
-          <Text style={styles.buttonText}>Subscriptions</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('EditProfile') }}>
+            <Text style={styles.buttonText}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleSubscriptions}>
+            <Text style={styles.buttonText}>Subscriptions</Text>
+          </TouchableOpacity>
 
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        </View>
+        <View style={[styles.contactInfo, { justifyContent: 'space-around', alignItems: 'center', alignContent: 'center' }]}>
+          <Text style={[styles.sectionTitle, { alignSelf: 'center', marginTop: 7 }]}>Vendor Admin: </Text>
+          <Switch value={vendorAdmin} onValueChange={onToggleSwitch} />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
 

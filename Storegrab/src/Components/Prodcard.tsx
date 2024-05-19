@@ -10,6 +10,7 @@ import Stepper from './shared/stepper/Stepper';
 import { addItemToCart, decreaseItemQuantity, increaseItemQuantity, removeItemFromCart, updateItemInCart } from '../../reducers/cartReducer';
 import { decreaseProductQuantity, increaseProductQuantity } from '../../reducers/vendorReducer';
 import { addToCartRequest } from '../../actions/userActions';
+import { decreaseInventoryQtyRequest, increaseInventoryQtyRequest } from '../../actions/vendorActions';
 // import { Text, theme } from 'galio-framework';
 
 
@@ -58,7 +59,7 @@ const Prodcard: React.FC<ProdcardProps> = ({
 }) => {
     const [isHorizontal, setIsHorizontal] = useState<boolean>(horizontal);
     const { colors } = useAppTheme();
-    const { user, token } = useSelector((state: any) => state.auth)
+    const { user, token, vendorAdmin } = useSelector((state: any) => state.auth)
     const styles = StyleSheet.create({
         card: {
             backgroundColor: '#fff',
@@ -135,52 +136,72 @@ const Prodcard: React.FC<ProdcardProps> = ({
 
 
     const handleChange = (change: number) => {
-        let cartItem = cartData.find((cartItem: any) => cartItem.skuId === item?.skuId)
-        dispatch(addToCartRequest(user?.userId,item?.skuId, change,token ));
-        if(cartItem){
-            if(cartItem.qty === 1 && change < 0){
-                dispatch(removeItemFromCart(cartItem?.skuId))
-                dispatch(increaseProductQuantity(cartItem?.skuId))
-            }
-            else if(change > 0) {
-                if(item?.qty > 0){
-                    dispatch(increaseItemQuantity(cartItem?.skuId))
-                    dispatch(decreaseProductQuantity(cartItem?.skuId))
-                }
-                
-            }   
-            else {
-                dispatch(decreaseItemQuantity(cartItem?.skuId))
-                dispatch(increaseProductQuantity(cartItem?.skuId))
-            }
-        }
-        else{
+        if(vendorAdmin){
+            
             if(change > 0){
-                if(item.qty > 0){
-                    const newCartItem: any = {
-                        skuId: item?.skuId,
-                        item:  item?.item,
-                        price: item?.price,
-                        qty: change,
-                        size: item?.size,
-                        features: item?.features,
-                        categories: item?.categories,
-                        image: item?.image,
-                        description: item?.description,
-                        brand: item?.brand,
-                        vendorId: item?.vendorId,
-                        vendor_name: item?.vendor_name,
-                      }
-                    dispatch(addItemToCart(newCartItem))
-                    dispatch(decreaseProductQuantity(cartItem?.skuId))
+                dispatch(increaseInventoryQtyRequest(item?.skuId, change, token))
+                dispatch(increaseProductQuantity(item?.skuId))
+            }
+            else{
+                if(item?.qty > 0){
+                    dispatch(decreaseInventoryQtyRequest(item?.skuId, 1, token))
+                    dispatch(decreaseProductQuantity(item?.skuId))
                 }
 
             }
         }
+        else{
+            let cartItem = cartData.find((cartItem: any) => cartItem.skuId === item?.skuId)
+            dispatch(addToCartRequest(user?.userId,item?.skuId, change,token ));
+            if(cartItem){
+                if(cartItem.qty === 1 && change < 0){
+                    dispatch(removeItemFromCart(cartItem?.skuId))
+                    dispatch(increaseProductQuantity(cartItem?.skuId))
+                }
+                else if(change > 0) {
+                    if(item?.qty > 0){
+                        dispatch(increaseItemQuantity(cartItem?.skuId))
+                        dispatch(decreaseProductQuantity(cartItem?.skuId))
+                    }
+                    
+                }   
+                else {
+                    dispatch(decreaseItemQuantity(cartItem?.skuId))
+                    dispatch(increaseProductQuantity(cartItem?.skuId))
+                }
+            }
+            else{
+                if(change > 0){
+                    if(item.qty > 0){
+                        const newCartItem: any = {
+                            skuId: item?.skuId,
+                            item:  item?.item,
+                            price: item?.price,
+                            qty: change,
+                            size: item?.size,
+                            features: item?.features,
+                            categories: item?.categories,
+                            image: item?.image,
+                            description: item?.description,
+                            brand: item?.brand,
+                            vendorId: item?.vendorId,
+                            vendor_name: item?.vendor_name,
+                          }
+                        dispatch(addItemToCart(newCartItem))
+                        dispatch(decreaseProductQuantity(cartItem?.skuId))
+                    }
+    
+                }
+            }
+        }
+
 
     }
 
     const getQuantity = () =>{
+        if(vendorAdmin){
+            return item?.qty ? item?.qty: 0;
+        }
         return (cartData && cartData.length > 0 && cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty)?cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty: 0
     }
 

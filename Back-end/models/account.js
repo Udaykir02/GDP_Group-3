@@ -37,7 +37,7 @@ const UserSchema = new Schema({
     hashedAndSaltedPassword: { type: String, required: true },
     emailVerified: { type: Boolean, default: false },
     address: AddressSchema,
-    vendors: [{ type: Schema.Types.ObjectId, ref: 'Vendor' }], // Assuming reference to a Vendor model
+    vendors: [{ type: String, default: '' }], // Assuming reference to a Vendor model
     notificationActive: { type: Boolean, default: false },
     vendorpreferences: [{ type: String }],
     userRecomendations: [{ type: Schema.Types.ObjectId, ref: 'Product' }], // Assuming reference to a Product model

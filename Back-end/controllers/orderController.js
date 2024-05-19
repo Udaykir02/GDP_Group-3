@@ -62,4 +62,15 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, getAllOrders, getOrder, updateOrder, deleteOrder }
+// Controller for getting all orders
+const getOrderByVendorId = async (req, res) => {
+  const { vendorId } = req.body;
+  try {
+    const orders = await Order.find({ vendorId: vendorId });
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createOrder, getAllOrders, getOrder, updateOrder, deleteOrder, getOrderByVendorId }

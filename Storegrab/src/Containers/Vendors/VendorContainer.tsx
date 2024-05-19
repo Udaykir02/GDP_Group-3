@@ -19,7 +19,7 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
   const [vendors, setVendors] = useState<any>([]);
   const styles = createToBeImplementedStyle();
   const { chosenLocation } = useSelector((state: any) => state.location)
-  const { token } = useSelector((state: any) => state.auth)
+  const { token, vendorAdmin, user } = useSelector((state: any) => state.auth)
   const { colors } = useAppTheme();
   const isReduxModalVisible = useSelector((state: any) => state.location.isModalVisible)
   const { defaultlocation } = useSelector((state: any) => state.location);
@@ -30,39 +30,61 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
   }
 
   useEffect(() => {
-    if (chosenLocation != undefined) {
-      // Define the request data including the body and token
+    if (vendorAdmin) {
       const requestData = {
-        longitude: chosenLocation.longitude, // Example longitude
-        latitude: chosenLocation.latitude, // Example latitude
-        miles: radius,
-        vendor_types: vendorTypes
+        vendorIds: user?.vendors ? user.vendors : []
       };
-
+      console.log('Request Data:', user?.vendors)
       // Define the request configuration
       const config = {
         method: 'post',
-        url: 'http://localhost:3000/vendorapi/nearest-vendor',
+        url: 'http://localhost:3000/vendorapi/getVendorByIds',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+          'Authorization': `${token}` // Add the token to the Authorization header
         },
         data: requestData // Add the request body
       };
       axios(config)
         .then(response => {
-          setVendors(response.data.nearestVendor)
-          console.log('Response:', response.data.nearestVendor);
+          setVendors(response.data)
+          console.log('Response:', response.data);
         })
         .catch(error => {
           setVendors([])
-        });
+        }); 
+    } else {
+      if (chosenLocation != undefined) {
+        // Define the request data including the body and token
+        const requestData = {
+          longitude: chosenLocation.longitude, // Example longitude
+          latitude: chosenLocation.latitude, // Example latitude
+          miles: radius,
+          vendor_types: vendorTypes
+        };
 
+        // Define the request configuration
+        const config = {
+          method: 'post',
+          url: 'http://localhost:3000/vendorapi/nearest-vendor',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` // Add the token to the Authorization header
+          },
+          data: requestData // Add the request body
+        };
+        axios(config)
+          .then(response => {
+            setVendors(response.data.nearestVendor)
+            console.log('Response:', response.data.nearestVendor);
+          })
+          .catch(error => {
+            setVendors([])
+          });
 
+      }
     }
-
-    console.log(JSON.stringify(chosenLocation) + "Hi")
-  }, [chosenLocation, radius, vendorTypes.length])
+  }, [chosenLocation, radius, vendorTypes.length, vendorAdmin])
 
   useEffect(() => {
     setIsModalVisible(isReduxModalVisible)
