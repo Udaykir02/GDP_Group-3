@@ -113,7 +113,7 @@ const getVendorsByIds = async (req, res) => {
       if (!Array.isArray(vendorIds)) {
           return res.status(400).json({ message: "vendorIds must be an array" });
       }
-
+      
       const vendors = await Vendor.find({ vendorId: { $in: vendorIds } });
       res.status(200).json(vendors);
   } catch (error) {
