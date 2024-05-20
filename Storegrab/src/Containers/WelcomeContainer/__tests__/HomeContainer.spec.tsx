@@ -5,7 +5,7 @@ import render, {
 } from '@testing-library/react-native/build/render'
 import { NavigationContainer } from '@react-navigation/native'
 import { fireEvent } from '@testing-library/react-native';
-import LoginContainer from '../LoginContainer';
+import HomeContainer from '../HomeContainer';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { PaperProvider } from 'react-native-paper';
 import AppThemeProvider from '../../../core/AppThemeProvider';
@@ -23,7 +23,7 @@ const renderStartupContainerPage = () => {
             <Provider store={store}>
                 <PaperProvider>
                     <AppThemeProvider>
-                            <LoginContainer />
+                            <HomeContainer />
                     </AppThemeProvider>
                 </PaperProvider>
             </Provider>
@@ -31,7 +31,7 @@ const renderStartupContainerPage = () => {
 }
 let page: RenderResult
 
-describe('LoginContainer', () => {
+describe('HomeContainer', () => {
     beforeEach(() => {
         jest.useFakeTimers();
         page = renderStartupContainerPage()
@@ -45,28 +45,6 @@ describe('LoginContainer', () => {
     })
 
     it('displays an error message when username is empty', async () => {
-        const loginButton = page.getByTestId('login-button');
+        const loginButton = page.getByTestId('home-container-testid');
     });
-
-    it('displays an error message when password is empty', async () => {
-        const loginButton = page.getByTestId('login-button');
-
-        fireEvent.changeText(page.getByTestId('password-input'), '');
-
-        expect(page.getByTestId('password-input')).toBeDefined();
-    });
-
-    it('calls the login function with the correct username and password', () => {
-        const mockLogin = jest.fn();
-        const { getByLabelText, getByTestId } = render(<Provider store={store}><LoginContainer /></Provider>);
-        const usernameInput = page.getByTestId('username-input')
-        const passwordInput = page.getByTestId('password-input')
-        const loginButton = getByTestId('login-button');
-
-        fireEvent.changeText(usernameInput, 'varunrachakatla0708@gmail.com');
-        fireEvent.changeText(passwordInput, '070894');
-        fireEvent.press(loginButton);
-
-        expect(mockLogin).toHaveBeenCalledWith('testuser', 'testpass');
-    });
-});  
+});

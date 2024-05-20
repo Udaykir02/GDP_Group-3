@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler/jestSetup';
-
+import mock from '@stripe/stripe-react-native/jest/mock.js';
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
