@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Alert, View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import NumericInput from './NumericInput';
 import { Card } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
 import { UserCartType } from '@/../reducers/users/types';
@@ -51,7 +50,7 @@ interface ProdcardProps {
     cartitems: CartItem[];
 }
 
-const Prodcard: React.FC<ProdcardProps> = ({
+const Prodcard: React.FC<any> = ({
     item,
     horizontal,
     style,
@@ -209,7 +208,7 @@ const Prodcard: React.FC<ProdcardProps> = ({
         <TouchableWithoutFeedback onPress={() => setIsHorizontal(!isHorizontal)}>
             <View style={[cardContainer, { flexDirection: isHorizontal ? 'row' : 'column' }]}>
                 <View style={[imgContainer, { flex: isHorizontal ? 0.3 : 1 }]}>
-                    <Image source={{ uri: item.image }} style={imageStyles} />
+                    <Image source={{ uri: item.image }} style={imageStyles}  testID='prodcard-image-testid'/>
                 </View>
                 <View style={{ flex: isHorizontal ? 0.7 : 1, justifyContent: 'space-between' }}>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>

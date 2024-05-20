@@ -1,0 +1,514 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prodcard should render correctly 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              [
+                {
+                  "backgroundColor": "#fff",
+                  "borderWidth": 0,
+                  "marginBottom": 16,
+                  "marginVertical": 16,
+                  "minHeight": 114,
+                },
+                {
+                  "paddingHorizontal": 16,
+                  "paddingVertical": 8,
+                },
+              ],
+              {
+                "flexDirection": "row",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              [
+                [
+                  {
+                    "borderRadius": 3,
+                    "elevation": 1,
+                    "overflow": "hidden",
+                  },
+                  {
+                    "borderBottomRightRadius": 0,
+                    "borderTopRightRadius": 0,
+                  },
+                  {
+                    "elevation": 2,
+                    "shadowColor": "#000",
+                    "shadowOffset": {
+                      "height": 2,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.1,
+                    "shadowRadius": 4,
+                  },
+                ],
+                {
+                  "flex": 0.3,
+                },
+              ]
+            }
+          >
+            <Image
+              source={
+                {
+                  "uri": "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
+                }
+              }
+              style={
+                [
+                  {
+                    "borderRadius": 3,
+                    "height": 107,
+                    "width": "auto",
+                  },
+                  {
+                    "borderRadius": 10,
+                  },
+                ]
+              }
+              testID="prodcard-image-testid"
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 0.7,
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <View
+                style={
+                  [
+                    {
+                      "flex": 0.4,
+                    },
+                    {
+                      "marginHorizontal": 5,
+                    },
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "flexWrap": "wrap",
+                        "paddingBottom": 6,
+                      },
+                      {
+                        "color": "#32325D",
+                        "fontSize": 14,
+                        "fontWeight": "bold",
+                      },
+                    ]
+                  }
+                >
+                  item
+                </Text>
+                <Text
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "flexWrap": "wrap",
+                        "paddingBottom": 6,
+                      },
+                      {
+                        "color": "#32325D",
+                        "fontSize": 12,
+                        "fontWeight": "normal",
+                      },
+                    ]
+                  }
+                >
+                  red
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "flex": 0.6,
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "flexWrap": "wrap",
+                        "paddingBottom": 6,
+                      },
+                      {
+                        "color": "#32325D",
+                        "fontSize": 18,
+                        "fontWeight": "bold",
+                      },
+                    ]
+                  }
+                >
+                  $100
+                </Text>
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "height": 40,
+                        "justifyContent": "space-evenly",
+                        "padding": 4,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "backgroundColor": "#ffffff",
+                        "blurRadius": 8,
+                        "borderColor": "#558235",
+                        "borderRadius": 50,
+                        "borderWidth": 1,
+                        "flexDirection": "row",
+                        "height": 40,
+                        "justifyContent": "center",
+                        "padding": 4,
+                        "shadowColor": "transparent",
+                        "shadowOffset": {
+                          "height": 0,
+                          "width": 0,
+                        },
+                        "shadowOpacity": 0.8,
+                        "shadowRadius": 2,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "alignItems": "center",
+                          "backgroundColor": "#ffffff",
+                          "borderColor": "#6aa342",
+                          "borderRadius": 50,
+                          "borderWidth": 1,
+                          "flexDirection": "row",
+                          "height": 32,
+                          "justifyContent": "center",
+                          "padding": 4,
+                        }
+                      }
+                    >
+                      <View
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={
+                          {
+                            "opacity": 1,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "alignItems": "center",
+                              "flexDirection": "column",
+                              "justifyContent": "center",
+                              "minWidth": 32,
+                            }
+                          }
+                        >
+                          <Text
+                            style={
+                              {
+                                "color": "#000",
+                                "fontSize": 16,
+                                "fontWeight": "bold",
+                                "height": 20,
+                                "marginBottom": 0,
+                                "marginHorizontal": 4,
+                                "minWidth": 32,
+                                "textAlign": "center",
+                              }
+                            }
+                          >
+                            Add
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={
+                          {
+                            "opacity": 1,
+                          }
+                        }
+                      >
+                        <View
+                          collapsable={false}
+                          style={
+                            {
+                              "alignItems": "center",
+                              "backgroundColor": "rgba(255, 255, 255, 0)",
+                              "borderColor": "#000000",
+                              "borderRadius": 16,
+                              "borderStyle": "dotted",
+                              "borderWidth": 0,
+                              "color": "#558235",
+                              "height": 32,
+                              "justifyContent": "center",
+                              "marginHorizontal": 5,
+                              "width": 32,
+                            }
+                          }
+                        >
+                          <Text
+                            style={
+                              {
+                                "color": "#558235",
+                                "fontSize": 16,
+                              }
+                            }
+                          >
+                            <Text
+                              allowFontScaling={false}
+                              selectable={false}
+                              style={
+                                [
+                                  {
+                                    "color": undefined,
+                                    "fontSize": 32,
+                                  },
+                                  undefined,
+                                  {
+                                    "fontFamily": "Material Design Icons",
+                                    "fontStyle": "normal",
+                                    "fontWeight": "normal",
+                                  },
+                                  {},
+                                ]
+                              }
+                            >
+                              󰐕
+                            </Text>
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <Text
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "flexWrap": "wrap",
+                        "paddingBottom": 6,
+                      },
+                      {
+                        "color": "#32325D",
+                        "fontSize": 12,
+                        "fontWeight": "bold",
+                        "marginTop": 10,
+                      },
+                    ]
+                  }
+                >
+                  In Stock: 
+                  1
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "margin": 5,
+                }
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "flex": 1,
+                      "flexWrap": "wrap",
+                      "paddingBottom": 6,
+                    },
+                    {
+                      "color": "#32325D",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                Description: 
+                description
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "justifyContent": "space-between",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "flex": 1,
+                      "flexWrap": "wrap",
+                      "paddingBottom": 6,
+                    },
+                    {
+                      "color": "#32325D",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                brand
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;
