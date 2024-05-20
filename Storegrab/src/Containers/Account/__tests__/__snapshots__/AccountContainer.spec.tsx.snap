@@ -471,21 +471,6 @@ exports[`AccountContainer should render correctly 1`] = `
         >
           Vendor Admin: 
         </Text>
-        <RCTSwitch
-          accessibilityRole="switch"
-          onChange={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          onTintColor="rgba(103, 80, 164, 1)"
-          style={
-            {
-              "height": 31,
-              "width": 51,
-            }
-          }
-          tintColor="rgba(103, 80, 164, 1)"
-          value={false}
-        />
       </View>
       <View
         accessibilityState={

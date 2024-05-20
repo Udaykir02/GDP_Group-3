@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VendorSubscriptionPage should render correctly 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": undefined,
+      "flexDirection": "column",
+      "padding": 16,
+      "width": "100%",
+    }
+  }
+>
+  <RCTScrollView
+    data={[]}
+    extraData={[]}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={0.1}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    refreshing={false}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "paddingHorizontal": 2,
+        "width": "auto",
+      }
+    }
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View />
+  </RCTScrollView>
+</View>
+`;
