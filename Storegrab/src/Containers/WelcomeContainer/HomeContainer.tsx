@@ -101,7 +101,7 @@ const HomeContainer = ({
         )
     }
     return (
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+        <View style={{ flex: 1, backgroundColor: '#fff' }} testID="home-container-testid">
             {selectedVendor !== null ? <View style={{ flex: 1 }}>
                 <FlatList
                     data={products}

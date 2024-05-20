@@ -1,5 +1,7 @@
 import 'react-native-gesture-handler/jestSetup';
+import mock from '@stripe/stripe-react-native/jest/mock.js';
 
+ 
 jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
@@ -36,3 +38,5 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   multiRemove: jest.fn(),
   multiMerge: jest.fn(),
 }));
+
+jest.mock('@stripe/stripe-react-native', () => mock);

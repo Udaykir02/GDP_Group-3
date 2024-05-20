@@ -1,21 +1,38 @@
-/**
- * @format
- */
+import { Provider } from 'react-redux'
+import store from '../Store'
+import render, {
+  RenderResult,
+} from '@testing-library/react-native/build/render'
+import { NavigationContainer } from '@react-navigation/native'
+import { StripeProvider } from '@stripe/stripe-react-native'
+import { PaperProvider } from 'react-native-paper'
+import AppThemeProvider from '@/core/AppThemeProvider'
+import App from '../App'
+jest.mock('@react-navigation/native', () => {
+  return {
+    ...jest.requireActual('@react-navigation/native'),
+    useNavigation: () => ({
+      navigate: jest.fn(),
+    }),
+  };
+});
+const renderStartupContainerPage = () => {
+  return render(
 
-import 'react-native';
-import React from 'react';
-import App from '../App';
-
-// Note: import explicitly to use the types shipped with jest.
-import {it, expect,describe} from '@jest/globals';
-
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
-
-
-describe('App', () => { // Describe the App component
-  it('renders correctly', () => { // Test that the App component renders correctly
-    const wrapper = shallow(<App />); // Shallow render the App component
-    expect(wrapper).toMatchSnapshot(); // Assert that the wrapper matches the snapshot
-  });
-} );  
+            <App />
+  )
+}
+let page: RenderResult
+describe('App', () => {
+  beforeEach(() => {
+    // jest.useFakeTimers();
+    page = renderStartupContainerPage()
+  })
+  // afterEach(() => {
+  //   jest.runOnlyPendingTimers();
+  //   jest.useRealTimers();
+  // });
+  it('should render correctly', function () {
+    expect(page.toJSON()).toMatchSnapshot()
+  })
+});

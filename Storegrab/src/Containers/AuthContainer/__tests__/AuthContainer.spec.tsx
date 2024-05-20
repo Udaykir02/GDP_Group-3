@@ -3,8 +3,8 @@ import store from '../../../../store'
 import render, {
     RenderResult,
 } from '@testing-library/react-native/build/render'
-import AccountContainer from '../AccountContainer'
 import { NavigationContainer } from '@react-navigation/native'
+import AuthContainer from '../AuthContainer'
 jest.mock('@react-navigation/native', () => {
     return {
       ...jest.requireActual('@react-navigation/native'),
@@ -17,7 +17,7 @@ const renderStartupContainerPage = () => {
     return render(
         <Provider store={store}>
             <NavigationContainer>
-                <AccountContainer />
+                <AuthContainer />
             </NavigationContainer>
         </Provider>,
     )

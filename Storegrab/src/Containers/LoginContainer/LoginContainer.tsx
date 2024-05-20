@@ -44,6 +44,7 @@ const LoginContainer = ({ navigation }: any) => {
                     value={email}
                     onChangeText={setEmail}
                     autoCapitalize={'none'}
+                    testID='email-input'
                 />
                 <TextInput
                     style={styles.input}
@@ -52,11 +53,12 @@ const LoginContainer = ({ navigation }: any) => {
                     onChangeText={setPassword}
                     secureTextEntry
                     autoCapitalize={'none'}
+                    testID='password-input'
                 />
                 <TouchableHighlight
                     style={styles.button}
                     onPress={handleLogin}
-                    underlayColor='#fff'>
+                    underlayColor='#fff' testID='login-button'>
                     <Text style={[{fontSize: 15},styles.loginText]}>Login</Text>
                 </TouchableHighlight>
                 <Button title="Reset Password" onPress={handleResetPassword} />
