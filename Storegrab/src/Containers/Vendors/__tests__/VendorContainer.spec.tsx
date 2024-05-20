@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux'
-import store from '../../../../Store'
+import store from '../../../../store'
 import render, {
     RenderResult,
 } from '@testing-library/react-native/build/render'
