@@ -1,0 +1,265 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VendorSubscriptionPage should render correctly 1`] = `
+<RCTScrollView
+  style={
+    {
+      "backgroundColor": "#fff",
+      "flex": 1,
+      "padding": 16,
+    }
+  }
+>
+  <View>
+    <Text
+      style={
+        {
+          "fontSize": 18,
+          "marginBottom": 8,
+        }
+      }
+    >
+      Order ID: 
+      ORD123456
+    </Text>
+    <Text>
+      Status: 
+      Shipped
+    </Text>
+    <Text>
+      Payment Status: 
+      Paid
+    </Text>
+    <Text>
+      Total Cost: 
+      USD
+       
+      39.98
+    </Text>
+    <Text>
+      Order Time: 
+      Sun May 19 2024
+    </Text>
+    <Text>
+      End Time: 
+      5/26/2024, 7:34:56 AM
+    </Text>
+    <View
+      style={
+        {
+          "borderBottomColor": "#ddd",
+          "borderBottomWidth": 1,
+          "marginTop": 16,
+          "paddingBottom": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginBottom": 8,
+          }
+        }
+      >
+        Shipping Information
+      </Text>
+      <Text>
+        Carrier: 
+        UPS
+      </Text>
+      <Text>
+        Tracking: 
+        1Z9999999999999999
+      </Text>
+      <Text>
+        Address: 
+        123 Main St
+        , 
+        Apt 4B
+        , 
+        Springfield
+        , 
+        IL
+        , 
+        USA
+         - 
+        62701
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "borderBottomColor": "#ddd",
+          "borderBottomWidth": 1,
+          "marginTop": 16,
+          "paddingBottom": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginBottom": 8,
+          }
+        }
+      >
+        Items
+      </Text>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "marginBottom": 16,
+          }
+        }
+      >
+        <Image
+          source={
+            {
+              "uri": "http://example.com/images/widgetA.png",
+            }
+          }
+          style={
+            {
+              "height": 100,
+              "marginRight": 16,
+              "width": 100,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Widget A
+          </Text>
+          <Text>
+            Brand: 
+            WidgetCo
+          </Text>
+          <Text>
+            Price: 
+            USD
+             
+            19.99
+          </Text>
+          <Text>
+            Quantity: 
+            2
+          </Text>
+          <Text>
+            Size: 
+            10
+            x
+            5
+            x
+            3
+          </Text>
+          <Text>
+            Features: 
+            Durable, lightweight, water-resistant
+          </Text>
+          <Text>
+            Categories: 
+            tools, gadgets
+          </Text>
+          <Text>
+            Description: 
+            A high-quality widget useful for various tasks.
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "marginBottom": 16,
+          }
+        }
+      >
+        <Image
+          source={
+            {
+              "uri": "http://example.com/images/gadgetB.png",
+            }
+          }
+          style={
+            {
+              "height": 100,
+              "marginRight": 16,
+              "width": 100,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Gadget B
+          </Text>
+          <Text>
+            Brand: 
+            GadgetInc
+          </Text>
+          <Text>
+            Price: 
+            USD
+             
+            9.99
+          </Text>
+          <Text>
+            Quantity: 
+            1
+          </Text>
+          <Text>
+            Size: 
+            10
+            x
+            5
+            x
+            3
+          </Text>
+          <Text>
+            Features: 
+            Compact, multi-purpose
+          </Text>
+          <Text>
+            Categories: 
+            gadgets
+          </Text>
+          <Text>
+            Description: 
+            A versatile gadget with multiple uses.
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
