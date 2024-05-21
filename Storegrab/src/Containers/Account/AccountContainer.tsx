@@ -90,7 +90,7 @@ const AccountContainer: React.FC = () => {
         </View>
         <View style={[styles.contactInfo, { justifyContent: 'space-around', alignItems: 'center', alignContent: 'center' }]}>
           <Text style={[styles.sectionTitle, { alignSelf: 'center', marginTop: 7 }]}>Vendor Admin: </Text>
-          {(vendorAdmin)?<Switch value={vendorAdmin} onValueChange={onToggleSwitch} testID='vendor-admin-switch'/>:<></>}
+          {(user?.vendors?.length > 0)?<Switch value={vendorAdmin} onValueChange={onToggleSwitch} testID='vendor-admin-switch'/>:<></>}
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleLogout}>

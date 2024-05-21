@@ -73,4 +73,17 @@ const getOrderByVendorId = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, getAllOrders, getOrder, updateOrder, deleteOrder, getOrderByVendorId }
+// Controller for deleting an order
+const deleteAll = async (req, res) => {
+  try {
+    const order = await Order.deleteMany();
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    res.json({ message: 'Orders deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createOrder, getAllOrders, getOrder, updateOrder, deleteOrder, getOrderByVendorId, deleteAll }

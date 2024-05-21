@@ -1,3 +1,4 @@
+import { argonTheme } from '../../constants';
 import { StyleSheet } from 'react-native';
 export default function <C>() {
     return StyleSheet.create({
@@ -27,7 +28,7 @@ export default function <C>() {
         marginTop: 20,
         paddingTop: 15,
         paddingBottom: 15,
-        backgroundColor: '#68a0cf',
+        backgroundColor: argonTheme.COLORS.ERROR,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#fff',

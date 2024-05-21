@@ -310,12 +310,12 @@ const addToCartController = async (req, res) => {
       res.status(200).json({ message: result.message, data: result.data });
     } else {
       console.log(result.message)
-      res.status(400).json({ error: result.message });
+      res.status(400).json({ message: result.message });
     }
   } catch (error) {
     
     console.error('Error adding item to cart:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
 

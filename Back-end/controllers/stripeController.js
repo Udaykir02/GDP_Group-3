@@ -48,6 +48,7 @@ const placeOrder = async (req, res) => {
         const { userId, paymentIntentId, vendorId, items } = req.body;
 
         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+        console.log(JSON.stringify(paymentIntent))
         if (paymentIntent.status === 'succeeded') {
             const orderId = uuid.v4();
             const address = {
@@ -73,12 +74,12 @@ const placeOrder = async (req, res) => {
                 paymentMethod: paymentIntent.payment_method_types[0],
                 status: "placed",
                 currency: paymentIntent.currency,
-                totalCost: paymentIntent.Orderamount,
+                totalCost: paymentIntent.amount,
                 items: items,
                 shipping: shipping
             }
 
-            console.log(orderBody)
+            // console.log(orderBody)
             const order = new Order(orderBody);
             const user = await User.findOne({ userId });
             user.cart = []

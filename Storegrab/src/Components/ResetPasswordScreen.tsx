@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordRequest, sendOTPRequest, verifyOTPRequest } from '../../actions/userActions';
+import { clearError } from '../../reducers/users/slice';
+import AppPageWrapper from '../shared/AppPageWrapper';
+import LoadingSpinner from './shared/LoadingSpinner';
 
 const ResetPasswordScreen = ({navigation}:any) => {
     const [email, setEmail] = useState('');
@@ -10,7 +13,7 @@ const ResetPasswordScreen = ({navigation}:any) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [step, setStep] = useState(1); // Track the current step
     const dispatch = useDispatch();
-    const { resetToken, error } = useSelector((state: any)=>state.auth)
+    const { resetToken, error, loading } = useSelector((state: any)=>state.auth)
     const handleSendOTP = async () => {
         // Dispatch action to send OTP
         await dispatch(sendOTPRequest(email));
@@ -33,9 +36,6 @@ const ResetPasswordScreen = ({navigation}:any) => {
     const handleResetPassword = async () => {
         // Dispatch action to reset password
         await dispatch(resetPasswordRequest(email, newPassword, resetToken));
-        if(error){
-
-        }
         // Reset state and navigate to login screen or home screen
         setEmail('');
         setOTP('');
@@ -45,8 +45,27 @@ const ResetPasswordScreen = ({navigation}:any) => {
 
         // Navigate to login screen or home screen
 
-        navigation.navigate('Login'); // Example navigation
+        // navigation.navigate('Login'); // Example navigation
     };
+
+
+    useEffect(()=>{
+        // Display alert when error occurs
+        if (error) {
+            console.log(JSON.stringify(error))
+            Alert.alert('Error', error, [{ text: 'OK' }]);
+            dispatch(clearError())
+        }
+        else if( step == 3){
+            navigation.navigate('Login')
+        }
+    },[loading])
+
+    if(loading){
+        return (<AppPageWrapper>
+            <LoadingSpinner />
+        </AppPageWrapper>)
+    }
 
     return (
         <View style={styles.container}>

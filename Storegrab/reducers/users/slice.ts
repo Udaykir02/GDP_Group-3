@@ -28,10 +28,12 @@ const authSlice = createSlice({
             state.token = action.payload.token;
             state.user = action.payload.userData
             state.error = null;
+            state.loading = false;
         },
         loginFailure: (state, action: PayloadAction<LoginFailurePayload>) => {
             state.error = action.payload;
             state.token  = null;
+            state.loading = false;
         },
         registerSuccess: (state) => {
             state.loading = false;
@@ -88,27 +90,39 @@ const authSlice = createSlice({
             state.token = action.payload.token;
             state.user = action.payload.userData
             state.error = null;
+            state.loading = false;
         },
         renewTokenFailure: (state, action: PayloadAction<LoginFailurePayload>) => {
             state.error = action.payload;
             state.token = null
+            state.loading = false;
         },
         clearCart: (state) => {
             if(state.user)
             state.user.cart = null
             state.error = null;
+            state.loading = false;
         },
         updateUser:(state, action) => {
             state.user = action.payload
+            state.loading = false;
         },
         updateVendorAdmin: (state, action: PayloadAction<boolean>) => {
             state.vendorAdmin = action.payload;
+            state.loading = false;
+        },
+        clearError: (state) => {
+            state.error = null;
+            state.loading = false;
+        },
+        updateUserLoading: (state) => {
+            state.loading = true
         }
         // Define reducers for registration success and failure if needed
     },
 });
 
-export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure , clearCart, updateUser, updateVendorAdmin} = authSlice.actions;
+export const { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess,  renewTokenFailure , clearCart, updateUser, updateVendorAdmin, clearError, updateUserLoading} = authSlice.actions;
 
 
 export default authSlice.reducer;

@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 import { TouchableOpacity, View, Text, TextInput, Button, Image, TouchableHighlight, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import createToBeImplementedStyle from "./LoginContainerStyle";
+import { clearError } from '../../../reducers/users/slice';
+import AppPageWrapper from '../../shared/AppPageWrapper';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 
 const LoginContainer = ({ navigation }: any) => {
@@ -12,7 +15,7 @@ const LoginContainer = ({ navigation }: any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const { error } = useSelector((state: any)=> state.auth)
+    const { error, loading } = useSelector((state: any)=> state.auth)
     const handleLogin = async () => {
         await dispatch(loginRequest(email, password));
         
@@ -26,14 +29,20 @@ const LoginContainer = ({ navigation }: any) => {
         if (error) {
             console.log(JSON.stringify(error))
             Alert.alert('Error', error, [{ text: 'OK' }]);
+            dispatch(clearError())
         }
-    },[error])
+    },[loading])
 
+    if(loading){
+        return (<AppPageWrapper>
+            <LoadingSpinner />
+        </AppPageWrapper>)
+    }
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
                 <Image
-                    source={require('../../Assets/icons/bearcat_plaw.png')}
+                    source={require('../../Assets/icons/Storegrab.png')}
                     style={styles.image}
                 />
             </View>

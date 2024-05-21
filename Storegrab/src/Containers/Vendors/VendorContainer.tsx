@@ -34,7 +34,6 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
       const requestData = {
         vendorIds: user?.vendors ? user.vendors : []
       };
-      console.log('Request Data:', user?.vendors)
       // Define the request configuration
       const config = {
         method: 'post',
@@ -48,7 +47,6 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
       axios(config)
         .then(response => {
           setVendors(response.data)
-          console.log('Response:', response.data);
         })
         .catch(error => {
           setVendors([])

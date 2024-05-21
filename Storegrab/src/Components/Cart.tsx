@@ -45,7 +45,6 @@ const Cart = ({ navigation }: any) => {
 
     const getTotal = () => {
         let total = 0;
-        let cart = user?.cart;
         for (let i = 0; i < cartData?.length; i++) {
             total += cartData[i].qty * cartData[i].price;
         }
@@ -136,7 +135,7 @@ const Cart = ({ navigation }: any) => {
                 Alert.alert(`Error code: ${error.code}`, error.message);
                 console.log(`Error code: ${error.code}`, error.message);
             } else {
-                const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: user?.cart, token: token }
+                const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: cartData, token: token }
                 console.log("orderreqq"+JSON.stringify(orderReq))
                 await dispatch(placeOrders(orderReq));
                 navigation.navigate('Orders')

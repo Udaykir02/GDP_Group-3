@@ -2,11 +2,11 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import { put, takeLatest, call } from "redux-saga/effects";
 import { UserType } from "../reducers/users/types";
-import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure, clearCart } from "../reducers/users/slice";
+import { loginSuccess, loginFailure, registerSuccess, registerFailure, logoutSuccess, logoutFailure, sendOTPSuccess, sendOTPFailure, verifyOTPSuccess, verifyOTPFailure, resetPasswordSuccess, resetPasswordFailure, addToCartSuccess, addToCartFailure, renewTokenSuccess, renewTokenFailure, clearCart, updateUserLoading } from "../reducers/users/slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginRequest, resetRequest } from "../actions/userActions";
 import { clearVendor, inventoryRequestSuccess, updateProducts, updateVendorProductsFailure, updateVendorProductsSuccess } from "../reducers/vendorReducer";
-import { getOrdersSuccess, getOrdersFailure, placeOrderSuccess, placeOrderFailure, clearOrders } from "../reducers/orderReducer";
+import { getOrdersSuccess, getOrdersFailure, placeOrderSuccess, placeOrderFailure, clearOrders, updateCartLoading } from "../reducers/orderReducer";
 import { clearState, fetchInventoryAndVendorDetailsFailure, fetchInventoryAndVendorDetailsStart, fetchInventoryAndVendorDetailsSuccess } from "../reducers/searchReducer";
 import { addUserCart, resetCart } from "../reducers/cartReducer";
 import { clearLocation } from "../reducers/locationReducer";
@@ -16,6 +16,7 @@ import { clearAddresses } from "../reducers/addressReducer";
 
 function* login(action: any) {
   try {
+    yield put(updateUserLoading());
     const response: AxiosResponse<UserType> = yield call(axios.post, 'http://localhost:3000/api/login', {
       email: action.payload.email,
       password: action.payload.password,
@@ -27,12 +28,13 @@ function* login(action: any) {
     yield put(loginSuccess({token, userData}));
     // Navigate to home screen or perform any other action
   } catch (error) {
-    yield put(loginFailure(JSON.stringify(error)));
+    yield put(loginFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
 function* register(action: any) {
   try {
+    yield put(updateUserLoading());
     yield call(axios.post, 'http://localhost:3000/api/register', {
       username: action.payload.username,
       email: action.payload.email,
@@ -42,12 +44,13 @@ function* register(action: any) {
     // Optionally, you can automatically login the user after registration
     // yield call(login, { payload: action.payload });
   } catch (error) {
-    yield put(registerFailure(JSON.stringify(error)));
+    yield put(registerFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
 function* logout(action: any) {
   try {
+    yield put(updateUserLoading());
     yield AsyncStorage.setItem('auth_token', '');
     yield put(logoutSuccess());
     yield put(resetCart());
@@ -58,7 +61,7 @@ function* logout(action: any) {
     // Optionally, you can automatically login the user after registration
     // yield call(login, { payload: action.payload });
   } catch (error:any) {
-    yield put(logoutFailure(JSON.stringify(error.message)));
+    yield put(logoutFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
@@ -67,14 +70,14 @@ function* logout(action: any) {
 // Saga function to handle sending OTP
 function* handleSendOTP(action: any) {
   try {
-
+    yield put(updateUserLoading());
     const { email } = action.payload;
     yield call(axios.post, `${process.env.BASE_URL}/api/reset`, {
       email: email,
     });
     yield put(sendOTPSuccess());
   } catch (error: any) {
-    yield put(sendOTPFailure(error.message));
+    yield put(JSON.stringify(error?.response?.data?.message));
   }
 }
 
@@ -83,7 +86,7 @@ function* handleSendOTP(action: any) {
 // Saga function to handle verifying OTP
 function* handleVerifyOTP(action: any) {
   try {
-
+    yield put(updateUserLoading());
     const { email, enteredOTP } = action.payload;
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/verify`, {
       email: email,
@@ -92,7 +95,26 @@ function* handleVerifyOTP(action: any) {
     const token = response.data.token;
     yield put(verifyOTPSuccess(token));
   } catch (error: any) {
-    yield put(verifyOTPFailure(error.message));
+    yield put(verifyOTPFailure(JSON.stringify(error?.response?.data?.message)));
+  }
+}
+
+// Define saga worker function
+function* renewTokenSaga(action: any) {
+  try {
+    yield put(updateUserLoading());
+    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/renewToken`, {
+      refreshToken: action.payload
+    }, { headers: { Authorization: `${action.payload}` } });
+    const token = response.data.token;
+    const userData = response.data.userData;
+    yield AsyncStorage.setItem('auth_token', token);
+    console.log('userData'+JSON.stringify(userData.cart))  
+    yield put(addUserCart(userData?.cart));
+    yield put(renewTokenSuccess({token, userData}));
+    // Navigate to home screen or perform any other action
+  } catch (error) {
+    yield put(renewTokenFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
@@ -106,7 +128,7 @@ function* handleResetPassword(action: any) {
     },{ headers: { Authorization: `${token}` } });
     yield put(resetPasswordSuccess());
   } catch (error: any) {
-    yield put(resetPasswordFailure(error.message));
+    yield put(resetPasswordFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
@@ -120,7 +142,7 @@ function* handleVendorProductsSaga(action: any) {
     console.log(JSON.stringify(response.data.data))
     yield put(updateVendorProductsSuccess(response.data?.data));
   } catch (error: any) {
-    yield put(updateVendorProductsFailure(error.message));
+    yield put(updateVendorProductsFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
@@ -135,39 +157,22 @@ function* addToCartSaga(action: any) {
   }
 }
 
-// Define saga worker function
-function* renewTokenSaga(action: any) {
-  try {
-    const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/renewToken`, {
-      refreshToken: action.payload
-    }, { headers: { Authorization: `${action.payload}` } });
-    const token = response.data.token;
-    const userData = response.data.userData;
-    yield AsyncStorage.setItem('auth_token', token);
-    console.log('userData'+JSON.stringify(userData.cart))  
-    yield put(addUserCart(userData?.cart));
-    yield put(renewTokenSuccess({token, userData}));
-    // Navigate to home screen or perform any other action
-  } catch (error) {
-    yield put(renewTokenFailure(JSON.stringify(error)));
-  }
-}
-
 function* getOrdersSaga(action: any) {
   try {
+    
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/order/orders`, {
       userId: action.payload.userId
     }, { headers: { Authorization: `${action.payload.token}` } });
     yield put(getOrdersSuccess(response?.data ? response?.data : []));
     // Navigate to home screen or perform any other action
   } catch (error) {
-    yield put(getOrdersFailure(JSON.stringify(error)));
+    yield put(getOrdersFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
 function* placeOrderSaga(action: any) {
   try {
-    console.log("hello")
+    yield put(updateCartLoading())
     const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/stripe/place-order`, {
       userId: action.payload.userId, paymentIntentId: action.payload.paymentIntentId, vendorId: action.payload.vendorId, items: action.payload.items
     }, { headers: { Authorization: `${action.payload.token}` } });
@@ -178,7 +183,7 @@ function* placeOrderSaga(action: any) {
     // Navigate to home screen or perform any other action
   } catch (error) {
     console.log(error)
-    yield put(placeOrderFailure(JSON.stringify(error)));
+    yield put(placeOrderFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
@@ -197,7 +202,7 @@ function* fetchInventoryAndVendorDetailsSaga(action:any) {
     const vendorResult = response.data.vendorResult;
     yield put(fetchInventoryAndVendorDetailsSuccess({ inventoryData: inventoryResult, vendorData: vendorResult }));
   } catch (error:any) {
-    yield put(fetchInventoryAndVendorDetailsFailure({ error: error.message }));
+    yield put(fetchInventoryAndVendorDetailsFailure({ error: JSON.stringify(error?.response?.data?.message) }));
   }
 }
 
@@ -217,13 +222,14 @@ function* handleInventoryQtySaga(action: any) {
 
 function* getOrdersByIdSaga(action: any) {
   try {
+    yield put(updateCartLoading())
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/order/getOrderById`, {
       vendorId: action.payload.vendorId
     }, { headers: { Authorization: `${action.payload.token}` } });
     yield put(getOrdersSuccess(response?.data ? response?.data : []));
     // Navigate to home screen or perform any other action
   } catch (error) {
-    yield put(getOrdersFailure(JSON.stringify(error)));
+    yield put(getOrdersFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
@@ -247,7 +253,7 @@ function* decreaseQtySaga(action: any) {
     }, { headers: { Authorization: `${action.payload.token}` } });
     // Navigate to home screen or perform any other action
   } catch (error) {
-    yield put(getOrdersFailure(JSON.stringify(error)));
+    yield put(getOrdersFailure(JSON.stringify(error?.response?.data?.message)));
     console.log(error)
   }
 }
