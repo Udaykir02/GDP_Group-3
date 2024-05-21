@@ -29,6 +29,7 @@ exports[`VendorSubscriptionPage should render correctly 1`] = `
     removeClippedSubviews={false}
     renderItem={[Function]}
     scrollEventThrottle={0.0001}
+    showsVerticalScrollIndicator={false}
     stickyHeaderIndices={[]}
     style={
       {
