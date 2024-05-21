@@ -113,11 +113,9 @@ const RootNavigation = () => {
       if (token !== null) {
         // Token exists, do something with it (e.g., use it for authentication)
         setAccessToken(token);
-        console.log('Retrieved token:', token);
       } else {
         // Token does not exist
         setAccessToken('');
-        console.log('Token does not exist');
       }
     } catch (error) {
       console.error('Error retrieving token:', error);

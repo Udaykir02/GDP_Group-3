@@ -66,7 +66,6 @@ const ProductFilter = ({ navigation }: any) => {
 
 
     useEffect(() => {
-        console.log(products[0]?.price)
         const numbers = [];
         for (let index = 0; index < products.length; index++) {
             numbers.push(products[index].price);
@@ -82,8 +81,7 @@ const ProductFilter = ({ navigation }: any) => {
 
 
     const handleSubmit = () => {
-        console.log(valueCategories)
-        console.log(value);
+
         dispatch(updateMaxPrice(min));
         dispatch(updateMaxPrice(sliderRadius));
         dispatch(updateBrand(value));

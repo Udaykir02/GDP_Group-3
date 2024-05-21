@@ -9,15 +9,8 @@ const VendorSubscriptionPage: React.FC = () => {
   const currentPlan = 'Vendor Plan';
   const monthlyCost = 49.99; // Example cost in dollars
 
-  const handleUpgradePlan = () => {
-    // Implement logic for upgrading plan
-    console.log('Upgrade plan clicked');
-  };
 
-  const handleCancelSubscription = () => {
-    // Implement logic for canceling subscription
-    console.log('Cancel subscription clicked');
-  };
+
 
   const getTotalCost = () => {
     if(user && user.vendors && user?.vandors?.length){

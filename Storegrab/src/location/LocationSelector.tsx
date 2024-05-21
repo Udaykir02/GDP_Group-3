@@ -95,7 +95,6 @@ const LocationSelector: React.FC<Props> = ({ toggleModal, locationListHeight, cl
 
   useEffect(() => {
     if (searchInput.length) {
-      console.log('gv ', searchInput);
       const tempLocationList = user.locations;
       const localLocationList = tempLocationList.filter(
         location =>

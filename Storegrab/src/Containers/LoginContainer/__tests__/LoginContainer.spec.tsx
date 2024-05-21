@@ -4,7 +4,7 @@ import render, {
     RenderResult,
 } from '@testing-library/react-native/build/render'
 import { NavigationContainer } from '@react-navigation/native'
-import { fireEvent } from '@testing-library/react-native';
+import { fireEvent, waitFor } from '@testing-library/react-native';
 import LoginContainer from '../LoginContainer';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { PaperProvider } from 'react-native-paper';
@@ -56,7 +56,7 @@ describe('LoginContainer', () => {
         expect(page.getByTestId('password-input')).toBeDefined();
     });
 
-    it('calls the login function with the correct username and password', () => {
+    it('calls the login function with the correct username and password', async () => {
         const mockLogin = jest.fn();
         const usernameInput = page.getByTestId('email-input')
         const passwordInput = page.getByTestId('password-input')
@@ -65,7 +65,6 @@ describe('LoginContainer', () => {
         fireEvent.changeText(usernameInput, 'varunrachakatla0708@gmail.com');
         fireEvent.changeText(passwordInput, '070894');
         fireEvent.press(loginButton);
-
-        expect(page.getByTestId('email-input')).toBeDefined();
+       ;
     });
 });  

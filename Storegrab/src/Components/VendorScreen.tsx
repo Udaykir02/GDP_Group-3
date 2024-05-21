@@ -5,24 +5,32 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { argonTheme } from '../constants';
-const  { width, height} = Dimensions.get('screen');
+import { ScrollView } from 'react-native';
+const { width, height } = Dimensions.get('screen');
 const VendorScreen = ({ navigation, route }: any) => {
     const [routeCoordinates, setRouteCoordinates] = useState<any>([]);
 
-    const address = useSelector((state:any)=> state.location.defaultLocation)
-    const { region } = useSelector((state:any)=> state.location)
+    const address = useSelector((state: any) => state.location.defaultLocation)
+    const { region } = useSelector((state: any) => state.location)
+    const { vendorAdmin } = useSelector((state: any) => state.auth)
     const [mapRegion, setMapRegion] = useState(region);
+
     const dispatch = useDispatch();
-    useEffect(()=>{
-        console.log("----->"+JSON.stringify(region))
-        console.log("----->"+JSON.stringify(route?.params?.vendor))
-    },[])
     useEffect(() => {
-        console.log(route?.params?.vendor.geopoint.coordinates)
-        fetchRoute()
+
+        if (!vendorAdmin) {
+            fetchRoute()
+        }
+        else {
+            const destLat = route?.params?.vendor?.geopoint.coordinates[1];
+            const destLng = route?.params?.vendor?.geopoint.coordinates[0];
+            const mapRegion = [{ latitude: destLat, longitude: destLng }]
+            adjustMapRegion(mapRegion)
+        }
     }, [route?.params?.vendor])
 
     const fetchRoute = async () => {
+
         try {
             const originLat = region?.latitude;
             const originLng = region?.longitude;
@@ -33,7 +41,7 @@ const VendorScreen = ({ navigation, route }: any) => {
             );
             const data = await response.json();
             if (data.status === 'OK') {
-                
+
                 const polyline = data.routes[0].overview_polyline.points;
                 const decodedPolyline = decodePolyline(polyline);
                 setRouteCoordinates(decodedPolyline);
@@ -44,6 +52,7 @@ const VendorScreen = ({ navigation, route }: any) => {
         } catch (error) {
             console.error('Error fetching route:', error);
         }
+
     };
 
     // Function to decode polyline points
@@ -108,8 +117,8 @@ const VendorScreen = ({ navigation, route }: any) => {
     };
 
     const handleSubmit = () => {
-            dispatch(updateSelectedVendor(route?.params?.vendor))
-            navigation.navigate('HomeScreen')
+        dispatch(updateSelectedVendor(route?.params?.vendor))
+        navigation.navigate('HomeScreen')
     }
     return (
         <View style={styles.container}>
@@ -132,19 +141,21 @@ const VendorScreen = ({ navigation, route }: any) => {
                 </MapView>
             </View>
             <View style={styles.otherView}>
-                <View style={styles.otherView}>
-                    {/* Render vendor data */}
-                    <Text style={styles.title}>{route?.params?.vendor.vendor_name}</Text>
-                    <Text style={styles.info}>Location: {route?.params?.vendor.vendor_location}</Text>
-                    <Text style={styles.info}>Contact: {route?.params?.vendor.vendor_contact_info}</Text>
-                    <Text style={styles.info}>Rating: {route?.params?.vendor.rating}</Text>
-                    <Text style={styles.info}>Employees: {route?.params?.vendor.employees}</Text>
-                    <Text style={styles.info}>Founded Year: {route?.params?.vendor.founded_year}</Text>
-                    <Text style={styles.description}>{route?.params?.vendor.vendor_description}</Text>
-                    {/* {route?.params?.vendor.website && (
+                <ScrollView>
+                    <View style={styles.otherView}>
+                        {/* Render vendor data */}
+                        <Text style={styles.title}>{route?.params?.vendor.vendor_name}</Text>
+                        <Text style={styles.info}>Location: {route?.params?.vendor.vendor_location}</Text>
+                        <Text style={styles.info}>Contact: {route?.params?.vendor.vendor_contact_info}</Text>
+                        <Text style={styles.info}>Rating: {route?.params?.vendor.rating}</Text>
+                        <Text style={styles.info}>Employees: {route?.params?.vendor.employees}</Text>
+                        <Text style={styles.info}>Founded Year: {route?.params?.vendor.founded_year}</Text>
+                        <Text style={styles.description}>{route?.params?.vendor.vendor_description}</Text>
+                        {/* {route?.params?.vendor.website && (
                         <Text style={styles.link} onPress={openWebsite}>Website</Text>
                     )} */}
-                </View>
+                    </View>
+                </ScrollView>
                 <Button
                     mode="contained"
                     onPress={handleSubmit}
@@ -206,13 +217,13 @@ const styles = StyleSheet.create({
         width: width - 16 * 2,
         position: 'absolute',
         bottom: 50
-    
-      },
-      buttonText: {
+
+    },
+    buttonText: {
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
-      },
+    },
 });
 
 export default VendorScreen;

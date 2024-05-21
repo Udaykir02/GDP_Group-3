@@ -68,13 +68,12 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
 
             if (response.status === 200) {
                 const address_json = await response.json();
-                console.log(JSON.stringify(address_json))
                 if (address_json.results.length > 0) {
                       dispatch(setDefaultLocation({ ...address_json.results[0], ...{ tag: false, title: '', tagaddress: '' } }));
                 }
             }
         } catch (error) {
-            console.log(error)
+
         }
 
         dispatch(setMapRegion({
@@ -112,7 +111,6 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
     };
 
     const handleSubmit = (index: number) => {
-        console.log(search[index])
         if (searchText.length>2) {
             dispatch(setMapRegion({latitude: search[index].geometry.location.lat, longitude: search[index].geometry.location.lng, latitudeDelta: 0.019175200768195566,longitudeDelta: 0.01609325408935547}))
             dispatch(setDefaultLocation({...search[index],...{tag:false,title:'',tagaddress:''}}));
@@ -139,28 +137,25 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
 
     const searchTextChange = (text: string) => {
         setSearchText(text)
-        console.log(process.env.GOOGLE_MAPS_API)
         if (text.length > 2) {
             setLoading(false)
             fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + text.split(" ").join("+") + '&key='+'AIzaSyA8dUT9FqaVVWyicIDocW-l3PY8npYofMY')
                 .then(
                     (response) => {
                         if (response.status !== 200) {
-                            console.log('Looks like there was a problem. Status Code: ' +
-                                response.status);
+
                             return;
                         }
 
                         // Examine the text in the response
                         response.json().then(result => {
                             setSearch(result.results)
-                            console.log(JSON.stringify(result))
                             setLoading(false)
                         });
                     }
                 )
                 .catch(function (err) {
-                    console.log('Fetch Error :-S', err);
+
                 });
         }
     }

@@ -24,14 +24,10 @@ const OrderContainer: React.FC = () => {
       if (selectedVendor && selectedVendor?.vendorId)
         dispatch(getVendorRequestByID(selectedVendor?.vendorId, token))
     } else {
-      console.log('user', user?.userId ? user.userId : '')
       dispatch(getOrders(user?.userId ? user.userId : '', token))
     }
   }, [vendorAdmin])
 
-  useEffect(() => {
-    console.log('orders', orders)
-  }, [orders])
 
   const { colors } = useAppTheme();
   if (loading)
