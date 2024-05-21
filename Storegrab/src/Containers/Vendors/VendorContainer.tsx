@@ -74,7 +74,7 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
         axios(config)
           .then(response => {
             setVendors(response.data.nearestVendor)
-            console.log('Response:', response.data.nearestVendor);
+
           })
           .catch(error => {
             setVendors([])

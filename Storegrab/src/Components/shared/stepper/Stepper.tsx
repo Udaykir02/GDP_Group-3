@@ -111,7 +111,6 @@ const Stepper = ({ handleChange, quantity }: IProps) => {
   };
 
   const formatNumber = (number: any) => {
-    console.log("skjde" + number)
     return new Intl.NumberFormat().format(number);
   };
 

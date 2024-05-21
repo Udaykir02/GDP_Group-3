@@ -28,10 +28,6 @@ describe('VendorSubscriptionPage', () => {
         jest.useFakeTimers();
         page = renderStartupContainerPage()
     })
-    afterEach(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
-    });
     it('should render correctly', function () {
         expect(page.toJSON()).toMatchSnapshot()
     })

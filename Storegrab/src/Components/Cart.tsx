@@ -54,7 +54,6 @@ const Cart = ({ navigation }: any) => {
 
 
     const fetchPaymentSheetParams = async () => {
-        console.log("I am here" + `${process.env.BASE_URL}/stripe/payment-sheet`)
         const response = await fetch(`${process.env.BASE_URL}/stripe/payment-sheet`, {
             method: 'POST',
             headers: {
@@ -80,14 +79,12 @@ const Cart = ({ navigation }: any) => {
     };
 
     useEffect(() => {
-        console.log('hi-bye')
         initializePaymentSheet()
     }, [])
 
 
 
     const initializePaymentSheet = async () => {
-        // console.log("I am here"+`${process.env.BASE_URL}/stripe/payment-sheet`)
         try {
             const {
                 paymentIntent,
@@ -97,7 +94,6 @@ const Cart = ({ navigation }: any) => {
                 paymentIntentId
             } = await fetchPaymentSheetParams();
             setPaymentIntentId(paymentIntentId);
-            console.log("hiiiiii",paymentIntent, ephemeralKey, customer, publishableKey)
 
             const response: any = await initPaymentSheet({
                 merchantDisplayName: "Storegrab",
@@ -114,10 +110,8 @@ const Cart = ({ navigation }: any) => {
             });
 
 
-            console.log("payment_log" + JSON.stringify(response))
         }
         catch (error) {
-            console.log(error)
             setLoading(true);
         }
         // const { error } 
@@ -133,15 +127,11 @@ const Cart = ({ navigation }: any) => {
             const { error } = await presentPaymentSheet();
             if (error) {
                 Alert.alert(`Error code: ${error.code}`, error.message);
-                console.log(`Error code: ${error.code}`, error.message);
             } else {
                 const orderReq = { userId: user?.userId, paymentIntentId: paymentIntentId, vendorId: (cartData && cartData?.length > 0 && cartData[0].vendorId)?cartData[0].vendorId:'', items: cartData, token: token }
-                console.log("orderreqq"+JSON.stringify(orderReq))
                 await dispatch(placeOrders(orderReq));
                 navigation.navigate('Orders')
-                console.log('Success', 'Your order is confirmed!');
             }
-            console.log(paymentIntentId)
 
         }
         catch (error) {

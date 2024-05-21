@@ -109,7 +109,6 @@ function* renewTokenSaga(action: any) {
     const token = response.data.token;
     const userData = response.data.userData;
     yield AsyncStorage.setItem('auth_token', token);
-    console.log('userData'+JSON.stringify(userData.cart))  
     yield put(addUserCart(userData?.cart));
     yield put(renewTokenSuccess({token, userData}));
     // Navigate to home screen or perform any other action
@@ -139,7 +138,6 @@ function* handleVendorProductsSaga(action: any) {
     const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
       skuids: skuids, brand: brand, categories: categories, minPrice: minPrice, maxPrice: maxPrice
     },{ headers: { Authorization: `${token}` } });
-    console.log(JSON.stringify(response.data.data))
     yield put(updateVendorProductsSuccess(response.data?.data));
   } catch (error: any) {
     yield put(updateVendorProductsFailure(JSON.stringify(error?.response?.data?.message)));
@@ -153,7 +151,6 @@ function* addToCartSaga(action: any) {
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/api/addToCart`,{userId:userId, skuId:skuId, qty: qty},{ headers: { Authorization: `${token}` } });
 
   } catch (error:any) {
-    console.log(error)
   }
 }
 
@@ -182,14 +179,12 @@ function* placeOrderSaga(action: any) {
     yield put(resetCart());
     // Navigate to home screen or perform any other action
   } catch (error) {
-    console.log(error)
     yield put(placeOrderFailure(JSON.stringify(error?.response?.data?.message)));
   }
 }
 
 function* fetchInventoryAndVendorDetailsSaga(action:any) {
   try {
-    console.log(action.payload.searchText)
     const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/search`, {
       skuids: undefined, 
       minPrice: undefined,
@@ -216,7 +211,6 @@ function* handleInventoryQtySaga(action: any) {
     yield put(inventoryRequestSuccess(response.data));
     // Navigate to home screen or perform any other action
   } catch (error) {
-    console.log(error)
   }
 }
 
@@ -241,7 +235,7 @@ function* increaseQtySaga(action: any) {
     }, { headers: { Authorization: `${action.payload.token}` } });
     // Navigate to home screen or perform any other action
   } catch (error) {
-    console.log(error)
+
   }
 }
 
@@ -254,7 +248,7 @@ function* decreaseQtySaga(action: any) {
     // Navigate to home screen or perform any other action
   } catch (error) {
     yield put(getOrdersFailure(JSON.stringify(error?.response?.data?.message)));
-    console.log(error)
+
   }
 }
 

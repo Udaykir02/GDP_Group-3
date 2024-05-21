@@ -123,7 +123,6 @@ const InventorySearch = ({
         let total = 0;
         let cart = user?.cart;
         for (let i = 0; i < cart.length; i++) {
-            console.log(cart[i])
             total += cart[i].qty * cart[i].price;
         }
         return total

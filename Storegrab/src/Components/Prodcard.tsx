@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Alert, View, Text } from 'react-native';
+import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Alert, View, Text, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from 'react-native-paper';
 import { useAppTheme } from '../styles/theme/theme';
@@ -106,6 +106,14 @@ const Prodcard: React.FC<any> = ({
             shadowOpacity: 0.1,
             elevation: 2,
         },
+        androidShadow: {
+            borderWidth: 0,
+            shadowColor: '#fff',
+            shadowOffset: { width: 0, height: 0 },
+            shadowRadius: 0,
+            shadowOpacity: 0,
+            elevation: 2, 
+        },
         cardContainer: {
             padding: 2,
             backgroundColor: colors.backgroundDefault,
@@ -128,53 +136,53 @@ const Prodcard: React.FC<any> = ({
     const imgContainer = [
         styles.imageContainer,
         isHorizontal ? styles.horizontalStyles : styles.verticalStyles,
-        styles.shadow,
+        Platform.OS === 'android'?  styles.androidShadow:styles.shadow,
     ];
 
 
 
 
     const handleChange = (change: number) => {
-        if(vendorAdmin){
-            
-            if(change > 0){
+        if (vendorAdmin) {
+
+            if (change > 0) {
                 dispatch(increaseInventoryQtyRequest(item?.skuId, change, token))
                 dispatch(increaseProductQuantity(item?.skuId))
             }
-            else{
-                if(item?.qty > 0){
+            else {
+                if (item?.qty > 0) {
                     dispatch(decreaseInventoryQtyRequest(item?.skuId, 1, token))
                     dispatch(decreaseProductQuantity(item?.skuId))
                 }
 
             }
         }
-        else{
+        else {
             let cartItem = cartData.find((cartItem: any) => cartItem.skuId === item?.skuId)
-            dispatch(addToCartRequest(user?.userId,item?.skuId, change,token ));
-            if(cartItem){
-                if(cartItem.qty === 1 && change < 0){
+            dispatch(addToCartRequest(user?.userId, item?.skuId, change, token));
+            if (cartItem) {
+                if (cartItem.qty === 1 && change < 0) {
                     dispatch(removeItemFromCart(cartItem?.skuId))
                     dispatch(increaseProductQuantity(cartItem?.skuId))
                 }
-                else if(change > 0) {
-                    if(item?.qty > 0){
+                else if (change > 0) {
+                    if (item?.qty > 0) {
                         dispatch(increaseItemQuantity(cartItem?.skuId))
                         dispatch(decreaseProductQuantity(cartItem?.skuId))
                     }
-                    
-                }   
+
+                }
                 else {
                     dispatch(decreaseItemQuantity(cartItem?.skuId))
                     dispatch(increaseProductQuantity(cartItem?.skuId))
                 }
             }
-            else{
-                if(change > 0){
-                    if(item.qty > 0){
+            else {
+                if (change > 0) {
+                    if (item.qty > 0) {
                         const newCartItem: any = {
                             skuId: item?.skuId,
-                            item:  item?.item,
+                            item: item?.item,
                             price: item?.price,
                             qty: change,
                             size: item?.size,
@@ -185,11 +193,11 @@ const Prodcard: React.FC<any> = ({
                             brand: item?.brand,
                             vendorId: item?.vendorId,
                             vendor_name: item?.vendor_name,
-                          }
+                        }
                         dispatch(addItemToCart(newCartItem))
                         dispatch(decreaseProductQuantity(cartItem?.skuId))
                     }
-    
+
                 }
             }
         }
@@ -197,34 +205,33 @@ const Prodcard: React.FC<any> = ({
 
     }
 
-    const getQuantity = () =>{
-        if(vendorAdmin){
-            return item?.qty ? item?.qty: 0;
+    const getQuantity = () => {
+        if (vendorAdmin) {
+            return item?.qty ? item?.qty : 0;
         }
-        return (cartData && cartData.length > 0 && cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty)?cartData.find((cartItem:any) => cartItem.skuId === item.skuId)?.qty: 0
+        return (cartData && cartData.length > 0 && cartData.find((cartItem: any) => cartItem.skuId === item.skuId)?.qty) ? cartData.find((cartItem: any) => cartItem.skuId === item.skuId)?.qty : 0
     }
 
     return (
         <TouchableWithoutFeedback onPress={() => setIsHorizontal(!isHorizontal)}>
             <View style={[cardContainer, { flexDirection: isHorizontal ? 'row' : 'column' }]}>
                 <View style={[imgContainer, { flex: isHorizontal ? 0.3 : 1 }]}>
-                    <Image source={{ uri: item.image }} style={imageStyles}  testID='prodcard-image-testid'/>
+                    <Image source={{ uri: item.image }} style={imageStyles} testID='prodcard-image-testid' />
                 </View>
                 <View style={{ flex: isHorizontal ? 0.7 : 1, justifyContent: 'space-between' }}>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                         <View style={[{ flex: 0.4 }, isHorizontal ? { marginHorizontal: 5 } : { marginVertical: 5 }]}>
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 14 }]}>{item?.item}</Text>
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'normal', fontSize: 12 }]}>{item?.features}</Text>
-                           
                         </View>
                         <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center' : 'flex-end', justifyContent: isHorizontal ? 'center' : 'flex-end' }}>
-                        <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'\u0024' + item?.price}</Text>
-                            <Stepper quantity={getQuantity()} handleChange={handleChange} />
+                            <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'\u0024' + item?.price}</Text>
+                            {((!vendorAdmin && item?.qty > 0) || (cartData && cartData.length > 0 && cartData.find((cartItem: any) => cartItem.skuId === item.skuId)?.qty>0))?<Stepper quantity={getQuantity()} handleChange={handleChange} />: <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'Out Of Stock'}</Text>}
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12, marginTop: 10 }]}>In Stock: {item?.qty}</Text>
                         </View>
                     </View>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', margin: 5 }}>
-                    <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>Description: {item?.description}</Text>
+                        <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>Description: {item?.description}</Text>
                     </View>
                     <View style={[{ justifyContent: 'space-between' }, isHorizontal ? { marginHorizontal: 5 } : { marginVertical: 5 }]}>
                         <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12 }]}>{item.brand}</Text>

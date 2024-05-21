@@ -35,5 +35,13 @@ describe('VendorSubscriptionPage', () => {
     it('should render correctly', function () {
         expect(page.toJSON()).toMatchSnapshot()
     })
+    it('renders the text properly',()=>{
+        expect(page.getByText('Subscription Details')).toBeDefined();
+        expect(page.getByText('Current Plan:')).toBeDefined();
+        expect(page.getByText('Vendor Plan')).toBeDefined();
+        expect(page.getByText('Cost Per Month:')).toBeDefined();
+        expect(page.getAllByText('$49.99')[0]).toBeDefined();
+        expect(page.getByText('Total Cost:')).toBeDefined();
+    })
 
 });

@@ -46,7 +46,6 @@ const vendorSlice = createSlice({
         },
         updateProducts(state, action) {
             const { skuId, qty } = action.payload;
-            console.log(state.products.find((element: any) => element.skuId === skuId))
             if (qty > 0)
                 state.products.find((element: any) => element.skuId === skuId).qty += qty;
             else

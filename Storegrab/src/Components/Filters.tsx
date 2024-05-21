@@ -40,14 +40,12 @@ const Filters = ({ navigation }: any) => {
     setSliderRadius(Math.round(value));
   }
   const onDropDownValuechange = (value:any) => {
-    console.log(value)
     setDropDownArray(value)
   }
 
   const handleSubmit = () => {
     dispatch(updateRadius(sliderRadius));
     dispatch(updateVendorType(dropDownArray));
-    // console.log(dropDownArray)
     navigation.goBack();
   }
   return (

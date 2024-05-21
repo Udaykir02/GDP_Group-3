@@ -27,14 +27,14 @@ const LoginContainer = ({ navigation }: any) => {
     useEffect(()=>{
         // Display alert when error occurs
         if (error) {
-            console.log(JSON.stringify(error))
             Alert.alert('Error', error, [{ text: 'OK' }]);
             dispatch(clearError())
         }
     },[loading])
 
     if(loading){
-        return (<AppPageWrapper>
+        return (
+        <AppPageWrapper>
             <LoadingSpinner />
         </AppPageWrapper>)
     }

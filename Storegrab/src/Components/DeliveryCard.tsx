@@ -9,9 +9,7 @@ const DeliveryCard: React.FC = ({order}:any) => {
   const { colors } = useAppTheme();
   const navigation = useNavigation();
 
-  useEffect(()=>{
-    console.log("--->deliverycard"+JSON.stringify(order))
-  })
+
   const styles = StyleSheet.create({
     footerContainer: {
       display: 'flex',

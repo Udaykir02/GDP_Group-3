@@ -74,7 +74,7 @@ const placeOrder = async (req, res) => {
                 paymentMethod: paymentIntent.payment_method_types[0],
                 status: "placed",
                 currency: paymentIntent.currency,
-                totalCost: paymentIntent.amount,
+                totalCost: paymentIntent.amount / 100,
                 items: items,
                 shipping: shipping
             }
