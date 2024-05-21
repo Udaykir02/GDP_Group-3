@@ -27,4 +27,4 @@ jobs:
         run: cd Storegrab && npm install
 
       - name: Run Tests
-        run: cd Storegrab && npm test --updateSnapshots
+        run: cd Storegrab && npm test -- -u
