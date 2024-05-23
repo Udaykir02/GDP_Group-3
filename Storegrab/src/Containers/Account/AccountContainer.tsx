@@ -88,12 +88,12 @@ const AccountContainer: React.FC = () => {
           </TouchableOpacity>
 
         </View>
-        <View style={[styles.contactInfo, { justifyContent: 'space-around', alignItems: 'center', alignContent: 'center' }]}>
+       {(user?.vendors?.length > 0)?<View style={[styles.contactInfo, { justifyContent: 'space-around', alignItems: 'center', alignContent: 'center' }]}>
           <Text style={[styles.sectionTitle, { alignSelf: 'center', marginTop: 7 }]}>Vendor Admin: </Text>
-          {(user?.vendors?.length > 0)?<Switch value={vendorAdmin} onValueChange={onToggleSwitch} testID='vendor-admin-switch'/>:<></>}
-        </View>
+          <Switch value={vendorAdmin} onValueChange={onToggleSwitch} testID='vendor-admin-switch'/>
+        </View>:<></>}
 
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        <TouchableOpacity style={styles.button} onPress={handleLogout} testID={"logout_button_trstid"}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
 

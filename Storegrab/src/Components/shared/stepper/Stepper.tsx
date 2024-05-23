@@ -149,7 +149,7 @@ const Stepper = ({ handleChange, quantity }: IProps) => {
             <View style={styles.inputContainer}>
               <Text style={{ ...styles.countInput, marginBottom: 0, height: 20 }} >{quantity}</Text>
             </View>
-            <TouchableOpacity onPress={() => handlePress(1)}>
+            <TouchableOpacity onPress={() => handlePress(1)} testID={"plus_stepper_testid"} accessibilityLabel={"plus_stepper_testid"}>
               <Animated.View style={[styles.button, animatedPlusButtonStyle]}>
                 <Text style={styles.buttonText}><MaterialCommunityIcons name="plus" size={32} /></Text>
               </Animated.View>

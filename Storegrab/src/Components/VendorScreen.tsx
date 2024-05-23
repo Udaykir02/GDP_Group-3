@@ -19,6 +19,7 @@ const VendorScreen = ({ navigation, route }: any) => {
     useEffect(() => {
 
         if (!vendorAdmin) {
+            if(region?.latitude )
             fetchRoute()
         }
         else {
@@ -30,7 +31,6 @@ const VendorScreen = ({ navigation, route }: any) => {
     }, [route?.params?.vendor])
 
     const fetchRoute = async () => {
-
         try {
             const originLat = region?.latitude;
             const originLng = region?.longitude;
@@ -161,6 +161,7 @@ const VendorScreen = ({ navigation, route }: any) => {
                     onPress={handleSubmit}
                     style={styles.button}
                     labelStyle={styles.buttonText}
+                    testID={'select_vendor_screen_button_test_id'}
                 >
                     {'Select Vendor'}
                 </Button>

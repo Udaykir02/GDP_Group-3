@@ -148,7 +148,7 @@ const Header: React.FC<Props> = ({ name }) => {
         )}
         {(name != 'Scan To Order' && !vendorAdmin) && (
           <><Appbar.Action icon="magnify" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Search') }} />
-            <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Cart') }} />{((cartData && cartData.length) > 0) ? <View style={styles.redDot} /> : null}</>
+            <Appbar.Action icon="cart-outline" color={colors.textDefault} style={styles.appbar} size={28} onPress={() => { navigation.navigate('Cart') }} testID={'cart_icon_testid'} accessibilityLabel={"cart_icon_testid"}/>{((cartData && cartData.length) > 0) ? <View style={styles.redDot}   testID={'cart_icon_dot_testid'}/> : null}</>
         )}
       </Appbar.Header>
     </>

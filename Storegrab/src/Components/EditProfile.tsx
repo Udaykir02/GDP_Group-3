@@ -1,8 +1,9 @@
+import { argonTheme } from '../constants';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../reducers/users/slice';
-
+const { width, height } = Dimensions.get('screen');
 // Define the User interface
 interface User {
   userId: string;
@@ -21,12 +22,12 @@ interface User {
 }
 
 const EditUserProfile = () => {
-    const userData = useSelector((state: any) => state.auth.user);
-    const token = useSelector((state: any) => state.auth.token);
-  const [user, setUser] = useState<User | null>(userData? userData : null);
+  const userData = useSelector((state: any) => state.auth.user);
+  const token = useSelector((state: any) => state.auth.token);
+  const [user, setUser] = useState<User | null>(userData ? userData : null);
   const [loading, setLoading] = useState(false);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // Handle updating user information
   const handleUpdate = () => {
@@ -41,7 +42,7 @@ const EditUserProfile = () => {
       .then(response => response.json())
       .then(data => {
         if (data.message) {
-            dispatch(updateUser(user));
+          dispatch(updateUser(user));
           Alert.alert('Success', 'User information updated successfully');
         } else {
           Alert.alert('Error', 'Failed to update user information');
@@ -119,6 +120,17 @@ const EditUserProfile = () => {
         placeholder="Zip Code"
       />
       <Button title="Update Profile" onPress={handleUpdate} />
+      <View style={[styles.shadow, { marginBottom: 10 }]}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity style={styles.optionsButton} onPress={handleUpdate} testID={"cart_pay_buttoon_testid"}>
+            <View style={{ width: 'auto', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontWeight: 'bold', color: "#fff", fontSize: 18 }}>
+                  Save Changes
+                </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -140,6 +152,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     paddingLeft: 8,
+  },
+  optionsButton: {
+    width: "92%",
+    height: 60,
+    paddingHorizontal: 16,
+    backgroundColor: argonTheme.COLORS.ERROR,
+    borderRadius: 8,
+    justifyContent: 'center'
+  }, shadow: {
+    position: 'absolute',
+    bottom: 5,
+    flex: 0.10,
+    flexDirection: 'row',
+    width: width,
+    backgroundColor: '#ffffff',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    borderRadius: 8
   },
 });
 

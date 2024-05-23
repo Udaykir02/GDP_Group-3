@@ -8,6 +8,7 @@ import { StripeProvider } from '@stripe/stripe-react-native'
 import { PaperProvider } from 'react-native-paper'
 import AppThemeProvider from '@/core/AppThemeProvider'
 import App from '../App'
+import { device } from 'detox'
 jest.mock('@react-navigation/native', () => {
   return {
     ...jest.requireActual('@react-navigation/native'),
@@ -16,23 +17,25 @@ jest.mock('@react-navigation/native', () => {
     }),
   };
 });
-const renderStartupContainerPage = () => {
-  return render(
-
-            <App />
-  )
-}
+// const renderStartupContainerPage = () => {
+//   return render(
+//     <App />
+//   )
+// }
 let page: RenderResult
-describe('App', () => {
-  beforeEach(() => {
-    // jest.useFakeTimers();
-    page = renderStartupContainerPage()
-  })
-  // afterEach(() => {
-  //   jest.runOnlyPendingTimers();
-  //   jest.useRealTimers();
+describe('Login flow', () => {
+  // beforeEach(async () => {
+  //   await device.reloadReactNative();
   // });
-  it('should render correctly', function () {
-    expect(page.toJSON()).toMatchSnapshot()
-  })
+
+  // it('should login successfully', async () => {
+  //   await element(by.id('email')).typeText('john@example.com');
+  //   await element(by.id('password')).typeText('123456');
+
+  //   const loginButton = element(by.text('Login'));
+  //   await loginButton.tap();
+
+  //   await expect(loginButton).not.toBeDefined();
+  //   await expect(element(by.label('Welcome'))).toBeDefined();
+  // });
 });

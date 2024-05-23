@@ -226,7 +226,7 @@ const Prodcard: React.FC<any> = ({
                         </View>
                         <View style={{ flex: 0.6, alignItems: isHorizontal ? 'center' : 'flex-end', justifyContent: isHorizontal ? 'center' : 'flex-end' }}>
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'\u0024' + item?.price}</Text>
-                            {((!vendorAdmin && item?.qty > 0) || (cartData && cartData.length > 0 && cartData.find((cartItem: any) => cartItem.skuId === item.skuId)?.qty>0))?<Stepper quantity={getQuantity()} handleChange={handleChange} />: <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'Out Of Stock'}</Text>}
+                            {((!vendorAdmin && item?.qty > 0) || (cartData && cartData.length > 0 && cartData.find((cartItem: any) => cartItem.skuId === item.skuId)?.qty>0) || vendorAdmin)?<Stepper quantity={getQuantity()} handleChange={handleChange} />: <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 18 }]}>{'Out Of Stock'}</Text>}
                             <Text style={[styles.cardTitle, { color: "#32325D", fontWeight: 'bold', fontSize: 12, marginTop: 10 }]}>In Stock: {item?.qty}</Text>
                         </View>
                     </View>
