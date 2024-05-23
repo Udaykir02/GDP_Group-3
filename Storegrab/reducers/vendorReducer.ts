@@ -18,7 +18,8 @@ const initialState: any = {
     minPrice: undefined,
     maxPrice: undefined,
     categories: [],
-    inventoryQty: []
+    inventoryQty: [],
+    vendorProducts: []
 };
 
 const vendorSlice = createSlice({
@@ -124,6 +125,7 @@ const vendorSlice = createSlice({
             state.maxPrice = undefined;
             state.categories = [];
             state.inventoryQty = [];
+            state.vendorProducts = [];
         },
         increaseProductQuantity: (state, action) => {
             const skuId = action.payload;
@@ -151,6 +153,9 @@ const vendorSlice = createSlice({
         },
         inventoryRequestSuccess: (state, action) => {
             state.inventoryQty = action.payload;
+        },
+        updateNewVendorProducts: (state) => {
+            state.vendorProducts = state.products
         }
     }
 });
@@ -180,7 +185,8 @@ export const {
     clearVendor,
     increaseProductQuantity,
     decreaseProductQuantity,
-    inventoryRequestSuccess
+    inventoryRequestSuccess,
+    updateNewVendorProducts
 } = vendorSlice.actions;
 
 export default vendorSlice.reducer;

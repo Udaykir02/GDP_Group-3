@@ -93,11 +93,11 @@ const LocationContainer = ({ addresses, route, controlModal}: any) => {
     const renderHeader = () => {
         return (
             <View style={{ width }}>
-                <TouchableOpacity onPress={renderRegion}>
+                <TouchableOpacity onPress={renderRegion} accessibilityLabel={'current_location_testid'} testID={'current_location_testid'}>
                     <View style={{ paddingHorizontal: 10, paddingVertical: 5, flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                         {/* <Icon name="enviromento" type="AntDesign" size={15} color="#CB202D" /> */}
                         <Text style={{ color: '#CB202D', fontSize: 15, alignSelf: 'center' }} numberOfLines={1}>
-                            {' Use current location'}
+                            {'Use current location'}
                         </Text>
                     </View>
                 </TouchableOpacity>

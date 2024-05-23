@@ -27,6 +27,7 @@ import Header from './Header';
 import OrderScreen from '../Components/OrderScreen';
 import EditUserProfile from '../Components/EditProfile';
 import { argonTheme } from '../constants';
+import Tracking from '../Components/Tracking';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -46,6 +47,7 @@ export type RootStackParamList = {
   Search: undefined;
   OrderScreen: undefined;
   EditProfile: undefined;
+  Tracking: undefined;
 };
 
 const MainContainer = () => {
@@ -244,6 +246,7 @@ const RootNavigation = () => {
       <Stack.Screen name="Cart" component={Cart} options={{ headerShown: true, headerBackTitle: 'back', title: "Cart" }} />
       <Stack.Screen name="OrderScreen" component={OrderScreen} options={{ headerShown: true, headerBackTitle: 'back', title: "Order Details" }} />
       <Stack.Screen name="EditProfile" component={EditUserProfile} options={{ headerShown: true, headerBackTitle: 'back', title: "Edit Profile" }} />
+      <Stack.Screen name="Tracking" component={Tracking} options={{ headerShown: true, headerBackTitle: 'back', title: "Tracking" }} />
     </Stack.Navigator>
   );
 };

@@ -5,7 +5,7 @@ import { useAppTheme } from '../styles/theme/theme';
 import { responsiveScreenHeight, responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
-const DeliveryCard: React.FC = ({order}:any) => {
+const DeliveryCard: React.FC = ({order, index}:any) => {
   const { colors } = useAppTheme();
   const navigation = useNavigation();
 
@@ -144,7 +144,7 @@ const getEstimatedTimeRemaining = () => {
 }
 
   return (
-    <TouchableWithoutFeedback onPress={()=>{ navigation.navigate('OrderScreen', {order: order})}}>
+    <TouchableWithoutFeedback onPress={()=>{ navigation.navigate('OrderScreen', {order: order})}} testID={`item-${index}`}>
     <View style={{ marginVertical: 10}}>
       <Card style={styles.cardContainer}>
         <View>

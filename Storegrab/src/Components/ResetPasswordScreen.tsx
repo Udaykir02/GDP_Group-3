@@ -52,11 +52,12 @@ const ResetPasswordScreen = ({navigation}:any) => {
     useEffect(()=>{
         // Display alert when error occurs
         if (error) {
-            Alert.alert('Error', error, [{ text: 'OK' }]);
+            Alert.alert('Error', error, [{ text: 'OK', onPress: () => { 
+            }}]);
+            
             dispatch(clearError())
-        }
-        else if( step == 3){
-            navigation.navigate('Login')
+
+
         }
     },[loading])
 

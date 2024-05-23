@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import Timeline from 'react-native-timeline-flatlist';
 
 interface Size {
     h: number;
@@ -58,6 +59,15 @@ interface Props {
 
 const OrderScreen: React.FC<Props> = ({ navigation, route }: any) => {
     const { order }: Props = route.params;
+
+    const timelineData = [
+       ...[ { time: order?.orderTime, title: 'Order Placed', description: 'Your order has been placed.' },
+        { time: order?.orderTime, title: 'Order Confirmed', description: 'Your order has been confirmed.' },
+        { time: order?.orderTime, title: 'Shipped', description: 'Your order has been shipped.' },
+        { time: order?.orderTime, title: 'Out for Delivery', description: 'Your order is out for delivery.' }],
+        ...(order?.endTime ? [{ time: order?.endTime, title: 'Order Completed', description: 'Your order has been completed.' }] : [])
+    ];
+
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.subHeader}>Order ID: {order.orderId}</Text>
@@ -66,14 +76,13 @@ const OrderScreen: React.FC<Props> = ({ navigation, route }: any) => {
             <Text>Total Cost: {order.currency} {order.totalCost}</Text>
             <Text>Order Time: {new Date(order.orderTime).toDateString()}</Text>
             {order.endTime && <Text>End Time: {new Date(order.endTime).toLocaleString()}</Text>}
-
             <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Shipping Information</Text>
                 <Text>Carrier: {order.shipping.carrier}</Text>
-                <Text>Tracking: {order.shipping.tracking}</Text>
+                <TouchableOpacity onPress={()=>{navigation.navigate("Tracking", { order: order})}}><Text>Tracking: {order.shipping.tracking}</Text></TouchableOpacity>
                 <Text>Address: {order.shipping.address.street1}, {order.shipping.address.street2}, {order.shipping.address.city}, {order.shipping.address.state}, {order.shipping.address.country} - {order.shipping.address.zip}</Text>
+                
             </View>
-
             <View style={styles.section}>
                 <Text style={styles.sectionHeader}>Items</Text>
                 {order.items.map((item, index) => (
@@ -92,6 +101,7 @@ const OrderScreen: React.FC<Props> = ({ navigation, route }: any) => {
                     </View>
                 ))}
             </View>
+            
         </ScrollView>
     );
 };

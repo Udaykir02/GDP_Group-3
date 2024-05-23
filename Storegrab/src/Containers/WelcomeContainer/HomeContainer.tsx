@@ -28,7 +28,8 @@ import {
     removeProduct2,
     removeProduct3,
     setAlgoliaText,
-    setRefreshing
+    setRefreshing,
+    updateNewVendorProducts
 } from '../../../reducers/vendorReducer'
 
 import {
@@ -56,7 +57,7 @@ import {
 
 import createToBeImplementedStyle from "./HomeContainerStyle";
 import Prodcard from "../../Components/Prodcard";
-import { getProductsRequest } from "../../../actions/vendorActions";
+import { filterProductRequest, getProductsRequest } from "../../../actions/vendorActions";
 import MyIcon from "../../Components/MyIcon";
 // import Prodcard from "../components/Prodcard";
 const { width, height } = Dimensions.get("screen");
@@ -86,7 +87,14 @@ const HomeContainer = ({
             dispatch(getProductsRequest(selectedVendor.products, token, brand, categories, minPrice, maxPrice))
         }
 
-    }, [selectedVendor?.vendorId, brand.length, categories.length, minPrice, maxPrice])
+    }, [selectedVendor?.vendorId])
+
+    useEffect(() => {
+        if (selectedVendor) {
+            dispatch(filterProductRequest(selectedVendor.products, token, brand, categories, minPrice, maxPrice))
+        }
+
+    }, [brand.length, categories.length, minPrice, maxPrice])
 
     const handleResetPassword = () => {
         navigation.navigate('ProductFilter')
@@ -97,6 +105,15 @@ const HomeContainer = ({
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 15 }}>
                 <Button icon={'menu'} mode={'outlined'} onPress={handleResetPassword} >Filters</Button>
+            </View>
+        )
+    }
+
+    if(!selectedVendor){
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 15 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold'}}>Please select any Vendors</Text>
+                <Button mode={'outlined'} onPress={()=>{ navigation.navigate("VendorsTab")}} >Go</Button>
             </View>
         )
     }
@@ -124,28 +141,6 @@ const HomeContainer = ({
                     style={styles.articles}
                 />
             </View> : null}
-            {/* {(user?.cart?.length>0)?
-                <View style={[styles.shadow]}>
-                    <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center'}}>
-                        <TouchableOpacity  style={styles.optionsButton} onPress={() => { navigation.navigate('Cart') }}>
-                            <View style={{ width: 'auto', flexDirection: 'row' }}>
-                                <View style={{ width: '70%'}}>
-                                    <Text>
-                                        {user?.cart?.length + ((user?.cart?.length === 1) ? ' ITEM' : ' ITEMS')}
-                                    </Text>
-                                    <Text>
-                                        {'\u0024' + getTotal()}<Text> plus charges</Text>
-                                    </Text>
-                                </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'flex-end'}}>
-                                    <Text>
-                                        View Cart <MyIcon name='Entypo|controller-play' style={{ fontSize: 15, color: "#fff"}} />
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>:null} */}
         </View>
     );
 };

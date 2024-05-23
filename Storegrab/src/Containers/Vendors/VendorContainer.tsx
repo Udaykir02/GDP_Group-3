@@ -89,7 +89,7 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
   }, [isReduxModalVisible])
 
   const renderHeader = () => {
-    if (!vendors || vendors.length === 0)
+    if ((!vendors || vendors.length === 0) || vendorAdmin )
       return (<></>);
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -118,7 +118,7 @@ const VendorContainer: React.FC = ({ navigation }: any) => {
               <Text variant="bodyMedium">{item.vendor_description}</Text>
             </Card.Content>
             <Card.Actions>
-              <Button onPress={() => { handleSelect(index) }}>Select</Button>
+              <Button onPress={() => { handleSelect(index) }} testID={'vendor_button_select_testid'+index}>Select</Button>
             </Card.Actions>
           </Card>
         )}

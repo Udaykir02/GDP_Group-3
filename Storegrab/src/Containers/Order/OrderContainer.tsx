@@ -40,7 +40,7 @@ const OrderContainer: React.FC = () => {
         data={orders}
         // ListHeaderComponent={renderHeader}
         renderItem={({ item, index }: any) => (
-          <DeliveryCard order={item} />
+          <DeliveryCard order={item} index={index} />
         )}
         keyExtractor={(item, index) => index.toString()}
         extraData={orders}
@@ -50,6 +50,7 @@ const OrderContainer: React.FC = () => {
         // onEndReached={() => fetchMore()}
         style={styles.articles}
         showsVerticalScrollIndicator={false}
+        testID={"orders_scroll_view_test_id"}
       />
     </AppPageWrapper>
   );

@@ -42,7 +42,7 @@ exports[`VendorSubscriptionPage should render correctly 1`] = `
     </Text>
     <Text>
       End Time: 
-      5/26/2024, 7:34:56 AM
+      26/05/2024, 07:34:56
     </Text>
     <View
       style={

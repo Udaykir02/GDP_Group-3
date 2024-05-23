@@ -22,3 +22,9 @@ export const decreaseInventoryQtyRequest = (skuId: any, amount: any, token: any)
     type: 'DECREASE_INVENTORY_QTY_REQUEST',
     payload: { skuId, amount, token},
 });
+
+
+export const filterProductRequest = (skuids: any, token: any, brand: any, categories: any, minPrice: any, maxPrice: any) => ({
+    type: 'FILTER_PRODUCTS_REQUEST',
+    payload:  { skuids, token, brand, categories, minPrice, maxPrice },
+});

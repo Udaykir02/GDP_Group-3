@@ -18,7 +18,9 @@ const RegisterContainer = ({ navigation }: any) => {
   const handleRegister = async () => {
 
       dispatch(registerRequest(username, email, password));
-
+      setUsername('')
+      setPassword('')
+      setEmail('')
   };
 
   useEffect(()=>{
@@ -49,6 +51,7 @@ if(loading){
           value={email}
           onChangeText={setEmail}
           autoCapitalize={'none'}
+          testID={"email_register_textinput_testid"}
         />
         <TextInput
           style={styles.input}
@@ -56,6 +59,7 @@ if(loading){
           value={username}
           onChangeText={setUsername}
           autoCapitalize={'none'}
+          testID={"username_register_textinput_testid"}
         />
         <TextInput
           style={styles.input}
@@ -64,11 +68,12 @@ if(loading){
           onChangeText={setPassword}
           secureTextEntry
           autoCapitalize={'none'}
+          testID={"password_register_textinput_testid"}
         />
         <TouchableHighlight
           style={styles.button}
           onPress={handleRegister}
-          underlayColor='#fff'>
+          underlayColor='#fff' testID='register_button_testid'>
           <Text style={[{ fontSize: 15 }, styles.loginText]}>Register</Text>
         </TouchableHighlight>
       </View>

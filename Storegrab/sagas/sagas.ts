@@ -144,6 +144,20 @@ function* handleVendorProductsSaga(action: any) {
   }
 }
 
+
+//update vendor products saga
+function* handleVendorProductsFilterSaga(action: any) {
+  try {
+    const { skuids, token, brand, categories, minPrice, maxPrice } = action.payload;
+    const response: AxiosResponse<any> = yield call(axios.post, `${process.env.BASE_URL}/inventory/getInventory`, {
+      skuids: skuids, brand: brand, categories: categories, minPrice: minPrice, maxPrice: maxPrice
+    },{ headers: { Authorization: `${token}` } });
+    yield put(updateVendorProductsSuccess(response.data?.data));
+  } catch (error: any) {
+    yield put(updateVendorProductsFailure(JSON.stringify(error?.response?.data?.message)));
+  }
+}
+
 // Define saga worker function
 function* addToCartSaga(action: any) {
   try {
@@ -238,7 +252,6 @@ function* increaseQtySaga(action: any) {
 
   }
 }
-
 function* decreaseQtySaga(action: any) {
   try {
     const response: AxiosResponse<UserType> = yield call(axios.post, `${process.env.BASE_URL}/inventory/decreaseQty`, {
@@ -273,4 +286,5 @@ export function* watchAuthUser() {
   yield takeLatest('GET_VENDOR_REQUEST_BY_ID', getOrdersByIdSaga);
   yield takeLatest('INCREASE_INVENTORY_QTY_REQUEST', increaseQtySaga);
   yield takeLatest('DECREASE_INVENTORY_QTY_REQUEST', decreaseQtySaga);
+  yield takeLatest('FILTER_PRODUCTS_REQUEST',handleVendorProductsFilterSaga)
 }

@@ -72,8 +72,14 @@ const resetPasswordController = async (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(req.body.email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }
     // Check if user already exists
     const existingUser = await User.findOne({ username: req.body.email });
+
+
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }

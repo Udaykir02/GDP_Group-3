@@ -218,12 +218,12 @@ const Cart = ({ navigation }: any) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <FlatList
+            {(cartData && cartData.length > 0) ?<FlatList
                 data={cartData}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.skuId}
                 contentContainerStyle={styles.list}
-            />
+            />: <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 25 }}><Text style={{ fontSize: 20}}> Your Cart is empty</Text></View>}
             {(cartData && cartData.length > 0) ?<View style={styles.totalContainer}>
                 <Text style={styles.totalText}>Total Cost:</Text>
                 <Text style={styles.totalAmount}>${getTotal()}</Text>
@@ -232,7 +232,7 @@ const Cart = ({ navigation }: any) => {
             {(cartData && cartData.length > 0) ?
                 <View style={[styles.shadow, { marginBottom: 10}]}>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <TouchableOpacity style={styles.optionsButton} onPress={() => { openPaymentSheet() }}>
+                        <TouchableOpacity style={styles.optionsButton} onPress={() => { openPaymentSheet() }} testID={"cart_pay_buttoon_testid"}>
                             <View style={{ width: 'auto', flexDirection: 'row' }}>
                                 <View style={{ width: '70%' }}>
                                     <Text style={{ color: "#fff", fontWeight: 'bold'}}>

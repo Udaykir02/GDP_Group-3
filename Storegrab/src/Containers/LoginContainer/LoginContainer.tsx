@@ -67,10 +67,11 @@ const LoginContainer = ({ navigation }: any) => {
                 <TouchableHighlight
                     style={styles.button}
                     onPress={handleLogin}
+                    accessibilityLabel={"login-button"}
                     underlayColor='#fff' testID='login-button'>
                     <Text style={[{fontSize: 15},styles.loginText]}>Login</Text>
                 </TouchableHighlight>
-                <Button title="Reset Password" onPress={handleResetPassword} />
+                <Button title="Reset Password" onPress={handleResetPassword}/>
             </View>
 
         </View>
